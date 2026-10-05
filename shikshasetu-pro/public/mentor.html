@@ -1,0 +1,13 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ShikshaSetu Mentor</title>
+<style>body{font:16px system-ui;max-width:640px;margin:20px auto;padding:0 14px;background:#f6f2fa;color:#2B2B33}h1{color:#5B2C83}.c{background:#fff;border:1px solid #e3dcec;border-radius:12px;padding:12px;margin:10px 0}textarea,input{width:100%;padding:8px;margin:6px 0;box-sizing:border-box}button{background:#5B2C83;color:#fff;border:0;border-radius:8px;padding:8px 14px;font-weight:700}</style></head><body>
+<h1>Mentor desk</h1><input id="pin" type="password" placeholder="Mentor PIN"><button id="go">Load doubts</button><div id="list"></div>
+<script>
+var $=function(i){return document.getElementById(i)};
+function H(){return{"x-pin":$("pin").value,"content-type":"application/json"}}
+function load(){fetch("/api/mentor/doubts",{headers:H()}).then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(a){var l=$("list");l.textContent="";if(!a.length)l.textContent="No pending doubts.";
+ a.forEach(function(d){var c=document.createElement("div");c.className="c";var q=document.createElement("b");q.textContent="Q ("+d.lang+"): "+d.question;
+  var t=document.createElement("textarea");t.rows=3;t.placeholder="Your reply";var b=document.createElement("button");b.textContent="Send reply";
+  b.onclick=function(){fetch("/api/mentor/reply",{method:"POST",headers:H(),body:JSON.stringify({id:d.id,text:t.value})}).then(load)};c.append(q,t,b);l.append(c)})})
+ .catch(function(){$("list").textContent="Wrong PIN or server error."})}
+$("go").onclick=load;
+</script></body></html>
