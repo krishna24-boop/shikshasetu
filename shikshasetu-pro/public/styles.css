@@ -477,3 +477,39 @@ header #sub { margin: 0 0 0 10px; }
   .roadmap-actions .btn { flex: 1 1 100%; }
   .profile-logout { align-items: flex-start; flex-direction: column; }
 }
+.college-subnav { gap: 7px; margin: 0 0 14px; overflow-x: auto; flex-wrap: nowrap; }
+.college-subnav .chip { flex: 0 0 auto; display: inline-flex; align-items: center; gap: 6px; }
+.college-filter-grid, #career-form, #admin-resource-form { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; align-items: end; }
+.college-filter-grid label, #career-form label, #admin-resource-form label { min-width: 0; }
+.college-filter-grid .college-wide { grid-column: 1/-1; }
+.college-material-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(min(100%,280px),1fr)); gap: 14px; align-content: start; }
+.college-material-card h2 { margin-top: 10px; }
+.college-material-card .material-actions { margin-top: 12px; }
+.college-empty { grid-column: 1/-1; text-align: center; }
+.college-empty > span { display: inline-grid; width: 46px; height: 46px; place-items: center; background: var(--primary-soft); border-radius: 15px; font-size: 23px; }
+.college-exam, .college-quiz-list, .college-subnav, .college-material-grid { grid-column: 1/-1; }
+.career-form, #career-form { grid-template-columns: repeat(auto-fit,minmax(min(100%,220px),1fr)); margin-top: 12px; }
+.roadmap-result, .material-context { overflow-wrap: anywhere; }
+.material-context { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.material-context .eyebrow { color: var(--primary); }
+.college-quiz-list { display: grid; gap: 12px; }
+.college-quiz-list > h2 { margin: 6px 0 0; }
+.college-quiz-list .quiz-item { padding: 10px 0; border-top: 1px solid var(--border); }
+.admin-item { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; padding: 12px 0; border-top: 1px solid var(--border); }
+.admin-item > span, .admin-item > div { min-width: 0; overflow-wrap: anywhere; }
+.admin-item small { display: block; margin-top: 3px; color: var(--muted); }
+.admin-managed-list { margin-top: 14px; }
+.mentor-profile-card { width: 100%; }
+.announcement-card article { padding: 10px 0; border-top: 1px solid var(--border); }
+.low-data-card { display: flex; align-items: center; justify-content: space-between; gap: 14px; }
+.low-data-card h2 { display: flex; align-items: center; gap: 7px; }
+.low-data-switch { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 12px; font-weight: 700; }
+.low-data-switch input { width: 20px; min-height: auto; height: 20px; accent-color: var(--primary-strong); }
+:root[data-low-data="on"] .welcome img { display: none; }
+:root[data-low-data="on"] .card, :root[data-low-data="on"] .welcome { animation: none; transition: none; }
+:root[data-low-data="on"] * { scroll-behavior: auto !important; }
+@media (max-width: 560px) {
+  .college-filter-grid, #career-form, #admin-resource-form { grid-template-columns: 1fr; }
+  .college-filter-grid .college-wide { grid-column: auto; }
+  .college-material-grid { grid-template-columns: 1fr; }
+}

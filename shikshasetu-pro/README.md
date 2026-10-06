@@ -3,7 +3,7 @@ Offline-first PWA + small Node backend.
 
 ## Run
     npm install
-    cp .env.example .env      # set GEMINI_API_KEY, MENTOR_PIN, and MONGODB_URI
+    cp .env.example .env      # set the keys and PINs you use
     npm start                 # http://localhost:3000
 
 MongoDB Atlas is required for the doubts/mentor API. Set `MONGODB_URI` to
@@ -31,7 +31,14 @@ the app can optionally personalize that plan using `GEMINI_API_KEY`. Scholarship
 eligibility and deadlines must be confirmed on official portals.
 
 ## Deploy
-Render/Railway web service: build `npm install`, start `npm start`, env `MONGODB_URI`, `MONGODB_DB` (optional), `GEMINI_API_KEY` (and `MENTOR_PIN`). HTTPS is required for mic + service worker on phones.
+Render/Railway web service: build `npm install`, start `npm start`. Configure `MONGODB_URI`, optional `MONGODB_DB`, `MENTOR_PIN`, and optionally `GEMINI_API_KEY` in the host's Environment settings. Set separate strong `ADMIN_PIN` and `FACULTY_PIN` values to enable college-content management. Never commit these secrets or put them in frontend code. HTTPS is required for mic + service worker on phones.
+
+## College library and content workflow
+The College tab complements—not replaces—the existing downloadable learning packs. Students can filter published material by university, course, branch, semester, subject, unit, topic, language, material type and PYQ year. PDF resources can be previewed, downloaded, and saved in the existing IndexedDB offline store; external video links require a connection. Students may mark material as studied and take published faculty-created quizzes; this progress stays in their browser.
+
+Faculty open **College → Faculty / Admin**, enter the `FACULTY_PIN`, create a draft, and submit it for review. Admins enter `ADMIN_PIN` to manage course structures and scholarship, mentor, and announcement records, and to review material. Material must move through **Draft → Pending Approval → Approved → Published** before it appears in the student library. Scholarship information is student-visible only after an admin verifies and publishes it; check the official scheme portal for current terms.
+
+PDF uploads must be valid PDF files no larger than 6 MB. MongoDB stores these PDFs with the material record, so consider Atlas storage and backup limits before accepting many uploads. Mentorship requests only collect an optional local-profile name and the student's question; students should not include phone numbers, addresses, or other sensitive personal data.
 
 ## Layout
 public/ (app.js, sw.js, packs/*.json, faq.json, schemes inside app.js) · server.js (AI + MongoDB-backed doubts API)
