@@ -316,3 +316,48 @@ label { display: block; margin: 14px 0 6px; font-size: 13px; font-weight: 700; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
+.mentor-entry { min-height: 38px; display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 0 11px; color: var(--primary); background: var(--primary-soft); border: 1px solid transparent; border-radius: 12px; font-size: 12px; font-weight: 750; cursor: pointer; transition: transform .18s ease, background-color .18s ease; }
+.mentor-entry.hide { display: none; }
+.mentor-entry:hover { transform: translateY(-1px); }
+.mentor-entry .icon { width: 17px; height: 17px; }
+.login-card { max-width: 540px; }
+.login-role-switch { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; padding: 5px; margin: 17px 0; background: var(--bg); border: 1px solid var(--border); border-radius: 14px; }
+.login-role { min-height: 42px; display: flex; align-items: center; justify-content: center; gap: 8px; color: var(--muted); background: transparent; border: 0; border-radius: 10px; font-weight: 700; cursor: pointer; transition: color .18s ease, background-color .18s ease, box-shadow .18s ease; }
+.login-role.on { color: var(--primary); background: var(--surface); box-shadow: 0 2px 8px rgba(37,27,79,.08); }
+.login-role .icon { width: 18px; height: 18px; }
+.login-role-intro { display: flex; align-items: flex-start; gap: 12px; margin: 17px 0 5px; }
+.login-role-icon { width: 40px; height: 40px; flex: 0 0 40px; display: grid; place-items: center; color: var(--primary); background: var(--primary-soft); border-radius: 13px; }
+.login-role-intro h3 { margin: 0; font-size: 16px; }
+.login-role-intro .mut { margin: 4px 0 0; }
+.mentor-login-message { display: none; padding: 10px 12px; margin: 12px 0 0; color: #9b462a; background: var(--accent-soft); border-radius: 11px; font-size: 12px; line-height: 1.55; }
+.mentor-login-message.visible { display: block; animation: rise-in .2s both; }
+.mentor-login-message.success { color: var(--success); background: var(--success-soft); }
+.ask-card { text-align: center; }
+.ask-badge { width: 48px; height: 48px; display: grid; place-items: center; margin: 0 auto 10px; color: var(--primary); background: var(--primary-soft); border-radius: 16px; }
+.ask-subject-label { text-align: left; }
+.ask-card > select { margin-bottom: 18px; text-align: left; }
+.mentor-dashboard-card { grid-column: 1 / -1; display: flex; align-items: center; justify-content: space-between; gap: 18px; }
+.mentor-dashboard-card h2 { margin: 10px 0 3px; }
+.mentor-dashboard-card p { margin: 0; }
+.mentor-question-grid { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); align-items: start; gap: 16px; }
+.mentor-question-card { min-width: 0; }
+.mentor-question-card h2 { margin: 13px 0 7px; font-size: 15px; }
+.mentor-question-card textarea { min-height: 96px; resize: vertical; line-height: 1.5; }
+.mentor-question-text { margin: 0 0 14px; overflow-wrap: anywhere; white-space: pre-wrap; line-height: 1.65; }
+.mentor-send { min-width: 142px; margin-top: 10px; }
+.mentor-empty-state { grid-column: 1 / -1; text-align: center; }
+.mentor-empty-state h2 { margin: 10px 0 4px; }
+.mentor-empty-state p { margin: 0; }
+.mentor-mode nav { display: none; }
+.mentor-mode main { grid-column: 1; grid-row: 2; }
+@media (min-width: 900px) {
+  #app.mentor-mode { grid-template-columns: minmax(0, 1fr); }
+  #app.mentor-mode header { grid-column: 1; }
+  #app.mentor-mode main { grid-column: 1; }
+}
+@media (max-width: 600px) {
+  .mentor-entry { width: 38px; padding: 0; }
+  .mentor-entry span { display: none; }
+  .mentor-dashboard-card { align-items: flex-start; flex-direction: column; }
+  .mentor-dashboard-card .row { width: 100%; }
+}

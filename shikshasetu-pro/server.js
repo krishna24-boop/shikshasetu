@@ -8,6 +8,7 @@ app.use(express.static("public"));
 const KEY = process.env.GEMINI_API_KEY,
   PIN = process.env.MENTOR_PIN;
 const MODEL = process.env.GEMINI_MODEL || "gemini-3.8-flash";
+const SUBJECTS = new Set(["math", "science", "english", "computer", "career", "other"]);
 
 function asyncRoute(handler) {
   return (req, res, next) =>
@@ -64,12 +65,18 @@ app.post("/api/doubts", asyncRoute(async (req, res) => {
     .slice(0, 500)
     .trim();
   const lang = req.body?.lang === "en" ? "en" : "hi";
+  const requestedSubject = req.body?.subject;
+  if (requestedSubject !== undefined && !SUBJECTS.has(requestedSubject)) {
+    return res.status(400).json({ error: "valid subject required" });
+  }
+  const subject = requestedSubject || "other";
   if (!question) return res.status(400).json({ error: "question required" });
   const id = randomUUID(),
     answer = req.body?.mentor ? null : await ai(question, lang); // mentor:true skips AI
   await req.app.locals.doubts.insertOne({
     id,
     question,
+    subject,
     lang,
     answer,
     mentor: false,
@@ -89,24 +96,39 @@ app.get("/api/doubts/:id", asyncRoute(async (req, res) => {
 }));
 
 const auth = (req, res, next) =>
-  PIN && req.get("x-pin") === PIN
-    ? next()
-    : res.status(401).json({ error: "bad pin" });
-app.get("/api/mentor/doubts", auth, asyncRoute(async (_req, res) => {
+  !PIN
+    ? res.status(503).json({ error: "mentor_pin_not_configured" })
+    : req.get("x-pin") === PIN
+      ? next()
+      : res.status(401).json({ error: "invalid_pin" });
+app.get("/api/mentor/doubts", auth, asyncRoute(async (req, res) => {
+  const subject = req.query.subject;
+  if (!SUBJECTS.has(subject)) {
+    return res.status(400).json({ error: "valid subject required" });
+  }
+  const subjectFilter = subject === "other"
+    ? { $in: ["other", null] }
+    : subject;
   const doubts = await req.app.locals.doubts
-    .find({ answer: null }, { projection: { _id: 0 } })
+    .find({ answer: null, subject: subjectFilter }, { projection: { _id: 0 } })
     .sort({ at: -1 })
     .toArray();
   res.json(doubts);
 }));
 app.post("/api/mentor/reply", auth, asyncRoute(async (req, res) => {
   const id = req.body?.id,
+    subject = req.body?.subject,
     text = String(req.body?.text || "")
       .slice(0, 1000)
       .trim();
-  if (!id || !text) return res.status(400).json({});
+  if (!id || !text || !SUBJECTS.has(subject)) {
+    return res.status(400).json({});
+  }
+  const subjectFilter = subject === "other"
+    ? { $in: ["other", null] }
+    : subject;
   const result = await req.app.locals.doubts.updateOne(
-    { id, answer: null },
+    { id, answer: null, subject: subjectFilter },
     { $set: { answer: text, mentor: true } },
   );
   if (!result.matchedCount) return res.status(400).json({});
@@ -130,7 +152,7 @@ async function start() {
   const doubts = database.collection("doubts");
   await Promise.all([
     doubts.createIndex({ id: 1 }, { unique: true }),
-    doubts.createIndex({ answer: 1, at: -1 }),
+    doubts.createIndex({ subject: 1, answer: 1, at: -1 }),
   ]);
   app.locals.doubts = doubts;
 

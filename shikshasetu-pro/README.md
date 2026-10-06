@@ -26,4 +26,9 @@ Render/Railway web service: build `npm install`, start `npm start`, env `MONGODB
 
 ## Layout
 public/ (app.js, sw.js, packs/*.json, faq.json, schemes inside app.js) · server.js (AI + MongoDB-backed doubts API)
-Mentor page: /mentor.html (enter MENTOR_PIN)
+Mentors choose **Mentor** from the student login screen, select a subject, and
+enter the `MENTOR_PIN` configured in the hosting environment. Student questions
+are routed to mentors by subject (Mathematics, Science, English, Computer,
+Career & Exams, or Other). Add `MENTOR_PIN` in Render/Railway environment
+settings and redeploy after changing it. The same configured mentor PIN is used
+for the available subject inboxes.

@@ -65,7 +65,7 @@ function showRes(){
 // ---------- Core ----------
 var $=function(i){return document.getElementById(i)},contentLang=function(){return S.lang=="en"?"en":"hi"},t=function(k){return T[S.lang]&&T[S.lang][k]||T.hi[k]},L=function(){return S.lang!="en"};
 var esc=function(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return"&#"+c.charCodeAt(0)+";"})};
-var S={lang:"hi",tab:"home",lessonLang:"hi",theme:window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light",profile:null,packs:{},cat:[],gen:[],open:null,quizAnswers:{},quizResults:{},shareOpen:false,shareSelected:{},ans:null,rec:false,q:"",queue:0,busy:{},fl:0};
+var S={lang:"hi",tab:"home",loginMode:"student",role:"student",subject:"other",mentorPin:"",mentorSubject:"math",mentorQuestions:[],mentorReplies:{},mentorMessage:"",mentorLoginMessage:"",mentorBusy:false,mentorLoading:false,mentorSending:null,lessonLang:"hi",theme:window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light",profile:null,packs:{},cat:[],gen:[],open:null,quizAnswers:{},quizResults:{},shareOpen:false,shareSelected:{},ans:null,rec:false,q:"",queue:0,busy:{},fl:0};
 try{var x=JSON.parse(localStorage.getItem("ss")||"{}");if(x.lang)S.lang=x.lang;if(x.theme==="light"||x.theme==="dark")S.theme=x.theme;if(x.profile&&x.profile.name&&x.profile.path&&x.profile.district)S.profile=x.profile}catch(e){}
 function applyTheme(){document.documentElement.dataset.theme=S.theme;var m=document.querySelector('meta[name="theme-color"]');if(m)m.content=S.theme==="dark"?"#11111a":"#6246d8"}
 applyTheme();
@@ -91,6 +91,8 @@ var I={
  edit:'<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4z"/>'
 };
 function icon(name){return '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">'+I[name]+'</svg>'}
+var SUBJECTS=[["math","गणित","Mathematics"],["science","विज्ञान","Science"],["english","अंग्रेज़ी","English"],["computer","कंप्यूटर","Computer"],["career","करियर और परीक्षा","Career & exams"],["other","अन्य","Other"]];
+function subjectName(id){var s=SUBJECTS.filter(function(x){return x[0]===id})[0]||SUBJECTS[5];return L()?s[1]:s[2]}
 
 // ---------- IndexedDB (packs + sync queue) ----------
 var DB;
@@ -140,18 +142,18 @@ function imp(f){var rd=new FileReader();rd.onload=function(){try{var a=JSON.pars
 function find(q){var l=q.toLowerCase(),all=S.gen.slice();
  Object.keys(S.packs).forEach(function(i){all=all.concat(S.packs[i].faq||[])});
  return all.filter(function(e){return e&&Array.isArray(e.k)&&e.a&&e.k.some(function(k){return l.indexOf(String(k).toLowerCase())>-1})})[0]}
-function api(q,l,m){return fetch("/api/doubts",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({question:q,lang:l||contentLang(),mentor:!!m})}).then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(j){return j})}
-function enqueue(q,m){tx("queue","readwrite",function(s){return s.add({q:q,lang:contentLang(),m:!!m})}).then(function(){S.queue++;
+function api(q,l,m,subject){return fetch("/api/doubts",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({question:q,lang:l||contentLang(),mentor:!!m,subject:subject||S.subject||"other"})}).then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(j){return j})}
+function enqueue(q,m,subject){tx("queue","readwrite",function(s){return s.add({q:q,lang:contentLang(),m:!!m,subject:subject||S.subject||"other"})}).then(function(){S.queue++;
  S.ans={q:q,a:L()?"उत्तर ऑफ़लाइन नहीं मिला। सवाल सेव हो गया, नेटवर्क मिलते ही जवाब आएगा।":"No offline answer. Saved; the answer will arrive when a network appears.",src:"🕒 Smart Sync queue"};render()})}
-function answer(q){S.q="";var f=find(q);
+function answer(q,subject){subject=subject||S.subject||"other";S.q="";var f=find(q);
  if(f){S.ans={q:q,a:String(f.a[contentLang()]||f.a.en||""),src:"📦 "+(L()?"ऑफ़लाइन FAQ से":"Offline FAQ")};return render()}
- if(!navigator.onLine)return enqueue(q);
+ if(!navigator.onLine)return enqueue(q,false,subject);
  S.ans={q:q,a:"…",src:"🌐 AI"};render();
- api(q).then(function(j){got(q,j)}).catch(function(){enqueue(q)})}
-function askMentor(q){S.q="";if(!navigator.onLine)return enqueue(q,true);S.ans={q:q,a:"…",src:"👩‍🏫 Mentor"};render();api(q,contentLang(),true).then(function(j){got(q,j)}).catch(function(){enqueue(q,true)})}
+ api(q,contentLang(),false,subject).then(function(j){got(q,j)}).catch(function(){enqueue(q,false,subject)})}
+function askMentor(q,subject){subject=subject||S.subject||"other";S.q="";if(!navigator.onLine)return enqueue(q,true,subject);S.ans={q:q,a:"…",src:"👩‍🏫 Mentor"};render();api(q,contentLang(),true,subject).then(function(j){got(q,j)}).catch(function(){enqueue(q,true,subject)})}
 function flush(){if(!navigator.onLine||S.fl)return;S.fl=1;
  tx("queue","readonly",function(s){return s.getAll()}).then(function(a){
-  return Promise.all((a||[]).map(function(it){return api(it.q,it.lang,it.m).then(function(j){
+  return Promise.all((a||[]).map(function(it){return api(it.q,it.lang,it.m,it.subject||"other").then(function(j){
    return tx("queue","readwrite",function(s){return s.delete(it.id)}).then(function(){S.queue=Math.max(0,S.queue-1);got(it.q,j)})}).catch(function(){})}))})
  .then(function(){S.fl=0},function(){S.fl=0})}
 
@@ -168,11 +170,39 @@ function poll(){if(!navigator.onLine)return;waits().forEach(function(w){fetch("/
 // ---------- Views ----------
 function login(){
  var Lh=L(),p=S.profile||{},paths=[["school",Lh?"स्कूल":"School"],["college",Lh?"कॉलेज":"College"],["prep",Lh?"परीक्षा की तैयारी":"Exam preparation"]];
- return '<div class="card login-card"><div class="row sp"><h2>'+(p.name?(Lh?"अपनी जानकारी बदलें":"Update your details"):(Lh?"छात्र लॉगिन":"Student login"))+'</h2><div class="row"><button type="button" class="chip '+(S.lang==="hi"?"on":"")+'" data-l="hi">हिन्दी</button><button type="button" class="chip '+(S.lang==="en"?"on":"")+'" data-l="en">English</button><button type="button" class="chip '+(S.lang==="bagheli"?"on":"")+'" data-l="bagheli">बघेली</button><button type="button" class="chip '+(S.lang==="bundeli"?"on":"")+'" data-l="bundeli">बुंदेली</button></div></div><p class="mut">'+(Lh?"बस ये जानकारी भरें। इंटरनेट के बिना भी लॉगिन होगा।":"Just fill in these details. Login works offline too.")+'</p><form id="student-form">'+
- '<label for="student-name">'+(Lh?"छात्र का नाम":"Student name")+'</label><input id="student-name" name="name" autocomplete="name" maxlength="60" required value="'+esc(p.name||"")+'" placeholder="'+(Lh?"अपना नाम लिखें":"Enter your name")+'">'+
- '<label for="student-path">'+(Lh?"आप अभी क्या कर रहे हैं?":"What are you currently doing?")+'</label><select id="student-path" name="path" required><option value="">'+(Lh?"एक विकल्प चुनें":"Choose an option")+'</option>'+paths.map(function(o){return '<option value="'+o[0]+'"'+(p.path===o[0]?" selected":"")+'>'+o[1]+'</option>'}).join("")+'</select>'+
- '<label for="student-district">'+(Lh?"ज़िला चुनें":"Select district")+'</label><select id="student-district" name="district" required><option value="">'+(Lh?"अपना ज़िला चुनें":"Choose your district")+'</option>'+DISTRICTS.map(function(d){return '<option value="'+d+'"'+(p.district===d?" selected":"")+'>'+d+'</option>'}).join("")+'</select>'+
- '<button class="btn o login-submit" type="submit">'+(Lh?"लॉगिन करें":"Log in")+'</button></form>'+(p.name?'<button class="btn g login-cancel" id="cancel-profile">'+(Lh?"वापस जाएँ":"Cancel")+'</button>':"")+'</div>'}
+ var h='<div class="card login-card"><div class="row sp"><h2>'+(Lh?"ShikshaSetu से जुड़ें":"Welcome to ShikshaSetu")+'</h2><div class="row"><button type="button" class="chip '+(S.lang==="hi"?"on":"")+'" data-l="hi">हिन्दी</button><button type="button" class="chip '+(S.lang==="en"?"on":"")+'" data-l="en">English</button><button type="button" class="chip '+(S.lang==="bagheli"?"on":"")+'" data-l="bagheli">बघेली</button><button type="button" class="chip '+(S.lang==="bundeli"?"on":"")+'" data-l="bundeli">बुंदेली</button></div></div>';
+ h+='<div class="login-role-switch" role="group" aria-label="'+(Lh?"लॉगिन प्रकार चुनें":"Choose sign-in type")+'"><button type="button" class="login-role '+(S.loginMode==="student"?"on":"")+'" data-login-mode="student">'+icon("user")+(Lh?"छात्र":"Student")+'</button><button type="button" class="login-role '+(S.loginMode==="mentor"?"on":"")+'" data-login-mode="mentor">'+icon("cap")+(Lh?"मेंटर":"Mentor")+'</button></div>';
+ if(S.loginMode==="mentor"){
+  h+='<div class="login-role-intro"><span class="login-role-icon">'+icon("cap")+'</span><div><h3>'+(Lh?"मेंटर लॉगिन":"Mentor sign in")+'</h3><p class="mut">'+(Lh?"अपना विषय और मेंटर PIN डालकर उसी विषय के सवाल देखें।":"Choose your subject and enter the mentor PIN to view matching questions.")+'</p></div></div>';
+  h+='<form id="mentor-login-form"><label for="mentor-subject">'+(Lh?"आपका विषय":"Your subject")+'</label><select id="mentor-subject" required>'+SUBJECTS.map(function(s){return '<option value="'+s[0]+'"'+(S.mentorSubject===s[0]?" selected":"")+'>'+esc(Lh?s[1]:s[2])+'</option>'}).join("")+'</select><label for="mentor-pin">Mentor PIN</label><input id="mentor-pin" type="password" autocomplete="current-password" required placeholder="'+(Lh?"Render का MENTOR_PIN डालें":"Enter the MENTOR_PIN set in Render")+'"><button class="btn login-submit" type="submit"'+(S.mentorBusy?" disabled":"")+'>'+(S.mentorBusy?"… ":icon("cap"))+(Lh?" सवाल देखें":"Open subject inbox")+'</button></form><p id="mentor-login-message" class="mentor-login-message'+(S.mentorLoginMessage?" visible":"")+'" role="status" aria-live="polite">'+esc(S.mentorLoginMessage)+'</p>';
+ }else{
+  h+='<p class="mut">'+(Lh?"बस ये जानकारी भरें। इंटरनेट के बिना भी लॉगिन होगा।":"Just fill in these details. Login works offline too.")+'</p><form id="student-form">'+
+  '<label for="student-name">'+(Lh?"छात्र का नाम":"Student name")+'</label><input id="student-name" name="name" autocomplete="name" maxlength="60" required value="'+esc(p.name||"")+'" placeholder="'+(Lh?"अपना नाम लिखें":"Enter your name")+'">'+
+  '<label for="student-path">'+(Lh?"आप अभी क्या कर रहे हैं?":"What are you currently doing?")+'</label><select id="student-path" name="path" required><option value="">'+(Lh?"एक विकल्प चुनें":"Choose an option")+'</option>'+paths.map(function(o){return '<option value="'+o[0]+'"'+(p.path===o[0]?" selected":"")+'>'+o[1]+'</option>'}).join("")+'</select>'+
+  '<label for="student-district">'+(Lh?"ज़िला चुनें":"Select district")+'</label><select id="student-district" name="district" required><option value="">'+(Lh?"अपना ज़िला चुनें":"Choose your district")+'</option>'+DISTRICTS.map(function(d){return '<option value="'+d+'"'+(p.district===d?" selected":"")+'>'+d+'</option>'}).join("")+'</select>'+
+  '<button class="btn o login-submit" type="submit">'+(Lh?"लॉगिन करें":"Log in")+'</button></form>'+(p.name?'<button class="btn g login-cancel" id="cancel-profile">'+(Lh?"वापस जाएँ":"Cancel")+'</button>':"")
+ }
+ return h+'</div>'}
+function mentorError(status,error){
+ if(status===401||error==="invalid_pin")return L()?"PIN सही नहीं है। Render में MENTOR_PIN की सेटिंग जाँचें और वही PIN डालें।":"PIN not accepted. Check the MENTOR_PIN value in Render and enter the same PIN.";
+ if(status===503||error==="mentor_pin_not_configured")return L()?"Render में MENTOR_PIN सेट नहीं है। Environment में PIN जोड़कर redeploy करें।":"Mentor sign-in is not configured. Add MENTOR_PIN in Render → Environment, save, and redeploy.";
+ if(status>=500)return L()?"सर्वर/डेटाबेस से जवाब नहीं मिला। Render logs और MongoDB connection जाँचें।":"The server/database could not complete the request. Check Render logs and the MongoDB connection.";
+ return L()?"सवाल लोड नहीं हुए। दोबारा कोशिश करें।":"Could not load questions. Please try again.";
+}
+function mentorRequest(url,options){
+ return fetch(url,options).then(function(r){return r.json().catch(function(){return{}}).then(function(j){if(!r.ok){var e=new Error(mentorError(r.status,j.error));e.status=r.status;throw e}return j})})
+}
+function mentor(){
+ var subject=subjectName(S.mentorSubject),h='<section class="welcome"><div class="welcome-copy"><span class="eyebrow">SHIKSHASETU · MENTOR INBOX</span><h2>'+(L()?"नमस्ते, मेंटर!":"Welcome, mentor!")+'</h2><p>'+(L()?"आपको "+esc(subject)+" के सवाल दिख रहे हैं। जवाब भेजें और विद्यार्थियों की मदद करें।":"Questions for "+esc(subject)+" are ready. Share a helpful answer with each student.")+'</p></div><img src="learning-illustration.svg" alt=""></section>';
+ h+='<div class="card mentor-dashboard-card"><div><span class="tag">'+esc(subject)+'</span><h2>'+(L()?"विद्यार्थियों के सवाल":"Student questions")+'</h2><p class="mut">'+(S.mentorQuestions.length?S.mentorQuestions.length+(L()?" सवाल जवाब का इंतज़ार कर रहे हैं।":" question(s) waiting for a reply."):(L()?"अभी कोई नया सवाल नहीं है।":"No new questions right now."))+'</p></div><div class="row"><button class="btn g" id="mentor-refresh"'+(S.mentorLoading?" disabled":"")+'>'+icon("clock")+(S.mentorLoading?(L()?"लोड हो रहा है…":"Loading…"):(L()?"रिफ्रेश":"Refresh"))+'</button><button class="btn g" id="mentor-logout">'+icon("upload")+(L()?"लॉग आउट":"Sign out")+'</button></div></div>';
+ if(S.mentorMessage)h+='<p class="mentor-login-message visible '+(S.mentorMessage.ok?"success":"")+'" role="status">'+esc(S.mentorMessage.text)+'</p>';
+ if(S.mentorLoading&&!S.mentorQuestions.length)h+='<div class="card"><p class="mut">'+(L()?"सवाल लोड हो रहे हैं…":"Loading questions…")+'</p></div>';
+ else if(!S.mentorQuestions.length)h+='<div class="card mentor-empty-state"><div class="mentor-empty-icon">'+icon("check")+'</div><h2>'+(L()?"इनबॉक्स साफ़ है":"You’re all caught up")+'</h2><p class="mut">'+(L()?"नए सवाल आने पर यहाँ दिखेंगे।":"New questions for your subject will appear here.")+'</p></div>';
+ else h+='<div class="mentor-question-grid">'+S.mentorQuestions.map(function(q){
+  var reply=S.mentorReplies[q.id]||"",date=q.at?new Date(Number(q.at)).toLocaleString():"";
+  return '<article class="card mentor-question-card"><div class="row sp"><span class="tag">'+esc(subjectName(q.subject))+'</span><span class="mut">'+esc(date)+'</span></div><h2>'+esc(q.lang==="hi"?"विद्यार्थी का सवाल":"Student question")+'</h2><p class="mentor-question-text">'+esc(q.question)+'</p><label for="reply-'+esc(q.id)+'">'+(L()?"आपका जवाब":"Your reply")+'</label><textarea id="reply-'+esc(q.id)+'" data-mentor-reply="'+esc(q.id)+'" maxlength="1000" rows="4" placeholder="'+(L()?"सरल भाषा में जवाब लिखें…":"Write a clear, encouraging reply…")+'">'+esc(reply)+'</textarea><button class="btn mentor-send" data-mentor-send="'+esc(q.id)+'"'+(S.mentorSending===q.id?" disabled":"")+'>'+icon("send")+(S.mentorSending===q.id?(L()?"भेज रहे हैं…":"Sending…"):(L()?"जवाब भेजें":"Send reply"))+'</button></article>'
+ }).join("")+'</div>';
+ return h}
 function home(){
  var pathName={school:L()?"स्कूल":"School",college:L()?"कॉलेज":"College",prep:L()?"परीक्षा की तैयारी":"Exam preparation"};
  var h='<section class="welcome"><div class="welcome-copy"><span class="eyebrow">'+(L()?"आपकी पढ़ाई, आपकी रफ़्तार":"LEARN AT YOUR OWN PACE")+'</span><h2>'+(L()?"नमस्ते, "+esc(S.profile.name)+"!":"Welcome back, "+esc(S.profile.name)+"!")+'</h2><p>'+(L()?"आज कुछ नया सीखें — आपके पाठ ऑफ़लाइन भी साथ रहेंगे।":"Pick up where you left off. Your lessons are ready, even offline.")+'</p></div><img src="learning-illustration.svg" alt=""></section>';
@@ -198,7 +228,8 @@ function lesson(){var ids=Object.keys(S.packs);
    return '<div class="quiz-item"><p><b>'+(i+1)+'. '+esc(q.q[contentLang()])+'</b></p>'+q.o.map(function(o,j){return '<label class="quiz-option"><input type="radio" name="quiz-'+i+'" value="'+j+'"'+(answers[i]===j?" checked":"")+'>'+esc(o[contentLang()])+'</label>'}).join("")+'<button class="btn g quiz-check" data-check="'+i+'">'+(L()?"जवाब जाँचें":"Check answer")+'</button>'+(result===undefined?"":'<p class="quiz-result '+(result?"correct":"incorrect")+'">'+(result?(L()?"सही जवाब!":"Correct!"):(L()?"फिर कोशिश करें।":"Try again."))+'</p>')+'</div>'}).join("")+'</div>'}
  return h}
 function bolo(){
- var h='<div class="card" style="text-align:center"><h2>'+icon("mic")+' '+(L()?"अपना सवाल बोलिए":"Ask by voice")+'</h2><button class="mic '+(S.rec?"rec":"")+'" id="mic" aria-label="'+(L()?"सवाल बोलें":"Ask by voice")+'">'+icon("mic")+'</button><p class="mut">'+(S.rec?(L()?"सुन रहा हूँ…":"Listening…"):(L()?"माइक दबाएँ या नीचे लिखें":"Tap mic or type below"))+'</p><div class="row" style="margin-top:8px"><input id="q" placeholder="'+(L()?"जैसे: प्रतिशत क्या है?":"e.g. what is percent?")+'" value="'+esc(S.q)+'"><button class="btn" id="ask" aria-label="'+(L()?"भेजें":"Send")+'">'+icon("send")+'</button></div><button class="btn o" id="ment" style="margin-top:10px;width:100%">'+icon("user")+(L()?"मेंटर से पूछें":"Ask a mentor")+'</button></div>';
+ var subjectOptions=SUBJECTS.map(function(s){return '<option value="'+s[0]+'"'+(S.subject===s[0]?" selected":"")+'>'+esc(L()?s[1]:s[2])+'</option>'}).join("");
+ var h='<div class="card ask-card" style="text-align:center"><span class="ask-badge">'+icon("mic")+'</span><h2>'+(L()?"अपना सवाल पूछें":"Ask your question")+'</h2><p class="mut">'+(L()?"सही विषय चुनें ताकि आपका सवाल सही मेंटर तक पहुँचे।":"Choose a subject so your question reaches the right mentor.")+'</p><label class="ask-subject-label" for="ask-subject">'+(L()?"सवाल किस विषय पर है?":"Which subject is this about?")+'</label><select id="ask-subject">'+subjectOptions+'</select><button class="mic '+(S.rec?"rec":"")+'" id="mic" aria-label="'+(L()?"सवाल बोलें":"Ask by voice")+'">'+icon("mic")+'</button><p class="mut">'+(S.rec?(L()?"सुन रहा हूँ…":"Listening…"):(L()?"माइक दबाएँ या नीचे लिखें":"Tap mic or type below"))+'</p><div class="row" style="margin-top:8px"><input id="q" placeholder="'+(L()?"जैसे: प्रतिशत क्या है?":"e.g. what is percent?")+'" value="'+esc(S.q)+'"><button class="btn" id="ask" aria-label="'+(L()?"भेजें":"Send")+'">'+icon("send")+'</button></div><button class="btn o" id="ment" style="margin-top:10px;width:100%">'+icon("user")+(L()?"मेंटर से पूछें":"Ask a mentor")+'</button></div>';
  if(S.queue)h+='<p class="mut">'+icon("clock")+' '+S.queue+(L()?" सवाल सिंक के इंतज़ार में":" doubt(s) waiting to sync")+'</p>';
  if(S.ans)h+='<div class="card"><b>'+esc(S.ans.q)+'</b><div class="ans">'+esc(S.ans.a)+'</div><p class="mut">'+esc(S.ans.src)+'</p><button class="btn g" id="sayans">'+icon("volume")+(L()?"सुनें":"Listen")+'</button></div>';
  return h}
@@ -208,7 +239,7 @@ function speak(s){if(!window.speechSynthesis)return notify("Speech not supported
 function listen(){var R=window.SpeechRecognition||window.webkitSpeechRecognition;if(!R)return notify("Voice input not supported here. Use Chrome or type.");
  if(!navigator.onLine){notify(L()?"माइक को इंटरनेट चाहिए। नीचे लिखें, या कीबोर्ड का 🎤 बटन इस्तेमाल करें।":"The mic needs internet. Type below, or use your keyboard's 🎤 button.");var qi=$("q");if(qi)qi.focus();return}
  var r=new R();r.lang=L()?"hi-IN":"en-IN";S.rec=true;render();
- r.onresult=function(e){S.rec=false;answer(e.results[0][0].transcript)};
+ r.onresult=function(e){S.rec=false;answer(e.results[0][0].transcript,S.subject)};
  r.onerror=function(e){S.rec=false;render();notify(L()?"माइक नहीं चला ("+e.error+")। नीचे लिखकर पूछें।":"Mic failed ("+e.error+"). Please type your question.")};r.onend=function(){if(S.rec){S.rec=false;render()}};r.start()}
 
 // ---------- Render & events ----------
@@ -216,15 +247,38 @@ function render(){
  $("sub").textContent=t("sub");var on=navigator.onLine,n=$("net");n.textContent=(on?"● ":"✈ ")+(on?t("online"):t("offline"));n.className="net"+(on?"":" off");
  var themeButton=$("theme-toggle"),nextTheme=S.theme==="dark"?"light":"dark";
  themeButton.innerHTML=icon(S.theme==="dark"?"sun":"moon");themeButton.setAttribute("aria-label",L()?(nextTheme==="dark"?"डार्क मोड चालू करें":"लाइट मोड चालू करें"):(nextTheme==="dark"?"Switch to dark mode":"Switch to light mode"));themeButton.title=themeButton.getAttribute("aria-label");
- if(!S.profile)S.tab="login";
- $("app").className=S.tab==="login"?"login":"";
+ if(!S.profile&&S.role!=="mentor")S.tab="login";
+ $("app").className=S.tab==="login"?"login":S.role==="mentor"?"mentor-mode":"";
+ $("mentor-entry").classList.toggle("hide",S.tab==="login"||S.role==="mentor");
  if(S.tab==="login"){$("nav").innerHTML="";$("main").innerHTML=login();translateBagheli($("main"));bind();return}
+ if(S.role==="mentor"){$("nav").innerHTML="";$("main").innerHTML=mentor();bind();return}
  var tabs=[["home","home"],["lesson","book"],["bolo","mic"],["sch","cap"]];
  $("nav").innerHTML=tabs.map(function(a){return '<button class="'+(S.tab==a[0]?"on":"")+'" data-t="'+a[0]+'"'+(S.tab==a[0]?' aria-current="page"':'')+'><b>'+icon(a[1])+'</b>'+t(a[0])+'</button>'}).join("");
  $("main").innerHTML={home:home,lesson:lesson,bolo:bolo,sch:sch}[S.tab]()+shareDialog();translateBagheli($("nav"));translateBagheli($("main"));bind()}
 function bind(){
  var all=function(s,f){Array.prototype.forEach.call(document.querySelectorAll(s),f)};
  if($("theme-toggle"))$("theme-toggle").onclick=function(){S.theme=S.theme==="dark"?"light":"dark";applyTheme();save();render()};
+ if($("mentor-entry"))$("mentor-entry").onclick=function(){S.loginMode="mentor";S.mentorLoginMessage="";S.tab="login";render()};
+ all("[data-login-mode]",function(b){b.onclick=function(){S.loginMode=b.dataset.loginMode;S.mentorLoginMessage="";render()}});
+ if($("mentor-login-form"))$("mentor-login-form").onsubmit=function(e){e.preventDefault();if(S.mentorBusy)return;
+  S.mentorBusy=true;S.mentorLoginMessage="";S.mentorSubject=$("mentor-subject").value;S.mentorPin=$("mentor-pin").value;
+  var submit=$("mentor-login-form").querySelector('button[type="submit"]');submit.disabled=true;submit.textContent=L()?"सवाल लोड हो रहे हैं…":"Loading questions…";
+  mentorRequest("/api/mentor/doubts?subject="+encodeURIComponent(S.mentorSubject),{headers:{"x-pin":S.mentorPin}})
+   .then(function(a){S.mentorBusy=false;S.role="mentor";S.tab="mentor";S.mentorQuestions=a;S.mentorReplies={};S.mentorMessage="";render()})
+   .catch(function(err){S.mentorBusy=false;S.mentorPin="";S.mentorLoginMessage=err.status?err.message:(L()?"सर्वर से संपर्क नहीं हो पाया। इंटरनेट और Render deployment जाँचें।":"Could not reach the service. Check your connection and Render deployment.");render()})};
+ if($("mentor-refresh"))$("mentor-refresh").onclick=function(){if(S.mentorLoading)return;S.mentorLoading=true;render();
+  mentorRequest("/api/mentor/doubts?subject="+encodeURIComponent(S.mentorSubject),{headers:{"x-pin":S.mentorPin}})
+   .then(function(a){S.mentorQuestions=a;S.mentorMessage=""})
+   .catch(function(err){S.mentorMessage={text:err.status?err.message:(L()?"सर्वर से संपर्क नहीं हो पाया।":"Could not reach the service."),ok:false}})
+   .then(function(){S.mentorLoading=false;render()})};
+ if($("mentor-logout"))$("mentor-logout").onclick=function(){S.role="student";S.loginMode="student";S.mentorPin="";S.mentorQuestions=[];S.mentorReplies={};S.mentorMessage="";S.tab="login";render()};
+ all("[data-mentor-reply]",function(input){input.oninput=function(){S.mentorReplies[input.dataset.mentorReply]=input.value}});
+ all("[data-mentor-send]",function(button){button.onclick=function(){var id=button.dataset.mentorSend,field=$('reply-'+id),text=field&&field.value.trim();if(!text||S.mentorSending)return;
+  S.mentorReplies[id]=text;S.mentorSending=id;button.disabled=true;button.textContent=L()?"भेज रहे हैं…":"Sending…";
+  mentorRequest("/api/mentor/reply",{method:"POST",headers:{"x-pin":S.mentorPin,"content-type":"application/json"},body:JSON.stringify({id:id,subject:S.mentorSubject,text:text})})
+   .then(function(){S.mentorQuestions=S.mentorQuestions.filter(function(q){return q.id!==id});delete S.mentorReplies[id];S.mentorMessage={text:L()?"जवाब विद्यार्थी को भेज दिया गया।":"Reply sent to the student.",ok:true}})
+   .catch(function(err){S.mentorMessage={text:err.status?err.message:(L()?"जवाब नहीं भेजा जा सका।":"Could not send the reply."),ok:false}})
+   .then(function(){S.mentorSending=null;render()})}});
  if(S.shareOpen){
   if($("share-close"))$("share-close").onclick=function(){closeShare();render()};
   if($("share-dialog"))$("share-dialog").onclick=function(e){if(e.target===this){closeShare();render()}};
@@ -236,7 +290,7 @@ function bind(){
  }
  if($("student-form"))$("student-form").onsubmit=function(e){e.preventDefault();var name=$("student-name").value.trim(),path=$("student-path").value,district=$("student-district").value;
   if(!name||!path||!district)return;
-  S.profile={name:name,path:path,district:district};S.tab="home";save();render()};
+  S.profile={name:name,path:path,district:district};S.role="student";S.tab="home";save();render()};
  if($("edit-profile"))$("edit-profile").onclick=function(){S.tab="login";render()};
  if($("cancel-profile"))$("cancel-profile").onclick=function(){S.tab="home";render()};
  all("[data-t]",function(b){b.onclick=function(){S.tab=b.dataset.t;render()}});
@@ -255,8 +309,9 @@ function bind(){
   if(!S.quizResults[p.id])S.quizResults[p.id]={};
   var selected=Number(choice.value);S.quizAnswers[p.id][i]=selected;S.quizResults[p.id][i]=selected===p.quiz[i].a;render()}});
  if($("mic"))$("mic").onclick=listen;
- if($("ask"))$("ask").onclick=function(){var v=$("q").value.trim();if(v)answer(v)};
- if($("ment"))$("ment").onclick=function(){var v=$("q").value.trim();if(v)askMentor(v);else $("q").focus()};
+ if($("ask-subject"))$("ask-subject").onchange=function(){S.subject=this.value};
+ if($("ask"))$("ask").onclick=function(){var v=$("q").value.trim();if(v)answer(v,$("ask-subject").value)};
+ if($("ment"))$("ment").onclick=function(){var v=$("q").value.trim();if(v)askMentor(v,$("ask-subject").value);else $("q").focus()};
  if($("q"))$("q").onkeydown=function(e){if(e.key=="Enter")$("ask").click()};
  if($("sayans"))$("sayans").onclick=function(){speak(S.ans.a)};
  ["cat","inc","course","goal"].forEach(function(k){if($(k))$(k).onchange=function(){SA[k]=this.value}});
