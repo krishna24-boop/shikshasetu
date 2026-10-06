@@ -1,1 +1,39 @@
-<!DOCTYPE html><html lang="hi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><link rel="manifest" href="manifest.json"><link rel="icon" href="icon-192.png"><meta name="theme-color" content="#5B2C83"><title>ShikshaSetu</title><link rel="stylesheet" href="styles.css"></head><body><div id="app"><header><div><h1>ShikshaSetu · शिक्षासेतु</h1><small id="sub"></small></div><button class="net" id="net"></button></header><main id="main"></main><nav id="nav"></nav></div><script src="app.js"></script></body></html>
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#6246d8">
+  <meta name="description" content="ShikshaSetu — learn, explore lessons and get study support, even offline.">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icon-192.png">
+  <script>
+    (function () {
+      var theme = "";
+      try { theme = JSON.parse(localStorage.getItem("ss") || "{}").theme || ""; } catch (e) {}
+      document.documentElement.dataset.theme = theme === "light" || theme === "dark"
+        ? theme
+        : (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    })();
+  </script>
+  <link rel="stylesheet" href="styles.css">
+  <title>ShikshaSetu · शिक्षासेतु</title>
+</head>
+<body>
+  <div id="app">
+    <header>
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21z"/><path d="M4 5.5v13A2.5 2.5 0 0 1 6.5 16H20M8 7h8M8 10h7"/></svg></span>
+        <div><h1>ShikshaSetu · शिक्षासेतु</h1><small id="sub"></small></div>
+      </div>
+      <div class="header-actions">
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to dark mode" title="Switch theme"></button>
+        <button class="net" id="net" type="button"></button>
+      </div>
+    </header>
+    <main id="main"></main>
+    <nav id="nav" aria-label="Main navigation"></nav>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -65,9 +65,32 @@ function showRes(){
 // ---------- Core ----------
 var $=function(i){return document.getElementById(i)},contentLang=function(){return S.lang=="en"?"en":"hi"},t=function(k){return T[S.lang]&&T[S.lang][k]||T.hi[k]},L=function(){return S.lang!="en"};
 var esc=function(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return"&#"+c.charCodeAt(0)+";"})};
-var S={lang:"hi",tab:"home",lessonLang:"hi",profile:null,packs:{},cat:[],gen:[],open:null,quizAnswers:{},quizResults:{},shareOpen:false,shareSelected:{},ans:null,rec:false,q:"",queue:0,busy:{},fl:0};
-try{var x=JSON.parse(localStorage.getItem("ss")||"{}");if(x.lang)S.lang=x.lang;if(x.profile&&x.profile.name&&x.profile.path&&x.profile.district)S.profile=x.profile}catch(e){}
-function save(){try{localStorage.setItem("ss",JSON.stringify({lang:S.lang,profile:S.profile}))}catch(e){}}
+var S={lang:"hi",tab:"home",lessonLang:"hi",theme:window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light",profile:null,packs:{},cat:[],gen:[],open:null,quizAnswers:{},quizResults:{},shareOpen:false,shareSelected:{},ans:null,rec:false,q:"",queue:0,busy:{},fl:0};
+try{var x=JSON.parse(localStorage.getItem("ss")||"{}");if(x.lang)S.lang=x.lang;if(x.theme==="light"||x.theme==="dark")S.theme=x.theme;if(x.profile&&x.profile.name&&x.profile.path&&x.profile.district)S.profile=x.profile}catch(e){}
+function applyTheme(){document.documentElement.dataset.theme=S.theme;var m=document.querySelector('meta[name="theme-color"]');if(m)m.content=S.theme==="dark"?"#11111a":"#6246d8"}
+applyTheme();
+function save(){try{localStorage.setItem("ss",JSON.stringify({lang:S.lang,profile:S.profile,theme:S.theme}))}catch(e){}}
+var I={
+ home:'<path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-6v-7h-4v7H4a1 1 0 0 1-1-1z"/>',
+ book:'<path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v17H6.5A2.5 2.5 0 0 0 4 21z"/><path d="M4 4.5v14A2.5 2.5 0 0 1 6.5 16H20M8 6h8M8 9h7"/>',
+ mic:'<rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10v2a7 7 0 0 0 14 0v-2M12 19v3m-4 0h8"/>',
+ cap:'<path d="m2 10 10-6 10 6-10 6z"/><path d="M6 12.5v5c3.5 2.5 8.5 2.5 12 0v-5M22 10v6"/>',
+ moon:'<path d="M20.8 13A8.5 8.5 0 0 1 11 3.2 8.5 8.5 0 1 0 20.8 13z"/>',
+ sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/>',
+ wifi:'<path d="M5 12.5a11 11 0 0 1 14 0M8.5 16a5.5 5.5 0 0 1 7 0M12 20h.01"/>',
+ plane:'<path d="m3 11 18-8-8 18-2-8z"/><path d="m11 13 5-5"/>',
+ user:'<circle cx="12" cy="8" r="4"/><path d="M5 21a7 7 0 0 1 14 0"/>',
+ download:'<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5m-5 5V3"/>',
+ check:'<path d="m5 12 4 4L19 6"/>',
+ share:'<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.7 10.7 6.6-4.4m-6.6 9 6.6 4.2"/>',
+ upload:'<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m17 8-5-5-5 5m5-5v12"/>',
+ volume:'<path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7m3-10a9 9 0 0 1 0 13"/>',
+ stop:'<rect x="5" y="5" width="14" height="14" rx="2"/>',
+ send:'<path d="m22 2-7 20-4-9-9-4z"/><path d="M22 2 11 13"/>',
+ clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+ edit:'<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4z"/>'
+};
+function icon(name){return '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">'+I[name]+'</svg>'}
 
 // ---------- IndexedDB (packs + sync queue) ----------
 var DB;
@@ -152,15 +175,16 @@ function login(){
  '<button class="btn o login-submit" type="submit">'+(Lh?"लॉगिन करें":"Log in")+'</button></form>'+(p.name?'<button class="btn g login-cancel" id="cancel-profile">'+(Lh?"वापस जाएँ":"Cancel")+'</button>':"")+'</div>'}
 function home(){
  var pathName={school:L()?"स्कूल":"School",college:L()?"कॉलेज":"College",prep:L()?"परीक्षा की तैयारी":"Exam preparation"};
- var h='<div class="card student-card"><div><h2 data-user-content>'+esc(S.profile.name)+'</h2><p class="mut">'+esc(pathName[S.profile.path]||S.profile.path)+' · <span data-user-content>'+esc(S.profile.district)+'</span></p></div><button class="btn g" id="edit-profile">'+(L()?"जानकारी बदलें":"Edit details")+'</button></div>';
+ var h='<section class="welcome"><div class="welcome-copy"><span class="eyebrow">'+(L()?"आपकी पढ़ाई, आपकी रफ़्तार":"LEARN AT YOUR OWN PACE")+'</span><h2>'+(L()?"नमस्ते, "+esc(S.profile.name)+"!":"Welcome back, "+esc(S.profile.name)+"!")+'</h2><p>'+(L()?"आज कुछ नया सीखें — आपके पाठ ऑफ़लाइन भी साथ रहेंगे।":"Pick up where you left off. Your lessons are ready, even offline.")+'</p></div><img src="learning-illustration.svg" alt=""></section>';
+ h+='<div class="card student-card"><div class="student-avatar">'+icon("user")+'</div><div class="student-info"><h2 data-user-content>'+esc(S.profile.name)+'</h2><p class="mut">'+esc(pathName[S.profile.path]||S.profile.path)+' · <span data-user-content>'+esc(S.profile.district)+'</span></p></div><button class="btn g" id="edit-profile">'+icon("edit")+(L()?"जानकारी बदलें":"Edit details")+'</button></div>';
  h+='<div class="card"><h2>'+(L()?"भाषा चुनें":"Choose language")+'</h2><div class="row"><button class="chip '+(S.lang==="hi"?"on":"")+'" data-l="hi">हिन्दी</button><button class="chip '+(S.lang==="en"?"on":"")+'" data-l="en">English</button><button class="chip '+(S.lang==="bagheli"?"on":"")+'" data-l="bagheli">बघेली</button><button class="chip '+(S.lang==="bundeli"?"on":"")+'" data-l="bundeli">बुंदेली</button><button class="chip" disabled>भीली · गोंडी (soon)</button></div></div>';
  var list=S.cat.slice();Object.keys(S.packs).forEach(function(i){if(!list.some(function(c){return c.id==i}))list.push(S.packs[i])});
  h+='<div class="card"><h2>'+(L()?"लेसन पैक":"Lesson packs")+'</h2><p class="mut">'+(L()?"एक बार CSC या पंचायत WiFi पर डाउनलोड करें, फिर बिना नेट पढ़ें।":"Download once at a CSC or panchayat WiFi, then learn without net.")+'</p>';
  list.forEach(function(p){var s=S.packs[p.id],b=S.busy[p.id];
-  h+='<div class="row sp" style="padding:10px 0;border-top:1px solid var(--bd)"><div><b>'+esc(p.ic)+' '+esc(p[contentLang()])+'</b><br><span class="mut">'+esc(p.kb||1)+' KB</span> '+(s?'<span class="tag ok">✓ saved</span>':'')+'</div>'+
-  (s?'<button class="btn g" data-o="'+esc(p.id)+'">'+(L()?"खोलें":"Open")+'</button>':'<button class="btn o" data-d="'+esc(p.id)+'"'+(navigator.onLine&&!b?'':' disabled')+'>'+(b?'⏳':'⬇ '+(L()?"डाउनलोड":"Download"))+'</button>')+'</div>'});
+  h+='<div class="row sp" style="padding:10px 0;border-top:1px solid var(--border)"><div><b>'+esc(p.ic)+' '+esc(p[contentLang()])+'</b><br><span class="mut">'+esc(p.kb||1)+' KB</span> '+(s?'<span class="tag ok">'+icon("check")+' saved</span>':'')+'</div>'+
+  (s?'<button class="btn g" data-o="'+esc(p.id)+'">'+(L()?"खोलें":"Open")+'</button>':'<button class="btn o" data-d="'+esc(p.id)+'"'+(navigator.onLine&&!b?'':' disabled')+'>'+(b?'…':icon("download")+(L()?"डाउनलोड":"Download"))+'</button>')+'</div>'});
  h+=(navigator.onLine?'':'<p class="mut">'+(L()?"डाउनलोड के लिए ऑनलाइन होना ज़रूरी है।":"You need to be online to download.")+'</p>')+'</div>';
- h+='<div class="card"><h2>🤝 Shiksha Sathi</h2><p class="mut">'+(L()?"डाउनलोड किए पैक WhatsApp/Nearby Share से साथियों को भेजें। साथी \"इम्पोर्ट\" दबाएँ।":"Send saved packs to peers via WhatsApp / Nearby Share. They tap Import.")+'</p><div class="row"><button class="btn g" id="share">📤 '+(L()?"पैक शेयर करें":"Share packs")+'</button><button class="btn g" id="imp">📥 '+(L()?"इम्पोर्ट":"Import")+'</button></div><input type="file" id="file" class="hide"></div>';
+ h+='<div class="card"><h2>Shiksha Sathi</h2><p class="mut">'+(L()?"डाउनलोड किए पैक WhatsApp/Nearby Share से साथियों को भेजें। साथी \"इम्पोर्ट\" दबाएँ।":"Send saved packs to peers via WhatsApp / Nearby Share. They tap Import.")+'</p><div class="row"><button class="btn g" id="share">'+icon("share")+(L()?"पैक शेयर करें":"Share packs")+'</button><button class="btn g" id="imp">'+icon("upload")+(L()?"इम्पोर्ट":"Import")+'</button></div><input type="file" id="file" class="hide"></div>';
  return h}
 function lesson(){var ids=Object.keys(S.packs);
  if(!ids.length)return '<div class="card"><p>'+(L()?"पहले होम से कोई पैक डाउनलोड करें।":"Download a pack from Home first.")+'</p></div>';
@@ -168,15 +192,15 @@ function lesson(){var ids=Object.keys(S.packs);
  var lessonLang=p.t.bundeli&&S.lang==="bundeli"?"bundeli":p.t.bagheli&&S.lang==="bagheli"?"bagheli":S.lessonLang||contentLang();
  var h='<div class="row" style="margin-bottom:10px">'+ids.map(function(i){return '<button class="chip '+(i==S.open?"on":"")+'" data-o="'+esc(i)+'">'+esc(S.packs[i].ic)+'</button>'}).join("")+'</div>';
  if((p.t.bagheli||p.t.bundeli)&&S.lang!=="bagheli"&&S.lang!=="bundeli")h+='<div class="row lesson-languages"><button class="chip '+(lessonLang==="hi"?"on":"")+'" data-lesson-lang="hi">हिन्दी</button>'+(p.t.bagheli?'<button class="chip '+(lessonLang==="bagheli"?"on":"")+'" data-lesson-lang="bagheli">बघेली</button>':"")+(p.t.bundeli?'<button class="chip '+(lessonLang==="bundeli"?"on":"")+'" data-lesson-lang="bundeli">बुंदेली</button>':"")+'</div>';
- h+='<div class="card"><h2>'+esc(p[contentLang()])+'</h2><p style="font-size:17px;line-height:1.7">'+esc(p.t[lessonLang])+'</p><div class="row"><button class="btn" id="say">🔊 '+(L()?"सुनें":"Listen")+'</button><button class="btn g" id="stop">⏹</button></div></div>';
+ h+='<div class="card"><h2>'+esc(p[contentLang()])+'</h2><p style="font-size:17px;line-height:1.7">'+esc(p.t[lessonLang])+'</p><div class="row"><button class="btn" id="say">'+icon("volume")+(L()?"सुनें":"Listen")+'</button><button class="btn g" id="stop" aria-label="'+(L()?"रोकें":"Stop")+'">'+icon("stop")+'</button></div></div>';
  if(p.quiz&&p.quiz.length){var answers=S.quizAnswers[p.id]||{},results=S.quizResults[p.id]||{};
   h+='<div class="card"><h2>'+(L()?"अपनी समझ जाँचें":"Check your learning")+'</h2>'+p.quiz.map(function(q,i){var result=results[i];
    return '<div class="quiz-item"><p><b>'+(i+1)+'. '+esc(q.q[contentLang()])+'</b></p>'+q.o.map(function(o,j){return '<label class="quiz-option"><input type="radio" name="quiz-'+i+'" value="'+j+'"'+(answers[i]===j?" checked":"")+'>'+esc(o[contentLang()])+'</label>'}).join("")+'<button class="btn g quiz-check" data-check="'+i+'">'+(L()?"जवाब जाँचें":"Check answer")+'</button>'+(result===undefined?"":'<p class="quiz-result '+(result?"correct":"incorrect")+'">'+(result?(L()?"सही जवाब!":"Correct!"):(L()?"फिर कोशिश करें।":"Try again."))+'</p>')+'</div>'}).join("")+'</div>'}
  return h}
 function bolo(){
- var h='<div class="card" style="text-align:center"><h2>🎤 '+(L()?"अपना सवाल बोलिए":"Ask by voice")+'</h2><button class="mic '+(S.rec?"rec":"")+'" id="mic">🎙</button><p class="mut">'+(S.rec?(L()?"सुन रहा हूँ…":"Listening…"):(L()?"माइक दबाएँ या नीचे लिखें":"Tap mic or type below"))+'</p><div class="row" style="margin-top:8px"><input id="q" placeholder="'+(L()?"जैसे: प्रतिशत क्या है?":"e.g. what is percent?")+'" value="'+esc(S.q)+'"><button class="btn" id="ask">→</button></div><button class="btn o" id="ment" style="margin-top:10px;width:100%">👩‍🏫 '+(L()?"मेंटर से पूछें":"Ask a mentor")+'</button></div>';
- if(S.queue)h+='<p class="mut">🕒 '+S.queue+(L()?" सवाल सिंक के इंतज़ार में":" doubt(s) waiting to sync")+'</p>';
- if(S.ans)h+='<div class="card"><b>❓ '+esc(S.ans.q)+'</b><div class="ans">'+esc(S.ans.a)+'</div><p class="mut">'+esc(S.ans.src)+'</p><button class="btn g" id="sayans">🔊 '+(L()?"सुनें":"Listen")+'</button></div>';
+ var h='<div class="card" style="text-align:center"><h2>'+icon("mic")+' '+(L()?"अपना सवाल बोलिए":"Ask by voice")+'</h2><button class="mic '+(S.rec?"rec":"")+'" id="mic" aria-label="'+(L()?"सवाल बोलें":"Ask by voice")+'">'+icon("mic")+'</button><p class="mut">'+(S.rec?(L()?"सुन रहा हूँ…":"Listening…"):(L()?"माइक दबाएँ या नीचे लिखें":"Tap mic or type below"))+'</p><div class="row" style="margin-top:8px"><input id="q" placeholder="'+(L()?"जैसे: प्रतिशत क्या है?":"e.g. what is percent?")+'" value="'+esc(S.q)+'"><button class="btn" id="ask" aria-label="'+(L()?"भेजें":"Send")+'">'+icon("send")+'</button></div><button class="btn o" id="ment" style="margin-top:10px;width:100%">'+icon("user")+(L()?"मेंटर से पूछें":"Ask a mentor")+'</button></div>';
+ if(S.queue)h+='<p class="mut">'+icon("clock")+' '+S.queue+(L()?" सवाल सिंक के इंतज़ार में":" doubt(s) waiting to sync")+'</p>';
+ if(S.ans)h+='<div class="card"><b>'+esc(S.ans.q)+'</b><div class="ans">'+esc(S.ans.a)+'</div><p class="mut">'+esc(S.ans.src)+'</p><button class="btn g" id="sayans">'+icon("volume")+(L()?"सुनें":"Listen")+'</button></div>';
  return h}
 
 // ---------- Speech ----------
@@ -190,14 +214,17 @@ function listen(){var R=window.SpeechRecognition||window.webkitSpeechRecognition
 // ---------- Render & events ----------
 function render(){
  $("sub").textContent=t("sub");var on=navigator.onLine,n=$("net");n.textContent=(on?"● ":"✈ ")+(on?t("online"):t("offline"));n.className="net"+(on?"":" off");
+ var themeButton=$("theme-toggle"),nextTheme=S.theme==="dark"?"light":"dark";
+ themeButton.innerHTML=icon(S.theme==="dark"?"sun":"moon");themeButton.setAttribute("aria-label",L()?(nextTheme==="dark"?"डार्क मोड चालू करें":"लाइट मोड चालू करें"):(nextTheme==="dark"?"Switch to dark mode":"Switch to light mode"));themeButton.title=themeButton.getAttribute("aria-label");
  if(!S.profile)S.tab="login";
  $("app").className=S.tab==="login"?"login":"";
  if(S.tab==="login"){$("nav").innerHTML="";$("main").innerHTML=login();translateBagheli($("main"));bind();return}
- var tabs=[["home","🏠"],["lesson","📖"],["bolo","🎤"],["sch","🎓"]];
- $("nav").innerHTML=tabs.map(function(a){return '<button class="'+(S.tab==a[0]?"on":"")+'" data-t="'+a[0]+'"><b>'+a[1]+'</b>'+t(a[0])+'</button>'}).join("");
+ var tabs=[["home","home"],["lesson","book"],["bolo","mic"],["sch","cap"]];
+ $("nav").innerHTML=tabs.map(function(a){return '<button class="'+(S.tab==a[0]?"on":"")+'" data-t="'+a[0]+'"'+(S.tab==a[0]?' aria-current="page"':'')+'><b>'+icon(a[1])+'</b>'+t(a[0])+'</button>'}).join("");
  $("main").innerHTML={home:home,lesson:lesson,bolo:bolo,sch:sch}[S.tab]()+shareDialog();translateBagheli($("nav"));translateBagheli($("main"));bind()}
 function bind(){
  var all=function(s,f){Array.prototype.forEach.call(document.querySelectorAll(s),f)};
+ if($("theme-toggle"))$("theme-toggle").onclick=function(){S.theme=S.theme==="dark"?"light":"dark";applyTheme();save();render()};
  if(S.shareOpen){
   if($("share-close"))$("share-close").onclick=function(){closeShare();render()};
   if($("share-dialog"))$("share-dialog").onclick=function(e){if(e.target===this){closeShare();render()}};
