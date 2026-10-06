@@ -59,6 +59,76 @@ async function ai(question, lang) {
   }
 }
 
+async function learningRoadmap(details, lang) {
+  if (!KEY) return null;
+  try {
+    const response = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent`,
+      {
+        method: "POST",
+        headers: { "content-type": "application/json", "x-goog-api-key": KEY },
+        signal: AbortSignal.timeout(25000),
+        body: JSON.stringify({
+          systemInstruction: {
+            parts: [{
+              text: `You are ShikshaSetu, a careful study and scholarship guide for students in Madhya Pradesh, India. Reply in ${lang === "hi" ? "simple Hindi" : "simple English"}. Give 3-5 numbered, concise and practical next steps. Tailor the study advice to the supplied stage, goal, and progress. For scholarship requests, provide a checklist and suggest checking the National Scholarship Portal and the official MP scholarship portal; never claim eligibility, current deadlines, or guaranteed awards. Do not ask for personal contact details. Use plain text, no markdown headings.`,
+            }],
+          },
+          contents: [{
+            role: "user",
+            parts: [{ text: JSON.stringify(details) }],
+          }],
+          generationConfig: { maxOutputTokens: 900 },
+        }),
+      },
+    );
+    const result = await response.json();
+    if (!response.ok) {
+      console.error("Gemini roadmap error:", result.error?.message);
+      return null;
+    }
+    const text = result.candidates?.[0]?.content?.parts
+      ?.map((part) => part.text || "")
+      .join("")
+      .trim();
+    if (!text) console.error("Gemini returned an empty learning roadmap");
+    return text || null;
+  } catch (error) {
+    console.error("Gemini roadmap unreachable:", error.message);
+    return null;
+  }
+}
+
+app.post("/api/learning-roadmap", asyncRoute(async (req, res) => {
+  const body = req.body || {};
+  const kind = body.kind === "scholarship" ? "scholarship" : body.kind === "study" ? "study" : null;
+  if (!kind) return res.status(400).json({ error: "valid roadmap kind required" });
+  const list = (value) => Array.isArray(value)
+    ? value.filter((item) => typeof item === "string").slice(0, 20).map((item) => item.slice(0, 80))
+    : [];
+  const details = {
+    request: kind,
+    student: {
+      stage: typeof body.stage === "string" ? body.stage.slice(0, 30) : "",
+      className: typeof body.className === "string" ? body.className.slice(0, 40) : "",
+      goal: typeof body.goal === "string" ? body.goal.slice(0, 20) : "",
+      district: typeof body.district === "string" ? body.district.slice(0, 40) : "",
+    },
+    progress: {
+      completed: list(body.completed),
+      started: list(body.started),
+      remaining: list(body.remaining),
+      quizAccuracy: Number.isInteger(body.quizAccuracy) && body.quizAccuracy >= 0 && body.quizAccuracy <= 100
+        ? body.quizAccuracy
+        : null,
+    },
+  };
+  if (!KEY) return res.status(503).json({ error: "ai_not_configured" });
+  const plan = await learningRoadmap(details, body.lang === "hi" ? "hi" : "en");
+  if (!plan) return res.status(502).json({ error: "ai_unavailable" });
+  res.json({ plan });
+}));
+
 // Student asks. If AI can't answer, the doubt waits for a mentor (answer: null).
 app.post("/api/doubts", asyncRoute(async (req, res) => {
   const question = String(req.body?.question || "")

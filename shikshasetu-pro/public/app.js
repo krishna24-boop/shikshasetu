@@ -1,7 +1,7 @@
-var T={hi:{home:"होम",lesson:"पाठ",bolo:"बोलो",sch:"छात्रवृत्ति",online:"ऑनलाइन",offline:"ऑफ़लाइन",sub:"बिना इंटरनेट भी सीखें"},
-en:{home:"Home",lesson:"Lesson",bolo:"Bolo",sch:"Schemes",online:"Online",offline:"Offline",sub:"Learn even without internet"},
-bagheli:{home:"होम",lesson:"पाठ",bolo:"बोला",sch:"पढ़ाई के मदद",online:"ऑनलाइन",offline:"ऑफलाइन",sub:"बिना इंटरनेट के भी सीखत रहा"},
-bundeli:{home:"घर",lesson:"पढ़ाई",bolo:"बोलो",sch:"पढ़ाई की मदद",online:"ऑनलाइन",offline:"बिना नेट",sub:"बिना नेट के भी पढ़ो"}};
+var T={hi:{home:"होम",lesson:"पाठ",progress:"मेरी प्रगति",bolo:"बोलो",sch:"छात्रवृत्ति",profile:"प्रोफ़ाइल",online:"ऑनलाइन",offline:"ऑफ़लाइन",sub:"बिना इंटरनेट भी सीखें"},
+en:{home:"Home",lesson:"Lesson",progress:"Progress",bolo:"Bolo",sch:"Schemes",profile:"Profile",online:"Online",offline:"Offline",sub:"Learn even without internet"},
+bagheli:{home:"होम",lesson:"पाठ",progress:"पढ़ाई के हाल",bolo:"बोला",sch:"पढ़ाई के मदद",profile:"परिचय",online:"ऑनलाइन",offline:"ऑफलाइन",sub:"बिना इंटरनेट के भी सीखत रहा"},
+bundeli:{home:"घर",lesson:"पढ़ाई",progress:"मेरी प्रगति",bolo:"बोलो",sch:"पढ़ाई की मदद",profile:"परिचय",online:"ऑनलाइन",offline:"बिना नेट",sub:"बिना नेट के भी पढ़ो"}};
 var BAG={
 "बोलो":"बोला","बिना इंटरनेट भी सीखें":"बिना इंटरनेट के भी सीखत रहा","2. सालाना पारिवारिक आय":"2. साल भर के घर-परिवार की कमाई","4. ज़िला":"4. जिला","5. लक्ष्य":"5. का बने के सोचत हौ?","योजनाएँ खोजें":"योजना खोजा","आपके लिए योजनाएँ":"तोहरे खातिर योजना","कोई मेल नहीं मिला।":"कउनो योजना नाहीं मिली।","भाषा चुनें":"भाखा चुना","एक बार CSC या पंचायत WiFi पर डाउनलोड करें, फिर बिना नेट पढ़ें।":"एक दफा CSC या पंचायत WiFi मा डाउनलोड करा, फेर बिना नेट पढ़ा।","खोलें":"खोला","डाउनलोड के लिए ऑनलाइन होना ज़रूरी है।":"डाउनलोड खातिर ऑनलाइन रहना जरूरी है।","पैक शेयर करें":"पैक भेजा","पहले होम से कोई पैक डाउनलोड करें।":"पहिले होम से कउनो पैक डाउनलोड करा।","डाउनलोड किए पैक WhatsApp/Nearby Share से साथियों को भेजें।":"डाउनलोड भे पैक WhatsApp/Nearby Share से संगी-साथियन का भेजा।","सुनें":"सुना","अपना सवाल बोलिए":"अपन सवाल बतावा","सुन रहा हूँ…":"सुनत हईं…","माइक दबाएँ या नीचे लिखें":"माइक दबावा या नीचे लिखा","जैसे: प्रतिशत क्या है?":"जइसे: प्रतिशत का होथे?","मेंटर से पूछें":"मेंटर से पूछा","सवाल सिंक के इंतज़ार में":"सवाल सिंक होय के इंतजार मा","मेंटर का जवाब":"मेंटर के जवाब",
 "छात्र लॉगिन":"छात्र लॉगिन","अपनी जानकारी बदलें":"अपन जानकारी बदला","छात्र का नाम":"छात्र के नाव","आप अभी क्या कर रहे हैं?":"अभी का करत हौ?","एक विकल्प चुनें":"एक चीज चुना","ज़िला चुनें":"जिला चुना","अपना नाम लिखें":"अपन नाव लिखा","लॉगिन करें":"लॉगिन करा","वापस जाएँ":"लौटि जा","जानकारी बदलें":"जानकारी बदला","स्कूल":"स्कूल","कॉलेज":"कॉलेज","परीक्षा की तैयारी":"परीक्षा की तैयारी","भाषा चुनें":"भाखा चुना","लेसन पैक":"पढ़ाई के पैक","पहले होम से कोई पैक डाउनलोड करें।":"पहिले होम से कउनो पैक डाउनलोड करा।","डाउनलोड नहीं हुआ। इंटरनेट जाँचें।":"डाउनलोड नाहीं भवा। इंटरनेट जाँच करा।","पहले कोई पैक डाउनलोड करें।":"पहिले कउनो पैक डाउनलोड करा।","पैक शेयर नहीं हो पाया।":"पैक नाहीं भेजा गवा।","पैक चुनें":"पैक चुना","भेजने के लिए डाउनलोड किए पैक चुनें।":"भेजे खातिर डाउनलोड भे पैक चुना।","डाउनलोड किया गया":"डाउनलोड भवा","सभी चुनें":"सबै चुना","हटाएँ":"हटावा","चुने गए":"चुने गे","चुने हुए पैक भेजें":"चुने भे पैक भेजा","अपनी समझ जाँचें":"अपन समझ जाँचा","जवाब जाँचें":"जवाब जाँचा","सही जवाब!":"सही जवाब!","फिर कोशिश करें।":"फेर कोसिस करा।","5 आसान सवाल":"5 आसान सवाल","1. श्रेणी":"1. जात","3. पढ़ाई":"3. पढ़ाई","योजनाएँ खोजें":"योजना खोजा","* Demo list. Verify eligibility on official portals before applying.":"* ई बस नमूना सूची है। आवेदन से पहिले official portal पर पात्रता जाँच ल्या।","करियर का रास्ता":"काम-काज के रस्ता","कोई मेल नहीं मिला।":"कउनो योजना नाहीं मिली।","माइक को इंटरनेट चाहिए। नीचे लिखें, या कीबोर्ड का 🎤 बटन इस्तेमाल करें।":"माइक खातिर इंटरनेट चाही। नीचे लिखा, या कीबोर्ड के 🎤 बटन दबावा।","माइक नहीं चला":"माइक नाहीं चला","नीचे लिखकर पूछें।":"नीचे लिख के पूछा।","सवाल मेंटर को भेज दिया गया। जवाब यहीं आएगा (कुछ घंटे लग सकते हैं)।":"सवाल मेंटर क लगे भेज दिहिस। जवाब इहीं मिली (कुछ घंटा लग सकत हैं)।","सवाल सिंक के इंतज़ार में":"सवाल सिंक होय के इंतजार मा","कक्षा 11–12":"कक्षा 11–12","भीली · गोंडी (soon)":"भीली · गोंडी (जल्दी)",
@@ -65,11 +65,11 @@ function showRes(){
 // ---------- Core ----------
 var $=function(i){return document.getElementById(i)},contentLang=function(){return S.lang=="en"?"en":"hi"},t=function(k){return T[S.lang]&&T[S.lang][k]||T.hi[k]},L=function(){return S.lang!="en"};
 var esc=function(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return"&#"+c.charCodeAt(0)+";"})};
-var S={lang:"hi",tab:"home",loginMode:"student",role:"student",subject:"other",mentorPin:"",mentorSubject:"math",mentorQuestions:[],mentorReplies:{},mentorMessage:"",mentorLoginMessage:"",mentorBusy:false,mentorLoading:false,mentorSending:null,splashTimer:null,lessonLang:"hi",theme:window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light",profile:null,packs:{},cat:[],gen:[],open:null,quizAnswers:{},quizResults:{},shareOpen:false,shareSelected:{},ans:null,rec:false,q:"",queue:0,busy:{},fl:0};
-try{var x=JSON.parse(localStorage.getItem("ss")||"{}");if(x.lang)S.lang=x.lang;if(x.theme==="light"||x.theme==="dark")S.theme=x.theme;if(x.profile&&x.profile.name&&x.profile.path&&x.profile.district)S.profile=x.profile}catch(e){}
+var S={lang:"hi",tab:"home",loginMode:"student",role:"student",subject:"other",mentorPin:"",mentorSubject:"math",mentorQuestions:[],mentorReplies:{},mentorMessage:"",mentorLoginMessage:"",mentorBusy:false,mentorLoading:false,mentorSending:null,splashTimer:null,lessonLang:"hi",theme:window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light",profile:null,loggedIn:false,progress:{opened:[],completed:[],quiz:{}},roadmap:null,roadmapError:"",roadmapLoading:false,packs:{},cat:[],gen:[],open:null,quizAnswers:{},quizResults:{},shareOpen:false,shareSelected:{},ans:null,rec:false,q:"",queue:0,busy:{},fl:0};
+try{var x=JSON.parse(localStorage.getItem("ss")||"{}");if(x.lang)S.lang=x.lang;if(x.theme==="light"||x.theme==="dark")S.theme=x.theme;if(x.profile){S.profile=x.profile;S.loggedIn=x.loggedIn!==false}if(x.progress&&typeof x.progress==="object"){S.progress.opened=Array.isArray(x.progress.opened)?x.progress.opened:[];S.progress.completed=Array.isArray(x.progress.completed)?x.progress.completed:[];S.progress.quiz=x.progress.quiz&&typeof x.progress.quiz==="object"?x.progress.quiz:{}}}catch(e){}
 function applyTheme(){document.documentElement.dataset.theme=S.theme;var m=document.querySelector('meta[name="theme-color"]');if(m)m.content=S.theme==="dark"?"#11111a":"#6246d8"}
 applyTheme();
-function save(){try{localStorage.setItem("ss",JSON.stringify({lang:S.lang,profile:S.profile,theme:S.theme}))}catch(e){}}
+function save(){try{localStorage.setItem("ss",JSON.stringify({lang:S.lang,profile:S.profile,loggedIn:S.loggedIn,progress:S.progress,theme:S.theme}))}catch(e){}}
 var I={
  home:'<path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-6v-7h-4v7H4a1 1 0 0 1-1-1z"/>',
  book:'<path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v17H6.5A2.5 2.5 0 0 0 4 21z"/><path d="M4 4.5v14A2.5 2.5 0 0 1 6.5 16H20M8 6h8M8 9h7"/>',
@@ -84,6 +84,9 @@ var I={
  check:'<path d="m5 12 4 4L19 6"/>',
  share:'<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.7 10.7 6.6-4.4m-6.6 9 6.6 4.2"/>',
  upload:'<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m17 8-5-5-5 5m5-5v12"/>',
+ chart:'<path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-5 5"/>',
+ spark:'<path d="m12 3 1.9 5.8L20 11l-6.1 2.2L12 19l-1.9-5.8L4 11l6.1-2.2z"/><path d="m19 14 1 3 3 1-3 1-1 3-1-3-3-1 3-1z"/>',
+ logout:'<path d="M10 17l5-5-5-5"/><path d="M15 12H3"/><path d="M12 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-6"/>',
  volume:'<path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7m3-10a9 9 0 0 1 0 13"/>',
  stop:'<rect x="5" y="5" width="14" height="14" rx="2"/>',
  send:'<path d="m22 2-7 20-4-9-9-4z"/><path d="M22 2 11 13"/>',
@@ -184,11 +187,15 @@ function login(){
   h+='<div class="login-role-intro"><span class="login-role-icon">'+icon("cap")+'</span><div><h3>'+(Lh?"मेंटर लॉगिन":"Mentor sign in")+'</h3><p class="mut">'+(Lh?"अपना विषय और मेंटर PIN डालकर उसी विषय के सवाल देखें।":"Choose your subject and enter the mentor PIN to view matching questions.")+'</p></div></div>';
   h+='<form id="mentor-login-form"><label for="mentor-subject">'+(Lh?"आपका विषय":"Your subject")+'</label><select id="mentor-subject" required>'+SUBJECTS.map(function(s){return '<option value="'+s[0]+'"'+(S.mentorSubject===s[0]?" selected":"")+'>'+esc(Lh?s[1]:s[2])+'</option>'}).join("")+'</select><label for="mentor-pin">Mentor PIN</label><input id="mentor-pin" type="password" autocomplete="current-password" required placeholder="'+(Lh?"Render का MENTOR_PIN डालें":"Enter the MENTOR_PIN set in Render")+'"><button class="btn login-submit" type="submit"'+(S.mentorBusy?" disabled":"")+'>'+(S.mentorBusy?"… ":icon("cap"))+(Lh?" सवाल देखें":"Open subject inbox")+'</button></form><p id="mentor-login-message" class="mentor-login-message'+(S.mentorLoginMessage?" visible":"")+'" role="status" aria-live="polite">'+esc(S.mentorLoginMessage)+'</p>';
  }else{
-  h+='<p class="mut">'+(Lh?"बस ये जानकारी भरें। इंटरनेट के बिना भी लॉगिन होगा।":"Just fill in these details. Login works offline too.")+'</p><form id="student-form">'+
-  '<label for="student-name">'+(Lh?"छात्र का नाम":"Student name")+'</label><input id="student-name" name="name" autocomplete="name" maxlength="60" required value="'+esc(p.name||"")+'" placeholder="'+(Lh?"अपना नाम लिखें":"Enter your name")+'">'+
-  '<label for="student-path">'+(Lh?"आप अभी क्या कर रहे हैं?":"What are you currently doing?")+'</label><select id="student-path" name="path" required><option value="">'+(Lh?"एक विकल्प चुनें":"Choose an option")+'</option>'+paths.map(function(o){return '<option value="'+o[0]+'"'+(p.path===o[0]?" selected":"")+'>'+o[1]+'</option>'}).join("")+'</select>'+
-  '<label for="student-district">'+(Lh?"ज़िला चुनें":"Select district")+'</label><select id="student-district" name="district" required><option value="">'+(Lh?"अपना ज़िला चुनें":"Choose your district")+'</option>'+DISTRICTS.map(function(d){return '<option value="'+d+'"'+(p.district===d?" selected":"")+'>'+d+'</option>'}).join("")+'</select>'+
-  '<button class="btn o login-submit" type="submit">'+(Lh?"लॉगिन करें":"Log in")+'</button></form>'+(p.name?'<button class="btn g login-cancel" id="cancel-profile">'+(Lh?"वापस जाएँ":"Cancel")+'</button>':"")
+  h+='<p class="mut">'+(Lh?"सीधे लॉगिन करें। वैकल्पिक जानकारी से सुझाव बेहतर होंगे। यह local profile है—जानकारी इसी browser में रहेगी।":"Continue now. Optional details personalize your suggestions. This local profile stays in this browser.")+'</p><form id="student-form">'+
+  '<label for="student-name">'+(Lh?"नाम (वैकल्पिक)":"Name (optional)")+'</label><input id="student-name" name="name" autocomplete="name" maxlength="60" value="'+esc(p.name||"")+'" placeholder="'+(Lh?"अपना नाम लिखें":"Enter your name")+'">'+
+  '<details class="profile-extra"><summary>'+(Lh?"वैकल्पिक व्यक्तिगत जानकारी":"Optional personal details")+'</summary>'+
+  '<label for="student-class">'+(Lh?"कक्षा / पढ़ाई का स्तर":"Class / study level")+'</label><input id="student-class" name="className" maxlength="40" value="'+esc(p.className||"")+'" placeholder="'+(Lh?"जैसे: कक्षा 12, कॉलेज":"e.g. Class 12, college")+'">'+
+  '<label for="student-institution">'+(Lh?"स्कूल / कॉलेज (वैकल्पिक)":"School / college (optional)")+'</label><input id="student-institution" name="institution" maxlength="80" value="'+esc(p.institution||"")+'" placeholder="'+(Lh?"संस्थान का नाम":"Institution name")+'">'+
+  '<label for="student-path">'+(Lh?"आप अभी क्या कर रहे हैं?":"What are you currently doing?")+'</label><select id="student-path" name="path"><option value="">'+(Lh?"चुनना वैकल्पिक है":"Choose (optional)")+'</option>'+paths.map(function(o){return '<option value="'+o[0]+'"'+(p.path===o[0]?" selected":"")+'>'+o[1]+'</option>'}).join("")+'</select>'+
+  '<label for="student-district">'+(Lh?"ज़िला (वैकल्पिक)":"District (optional)")+'</label><select id="student-district" name="district"><option value="">'+(Lh?"बाद में चुनें":"Choose later")+'</option>'+DISTRICTS.map(function(d){return '<option value="'+d+'"'+(p.district===d?" selected":"")+'>'+d+'</option>'}).join("")+'</select>'+
+  '<label for="student-goal">'+(Lh?"पढ़ाई / करियर का लक्ष्य (वैकल्पिक)":"Study / career goal (optional)")+'</label><select id="student-goal" name="goal"><option value="">'+(Lh?"अपना लक्ष्य चुनें":"Choose a goal")+'</option><option value="gov"'+(p.goal==="gov"?" selected":"")+'>'+(Lh?"सरकारी नौकरी":"Government job")+'</option><option value="teach"'+(p.goal==="teach"?" selected":"")+'>'+(Lh?"शिक्षक":"Teaching")+'</option><option value="tech"'+(p.goal==="tech"?" selected":"")+'>'+(Lh?"तकनीक / कौशल":"Technology / skills")+'</option><option value="biz"'+(p.goal==="biz"?" selected":"")+'>'+(Lh?"व्यवसाय":"Business")+'</option></select></details>'+
+  '<button class="btn o login-submit" type="submit">'+(Lh?"लॉगिन करें":"Log in")+'</button></form>'+(S.profile&&S.loggedIn?'<button class="btn g login-cancel" id="cancel-profile">'+(Lh?"वापस जाएँ":"Cancel")+'</button>':"")
  }
  return h+'</div></section>'}
 function mentorError(status,error){
@@ -199,6 +206,17 @@ function mentorError(status,error){
 }
 function mentorRequest(url,options){
  return fetch(url,options).then(function(r){return r.json().catch(function(){return{}}).then(function(j){if(!r.ok){var e=new Error(mentorError(r.status,j.error));e.status=r.status;throw e}return j})})
+}
+function createRoadmap(kind){
+ if(S.roadmapLoading)return;
+ if(!navigator.onLine){S.roadmapError=L()?"AI सुझाव के लिए इंटरनेट चाहिए। बाकी progress offline देख सकते हैं।":"AI suggestions need an internet connection. Your progress is still available offline.";render();return}
+ S.roadmapLoading=true;S.roadmapError="";render();
+ var p=S.profile||{},titles=function(ids){return ids.map(function(id){var pack=S.cat.filter(function(item){return item.id===id})[0];return pack?pack[contentLang()]:id}).slice(0,20)};
+ fetch("/api/learning-roadmap",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({kind:kind,lang:contentLang(),stage:p.path||"",className:p.className||"",goal:p.goal||"",district:p.district||"",completed:titles(S.progress.completed),started:titles(S.progress.opened),remaining:titles(S.cat.map(function(item){return item.id}).filter(function(id){return S.progress.completed.indexOf(id)===-1})),quizAccuracy:(function(){var values=[];Object.keys(S.progress.quiz).forEach(function(id){Object.keys(S.progress.quiz[id]||{}).forEach(function(i){values.push(S.progress.quiz[id][i])})});return values.length?Math.round(values.filter(Boolean).length*100/values.length):null})()})})
+  .then(function(r){return r.json().catch(function(){return{}}).then(function(j){if(!r.ok){var message=r.status===503?(L()?"AI सुविधा अभी सेट नहीं है। GEMINI_API_KEY जाँचें।":"AI is not configured yet. Check GEMINI_API_KEY."):r.status===502?(L()?"AI से सुझाव नहीं मिल पाए। थोड़ी देर बाद फिर कोशिश करें।":"The AI could not create suggestions. Please try again shortly."):L()?"सुझाव लोड नहीं हुए ("+r.status+")।":"Could not load suggestions ("+r.status+").";throw new Error(message)}if(typeof j.plan!=="string"||!j.plan.trim())throw new Error(L()?"AI ने खाली सुझाव भेजे। फिर कोशिश करें।":"The AI returned an empty plan. Please try again.");return j})})
+  .then(function(j){S.roadmap={kind:kind,plan:j.plan.trim().slice(0,3000)}})
+  .catch(function(e){S.roadmapError=e.message|| (L()?"AI सुझाव नहीं मिल पाए।":"Could not get AI suggestions.")})
+  .then(function(){S.roadmapLoading=false;render()})
 }
 function mentor(){
  var subject=subjectName(S.mentorSubject),h='<section class="welcome"><div class="welcome-copy"><span class="eyebrow">SHIKSHASETU · MENTOR INBOX</span><h2>'+(L()?"नमस्ते, मेंटर!":"Welcome, mentor!")+'</h2><p>'+(L()?"आपको "+esc(subject)+" के सवाल दिख रहे हैं। जवाब भेजें और विद्यार्थियों की मदद करें।":"Questions for "+esc(subject)+" are ready. Share a helpful answer with each student.")+'</p></div><img src="learning-illustration.svg" alt=""></section>';
@@ -213,10 +231,11 @@ function mentor(){
  return h}
 function home(){
  var pathName={school:L()?"स्कूल":"School",college:L()?"कॉलेज":"College",prep:L()?"परीक्षा की तैयारी":"Exam preparation"};
- var h='<section class="welcome"><div class="welcome-copy"><span class="eyebrow">'+(L()?"आपकी पढ़ाई, आपकी रफ़्तार":"LEARN AT YOUR OWN PACE")+'</span><h2>'+(L()?"नमस्ते, "+esc(S.profile.name)+"!":"Welcome back, "+esc(S.profile.name)+"!")+'</h2><p>'+(L()?"आज कुछ नया सीखें — आपके पाठ ऑफ़लाइन भी साथ रहेंगे।":"Pick up where you left off. Your lessons are ready, even offline.")+'</p></div><img src="learning-illustration.svg" alt=""></section>';
- h+='<div class="card student-card"><div class="student-avatar">'+icon("user")+'</div><div class="student-info"><h2 data-user-content>'+esc(S.profile.name)+'</h2><p class="mut">'+esc(pathName[S.profile.path]||S.profile.path)+' · <span data-user-content>'+esc(S.profile.district)+'</span></p></div><button class="btn g" id="edit-profile">'+icon("edit")+(L()?"जानकारी बदलें":"Edit details")+'</button></div>';
+ var name=S.profile.name||(L()?"विद्यार्थी":"Student"),details=[pathName[S.profile.path],S.profile.className,S.profile.district].filter(Boolean).join(" · ");
+ var h='<section class="welcome"><div class="welcome-copy"><span class="eyebrow">'+(L()?"आपकी पढ़ाई, आपकी रफ़्तार":"LEARN AT YOUR OWN PACE")+'</span><h2>'+(L()?"नमस्ते, "+esc(name)+"!":"Welcome back, "+esc(name)+"!")+'</h2><p>'+(L()?"आज कुछ नया सीखें — आपके पाठ ऑफ़लाइन भी साथ रहेंगे।":"Pick up where you left off. Your lessons are ready, even offline.")+'</p></div><img src="learning-illustration.svg" alt=""></section>';
+ h+='<div class="card student-card"><div class="student-avatar">'+icon("user")+'</div><div class="student-info"><h2 data-user-content>'+esc(name)+'</h2><p class="mut">'+esc(details|| (L()?"अपनी पढ़ाई जारी रखें":"Keep learning at your own pace"))+'</p></div><button class="btn g" data-t="profile">'+icon("user")+(L()?"प्रोफ़ाइल":"Profile")+'</button></div>';
  h+='<div class="card"><h2>'+(L()?"भाषा चुनें":"Choose language")+'</h2><div class="row"><button class="chip '+(S.lang==="hi"?"on":"")+'" data-l="hi">हिन्दी</button><button class="chip '+(S.lang==="en"?"on":"")+'" data-l="en">English</button><button class="chip '+(S.lang==="bagheli"?"on":"")+'" data-l="bagheli">बघेली</button><button class="chip '+(S.lang==="bundeli"?"on":"")+'" data-l="bundeli">बुंदेली</button><button class="chip" disabled>भीली · गोंडी (soon)</button></div></div>';
- var list=S.cat.slice();Object.keys(S.packs).forEach(function(i){if(!list.some(function(c){return c.id==i}))list.push(S.packs[i])});
+ var list=packCatalog();
  h+='<div class="card"><h2>'+(L()?"लेसन पैक":"Lesson packs")+'</h2><p class="mut">'+(L()?"एक बार CSC या पंचायत WiFi पर डाउनलोड करें, फिर बिना नेट पढ़ें।":"Download once at a CSC or panchayat WiFi, then learn without net.")+'</p>';
  list.forEach(function(p){var s=S.packs[p.id],b=S.busy[p.id];
   h+='<div class="row sp" style="padding:10px 0;border-top:1px solid var(--border)"><div><b>'+esc(p.ic)+' '+esc(p[contentLang()])+'</b><br><span class="mut">'+esc(p.kb||1)+' KB</span> '+(s?'<span class="tag ok">'+icon("check")+' saved</span>':'')+'</div>'+
@@ -224,14 +243,37 @@ function home(){
  h+=(navigator.onLine?'':'<p class="mut">'+(L()?"डाउनलोड के लिए ऑनलाइन होना ज़रूरी है।":"You need to be online to download.")+'</p>')+'</div>';
  h+='<div class="card"><h2>Shiksha Sathi</h2><p class="mut">'+(L()?"डाउनलोड किए पैक WhatsApp/Nearby Share से साथियों को भेजें। साथी \"इम्पोर्ट\" दबाएँ।":"Send saved packs to peers via WhatsApp / Nearby Share. They tap Import.")+'</p><div class="row"><button class="btn g" id="share">'+icon("share")+(L()?"पैक शेयर करें":"Share packs")+'</button><button class="btn g" id="imp">'+icon("upload")+(L()?"इम्पोर्ट":"Import")+'</button></div><input type="file" id="file" class="hide"></div>';
  return h}
+function packCatalog(){var list=(S.cat||[]).slice();Object.keys(S.packs).forEach(function(id){if(!list.some(function(item){return item.id===id}))list.push(S.packs[id])});return list}
+function progress(){
+ var allPacks=packCatalog(),total=allPacks.length,opened=S.progress.opened.filter(function(id){return allPacks.some(function(pack){return pack.id===id})}).length,completed=S.progress.completed.filter(function(id){return allPacks.some(function(pack){return pack.id===id})}).length,remaining=Math.max(0,total-opened),percent=total?Math.round(completed*100/total):0;
+ var quizTotals=0,quizCorrect=0;
+ Object.keys(S.progress.quiz).forEach(function(id){var a=S.progress.quiz[id]||{};Object.keys(a).forEach(function(i){quizTotals++;if(a[i])quizCorrect++})});
+ var accuracy=quizTotals?Math.round(quizCorrect*100/quizTotals):0;
+ var h='<section class="welcome progress-welcome"><div class="welcome-copy"><span class="eyebrow">'+(L()?"आपकी सीखने की यात्रा":"YOUR LEARNING JOURNEY")+'</span><h2>'+(L()?"हर छोटा कदम मायने रखता है!":"Every small step counts!")+'</h2><p>'+(L()?"सीखे हुए पाठ, बाकी पाठ और quiz का score यहाँ देखें।":"See lessons started, what is left, and your quiz scores.")+'</p></div><img src="learning-illustration.svg" alt=""></section>';
+ h+='<section class="progress-summary"><article class="card progress-ring-card"><div class="progress-ring" style="--progress:'+percent+'%"><span><b>'+percent+'%</b><small>'+(L()?"पूरा":"complete")+'</small></span></div><div><h2>'+(L()?"कुल प्रगति":"Overall progress")+'</h2><p class="mut">'+completed+' / '+total+' '+(L()?"पाठ पूरे":"lessons completed")+'</p></div></article><div class="progress-stats"><article class="card progress-stat"><span class="progress-stat-icon">'+icon("book")+'</span><b>'+opened+'</b><small>'+(L()?"शुरू किए":"started")+'</small></article><article class="card progress-stat"><span class="progress-stat-icon remaining">'+icon("clock")+'</span><b>'+remaining+'</b><small>'+(L()?"बाकी पाठ":"to explore")+'</small></article><article class="card progress-stat"><span class="progress-stat-icon score">'+icon("check")+'</span><b>'+accuracy+'%</b><small>'+(L()?"quiz सही":"quiz accuracy")+'</small></article></div></section>';
+ h+='<section class="card progress-list"><div class="row sp"><div><h2>'+(L()?"आपने क्या पढ़ा?":"Your learning map")+'</h2><p class="mut">'+(L()?"पूरे और बाकी पाठों की सूची":"Completed, started, and remaining lessons")+'</p></div><button class="btn g" data-t="home">'+icon("book")+(L()?"पाठ देखें":"Explore lessons")+'</button></div>';
+ if(!total)h+='<p class="mut">'+(L()?"पाठों की सूची लोड हो रही है…":"Loading lesson packs…")+'</p>';
+ h+=allPacks.map(function(p){var done=S.progress.completed.indexOf(p.id)!==-1,started=S.progress.opened.indexOf(p.id)!==-1,marks=S.progress.quiz[p.id]||{},n=Object.keys(marks).length,correct=Object.keys(marks).filter(function(i){return marks[i]}).length;
+  return '<div class="learning-row"><span class="learning-icon">'+esc(p.ic||"📘")+'</span><div class="learning-copy"><b>'+esc(p[contentLang()]||p.id)+'</b><small>'+(!started?(L()?"अभी शुरू नहीं":"Not started"):done?(L()?"पूरा हुआ":"Completed"):n?(L()?"Quiz "+correct+"/"+n+" सही":"Quiz "+correct+"/"+n+" correct"):(L()?"शुरू किया":"In progress"))+'</small></div><span class="tag '+(done?"ok":"")+'">'+(done?(L()?"पूरा":"Done"):started?(L()?"जारी":"Ongoing"):(L()?"बाकी":"To do"))+'</span></div>'}).join("")+'</section>';
+ h+='<section class="card ai-roadmap-card"><div class="roadmap-heading"><span class="roadmap-spark">'+icon("spark")+'</span><div><span class="eyebrow">'+(L()?"AI से व्यक्तिगत सुझाव":"PERSONALIZED WITH AI")+'</span><h2>'+(L()?"अब आगे क्या पढ़ें?":"What should you learn next?")+'</h2></div></div><p class="mut">'+(L()?"अपनी प्रगति के आधार पर पढ़ाई का अगला कदम और छात्रवृत्ति जाँचने का roadmap पाएँ।":"Get next study steps and a scholarship-check roadmap based on your progress.")+'</p><div class="row roadmap-actions"><button class="btn" data-roadmap="study"'+(S.roadmapLoading?" disabled":"")+'>'+icon("spark")+(S.roadmapLoading?(L()?"सुझाव बन रहे हैं…":"Creating suggestions…"):(L()?"पढ़ाई का plan बनाएँ":"Build my study plan"))+'</button><button class="btn o" data-roadmap="scholarship"'+(S.roadmapLoading?" disabled":"")+'>'+icon("cap")+(L()?"छात्रवृत्ति roadmap":"Scholarship roadmap")+'</button></div>';
+ if(S.roadmapError)h+='<p class="roadmap-error" role="status">'+esc(S.roadmapError)+'</p>';
+ if(S.roadmap)h+='<div class="roadmap-result" role="status"><h3>'+(S.roadmap.kind==="scholarship"?(L()?"छात्रवृत्ति जाँचने के कदम":"Scholarship checklist"):(L()?"आपकी पढ़ाई का अगला plan":"Your next study steps"))+'</h3><p>'+esc(S.roadmap.plan).replace(/\n/g,"<br>")+'</p><small>'+(L()?"योग्यता व तारीखें आधिकारिक पोर्टल पर ज़रूर जाँचें।":"Verify current eligibility and deadlines on official portals.")+'</small></div>';
+ h+='<p class="device-note">'+(L()?"आपकी profile और progress इसी device में save होती है। AI सुझाव माँगने पर पढ़ाई का स्तर, ज़िला, लक्ष्य और progress AI सेवा को भेजे जाते हैं—नाम या स्कूल नहीं।":"Your profile and progress stay on this device. Requesting an AI plan sends your study stage, district, goal, and progress to the AI service—not your name or school.")+'</p></section>';
+ return h}
+function profilePage(){
+ var p=S.profile||{},name=p.name||(L()?"विद्यार्थी":"Student"),path={school:L()?"स्कूल":"School",college:L()?"कॉलेज":"College",prep:L()?"परीक्षा की तैयारी":"Exam preparation"};
+ var rows=[[L()?"नाम":"Name",p.name],[L()?"कक्षा / स्तर":"Class / level",p.className],[L()?"स्कूल / कॉलेज":"School / college",p.institution],[L()?"अभी क्या कर रहे हैं":"Study stage",path[p.path]],[L()?"ज़िला":"District",p.district],[L()?"पढ़ाई / करियर का लक्ष्य":"Study / career goal",p.goal?({gov:L()?"सरकारी नौकरी":"Government job",teach:L()?"शिक्षक":"Teaching",tech:L()?"तकनीक / कौशल":"Technology / skills",biz:L()?"व्यवसाय":"Business"}[p.goal]||""):""]];
+ var h='<section class="welcome"><div class="welcome-copy"><span class="eyebrow">'+(L()?"आपका ShikshaSetu":"YOUR SHIKSHASETU")+'</span><h2>'+(L()?"नमस्ते, "+esc(name)+"!":"Hello, "+esc(name)+"!")+'</h2><p>'+(L()?"अपनी वैकल्पिक जानकारी देखें या बदलें।":"View or update your optional details.")+'</p></div><img src="learning-illustration.svg" alt=""></section><section class="card profile-details"><div class="row sp"><div><h2>'+(L()?"विद्यार्थी की प्रोफ़ाइल":"Student profile")+'</h2><p class="mut">'+(L()?"ये जानकारी सिर्फ़ इस device पर रहती है।":"Your profile is stored on this device only.")+'</p></div><button class="btn g" id="edit-profile">'+icon("edit")+(L()?"बदलें":"Edit")+'</button></div>'+rows.filter(function(r){return r[1]}).map(function(r){return '<div class="profile-row"><span>'+esc(r[0])+'</span><b>'+esc(r[1])+'</b></div>'}).join("")+(!rows.some(function(r){return r[1]})?'<p class="mut">'+(L()?"अभी कोई वैकल्पिक जानकारी नहीं जोड़ी।":"No optional details added yet.")+'</p>':"")+'</section><section class="card profile-progress"><div><h2>'+(L()?"आपकी पढ़ाई की progress":"Your learning progress")+'</h2><p class="mut">'+S.progress.opened.length+' '+(L()?"पाठ शुरू किए":"lessons started")+" · "+S.progress.completed.length+" "+(L()?"पूरे":"completed")+'</p></div><button class="btn g" data-t="progress">'+icon("chart")+(L()?"प्रगति dashboard":"Progress dashboard")+'</button></section><section class="card profile-logout"><div><h2>'+(L()?"इस device से लॉग आउट":"Log out on this device")+'</h2><p class="mut">'+(L()?"अगली बार login करने पर आपकी local progress उपलब्ध रहेगी।":"Your local progress will still be here the next time you log in.")+'</p></div><button class="btn logout-btn" id="student-logout">'+icon("logout")+(L()?"लॉग आउट":"Log out")+'</button></section>';
+ return h}
 function lesson(){var ids=Object.keys(S.packs);
  if(!ids.length)return '<div class="card"><p>'+(L()?"पहले होम से कोई पैक डाउनलोड करें।":"Download a pack from Home first.")+'</p></div>';
  if(!S.packs[S.open])S.open=ids[0];var p=S.packs[S.open];
+ if(S.progress.opened.indexOf(p.id)===-1){S.progress.opened.push(p.id);S.roadmap=null;save()}
  var lessonLang=p.t.bundeli&&S.lang==="bundeli"?"bundeli":p.t.bagheli&&S.lang==="bagheli"?"bagheli":S.lessonLang||contentLang();
  var h='<div class="row" style="margin-bottom:10px">'+ids.map(function(i){return '<button class="chip '+(i==S.open?"on":"")+'" data-o="'+esc(i)+'">'+esc(S.packs[i].ic)+'</button>'}).join("")+'</div>';
  if((p.t.bagheli||p.t.bundeli)&&S.lang!=="bagheli"&&S.lang!=="bundeli")h+='<div class="row lesson-languages"><button class="chip '+(lessonLang==="hi"?"on":"")+'" data-lesson-lang="hi">हिन्दी</button>'+(p.t.bagheli?'<button class="chip '+(lessonLang==="bagheli"?"on":"")+'" data-lesson-lang="bagheli">बघेली</button>':"")+(p.t.bundeli?'<button class="chip '+(lessonLang==="bundeli"?"on":"")+'" data-lesson-lang="bundeli">बुंदेली</button>':"")+'</div>';
  h+='<div class="card"><h2>'+esc(p[contentLang()])+'</h2><p style="font-size:17px;line-height:1.7">'+esc(p.t[lessonLang])+'</p><div class="row"><button class="btn" id="say">'+icon("volume")+(L()?"सुनें":"Listen")+'</button><button class="btn g" id="stop" aria-label="'+(L()?"रोकें":"Stop")+'">'+icon("stop")+'</button></div></div>';
- if(p.quiz&&p.quiz.length){var answers=S.quizAnswers[p.id]||{},results=S.quizResults[p.id]||{};
+ if(p.quiz&&p.quiz.length){var answers=S.quizAnswers[p.id]||{},results=S.quizResults[p.id]||S.progress.quiz[p.id]||{};
   h+='<div class="card"><h2>'+(L()?"अपनी समझ जाँचें":"Check your learning")+'</h2>'+p.quiz.map(function(q,i){var result=results[i];
    return '<div class="quiz-item"><p><b>'+(i+1)+'. '+esc(q.q[contentLang()])+'</b></p>'+q.o.map(function(o,j){return '<label class="quiz-option"><input type="radio" name="quiz-'+i+'" value="'+j+'"'+(answers[i]===j?" checked":"")+'>'+esc(o[contentLang()])+'</label>'}).join("")+'<button class="btn g quiz-check" data-check="'+i+'">'+(L()?"जवाब जाँचें":"Check answer")+'</button>'+(result===undefined?"":'<p class="quiz-result '+(result?"correct":"incorrect")+'">'+(result?(L()?"सही जवाब!":"Correct!"):(L()?"फिर कोशिश करें।":"Try again."))+'</p>')+'</div>'}).join("")+'</div>'}
  return h}
@@ -255,14 +297,14 @@ function render(){
  $("sub").textContent=t("sub");var on=navigator.onLine,n=$("net");n.textContent=(on?"● ":"✈ ")+(on?t("online"):t("offline"));n.className="net"+(on?"":" off");
  var themeButton=$("theme-toggle"),nextTheme=S.theme==="dark"?"light":"dark";
  themeButton.innerHTML=icon(S.theme==="dark"?"sun":"moon");themeButton.setAttribute("aria-label",L()?(nextTheme==="dark"?"डार्क मोड चालू करें":"लाइट मोड चालू करें"):(nextTheme==="dark"?"Switch to dark mode":"Switch to light mode"));themeButton.title=themeButton.getAttribute("aria-label");
- if(!S.profile&&S.role!=="mentor")S.tab="login";
+ if((!S.profile||!S.loggedIn)&&S.role!=="mentor")S.tab="login";
  $("app").className=S.tab==="login"?"login":S.role==="mentor"?"mentor-mode":"";
  $("mentor-entry").classList.toggle("hide",S.tab==="login"||S.role==="mentor");
  if(S.tab==="login"){$("nav").innerHTML="";$("main").innerHTML=login();translateBagheli($("main"));bind();return}
  if(S.role==="mentor"){$("nav").innerHTML="";$("main").innerHTML=mentor();bind();return}
- var tabs=[["home","home"],["lesson","book"],["bolo","mic"],["sch","cap"]];
+ var tabs=[["home","home"],["lesson","book"],["progress","chart"],["bolo","mic"],["sch","cap"],["profile","user"]];
  $("nav").innerHTML=tabs.map(function(a){return '<button class="'+(S.tab==a[0]?"on":"")+'" data-t="'+a[0]+'"'+(S.tab==a[0]?' aria-current="page"':'')+'><b>'+icon(a[1])+'</b>'+t(a[0])+'</button>'}).join("");
- $("main").innerHTML={home:home,lesson:lesson,bolo:bolo,sch:sch}[S.tab]()+shareDialog();translateBagheli($("nav"));translateBagheli($("main"));bind()}
+ $("main").innerHTML={home:home,lesson:lesson,progress:progress,bolo:bolo,sch:sch,profile:profilePage}[S.tab]()+shareDialog();translateBagheli($("nav"));translateBagheli($("main"));bind()}
 function bind(){
  var all=function(s,f){Array.prototype.forEach.call(document.querySelectorAll(s),f)};
  if($("theme-toggle"))$("theme-toggle").onclick=function(){S.theme=S.theme==="dark"?"light":"dark";applyTheme();save();render()};
@@ -297,10 +339,11 @@ function bind(){
   if($("share-close"))$("share-close").focus()
  }
  if($("student-form"))$("student-form").onsubmit=function(e){e.preventDefault();var name=$("student-name").value.trim(),path=$("student-path").value,district=$("student-district").value;
-  if(!name||!path||!district)return;
-  S.profile={name:name,path:path,district:district};S.role="student";S.tab="home";save();render()};
- if($("edit-profile"))$("edit-profile").onclick=function(){S.tab="login";render()};
- if($("cancel-profile"))$("cancel-profile").onclick=function(){S.tab="home";render()};
+  S.profile={name:name,className:$("student-class").value.trim(),institution:$("student-institution").value.trim(),path:path,district:district,goal:$("student-goal").value};
+  S.loggedIn=true;S.role="student";S.tab="home";S.roadmap=null;S.roadmapError="";save();render()};
+ if($("edit-profile"))$("edit-profile").onclick=function(){S.loginMode="student";S.tab="login";render()};
+ if($("cancel-profile"))$("cancel-profile").onclick=function(){S.tab="profile";render()};
+ if($("student-logout"))$("student-logout").onclick=function(){S.loggedIn=false;S.role="student";S.loginMode="student";S.tab="login";save();render()};
  all("[data-t]",function(b){b.onclick=function(){S.tab=b.dataset.t;render()}});
  all("[data-l]",function(b){b.onclick=function(){S.lang=b.dataset.l;S.lessonLang=S.lang==="bagheli"?"bagheli":"hi";save();render()}});
  all("[data-o]",function(b){b.onclick=function(){S.open=b.dataset.o;S.tab="lesson";render()}});
@@ -315,7 +358,11 @@ function bind(){
   if(!choice)return;
   if(!S.quizAnswers[p.id])S.quizAnswers[p.id]={};
   if(!S.quizResults[p.id])S.quizResults[p.id]={};
-  var selected=Number(choice.value);S.quizAnswers[p.id][i]=selected;S.quizResults[p.id][i]=selected===p.quiz[i].a;render()}});
+  var selected=Number(choice.value),correct=selected===p.quiz[i].a;S.quizAnswers[p.id][i]=selected;S.quizResults[p.id][i]=correct;
+  if(!S.progress.quiz[p.id])S.progress.quiz[p.id]={};S.progress.quiz[p.id][i]=correct;S.roadmap=null;S.roadmapError="";
+  if(p.quiz.every(function(q,index){return S.progress.quiz[p.id][index]===true})){if(S.progress.completed.indexOf(p.id)===-1)S.progress.completed.push(p.id)}
+  else S.progress.completed=S.progress.completed.filter(function(id){return id!==p.id});
+  save();render()}});
  if($("mic"))$("mic").onclick=listen;
  if($("ask-subject"))$("ask-subject").onchange=function(){S.subject=this.value};
  if($("ask"))$("ask").onclick=function(){var v=$("q").value.trim();if(v)answer(v,$("ask-subject").value)};
@@ -323,7 +370,9 @@ function bind(){
  if($("q"))$("q").onkeydown=function(e){if(e.key=="Enter")$("ask").click()};
  if($("sayans"))$("sayans").onclick=function(){speak(S.ans.a)};
  ["cat","inc","course","goal"].forEach(function(k){if($(k))$(k).onchange=function(){SA[k]=this.value}});
- if($("match"))$("match").onclick=showRes}
+ if($("match"))$("match").onclick=showRes;
+ all("[data-roadmap]",function(b){b.onclick=function(){createRoadmap(b.dataset.roadmap)}});
+}
 function updateShareSelection(){
  var boxes=document.querySelectorAll("[data-share-pack]"),count=0;
  Array.prototype.forEach.call(boxes,function(c){S.shareSelected[c.dataset.sharePack]=c.checked;if(c.checked)count++});

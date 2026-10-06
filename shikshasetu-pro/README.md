@@ -22,6 +22,13 @@ The app includes CUET and college guidance, digital safety, spoken English, scho
 The interface can be switched between Hindi, English, Bagheli, and Bundeli. Bagheli and Bundeli lesson text is currently available in the digital safety pack.
 The supplied ShikshaSetu splash screen appears briefly before sign-in; students
 and mentors choose their role on the same login screen.
+Student name, study stage, district, class, institution, and career goal are
+optional. Student profile and lesson/quiz progress are saved in the current
+browser only; this is a local profile, not a server-backed student account.
+The Progress dashboard tracks opened lesson packs and quiz completions. Its
+AI study and scholarship roadmaps require an internet connection and
+`GEMINI_API_KEY`; scholarship eligibility and deadlines must be confirmed on
+official portals.
 
 ## Deploy
 Render/Railway web service: build `npm install`, start `npm start`, env `MONGODB_URI`, `MONGODB_DB` (optional), `GEMINI_API_KEY` (and `MENTOR_PIN`). HTTPS is required for mic + service worker on phones.

@@ -321,6 +321,9 @@ label { display: block; margin: 14px 0 6px; font-size: 13px; font-weight: 700; }
 .mentor-entry:hover { transform: translateY(-1px); }
 .mentor-entry .icon { width: 17px; height: 17px; }
 .login-card { max-width: 540px; }
+.profile-extra { padding: 12px; margin: 14px 0 2px; background: var(--bg); border: 1px solid var(--border); border-radius: 12px; }
+.profile-extra summary { color: var(--primary); font-size: 13px; font-weight: 750; cursor: pointer; }
+.profile-extra[open] summary { margin-bottom: 9px; }
 .login-role-switch { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; padding: 5px; margin: 17px 0; background: var(--bg); border: 1px solid var(--border); border-radius: 14px; }
 .login-role { min-height: 42px; display: flex; align-items: center; justify-content: center; gap: 8px; color: var(--muted); background: transparent; border: 0; border-radius: 10px; font-weight: 700; cursor: pointer; transition: color .18s ease, background-color .18s ease, box-shadow .18s ease; }
 .login-role.on { color: var(--primary); background: var(--surface); box-shadow: 0 2px 8px rgba(37,27,79,.08); }
@@ -413,4 +416,60 @@ header #sub { margin: 0 0 0 10px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .splash-loader i { animation-duration: .01ms !important; }
+}
+.progress-welcome,.progress-summary,.progress-list,.ai-roadmap-card,.profile-details,.profile-progress,.profile-logout { grid-column: 1 / -1; }
+.progress-summary { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 14px; }
+.progress-ring-card { min-height: 190px; display: flex; align-items: center; justify-content: center; gap: 18px; }
+.progress-ring { position: relative; width: 132px; height: 132px; flex: 0 0 132px; display: grid; place-items: center; background: conic-gradient(var(--primary-strong) var(--progress),var(--primary-soft) 0); border-radius: 50%; }
+.progress-ring::before { position: absolute; content: ""; width: 106px; height: 106px; background: var(--surface); border-radius: 50%; }
+.progress-ring span { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; }
+.progress-ring b { color: var(--primary); font-size: 27px; line-height: 1.1; }
+.progress-ring small { color: var(--muted); font-size: 11px; }
+.progress-ring-card h2 { margin-bottom: 5px; }
+.progress-stats { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 10px; }
+.progress-stat { min-height: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 13px 7px; text-align: center; }
+.progress-stat-icon { width: 32px; height: 32px; display: grid; place-items: center; color: var(--primary); background: var(--primary-soft); border-radius: 11px; }
+.progress-stat-icon.remaining { color: var(--accent); background: var(--accent-soft); }
+.progress-stat-icon.score { color: var(--success); background: var(--success-soft); }
+.progress-stat b { margin: 7px 0 1px; font-size: 20px; }
+.progress-stat small { color: var(--muted); font-size: 10px; line-height: 1.35; }
+.progress-list > .row { margin-bottom: 12px; }
+.learning-row { min-height: 63px; display: flex; align-items: center; gap: 11px; padding: 10px 0; border-top: 1px solid var(--border); }
+.learning-icon { width: 38px; height: 38px; flex: 0 0 38px; display: grid; place-items: center; background: var(--primary-soft); border-radius: 12px; font-size: 18px; }
+.learning-copy { min-width: 0; flex: 1; display: flex; flex-direction: column; gap: 4px; }
+.learning-copy b { font-size: 13px; }
+.learning-copy small { color: var(--muted); font-size: 11px; }
+.learning-row .tag { flex: 0 0 auto; }
+.ai-roadmap-card { overflow: hidden; background: linear-gradient(135deg,var(--surface),var(--primary-soft)); }
+.roadmap-heading { display: flex; align-items: center; gap: 12px; }
+.roadmap-spark { width: 43px; height: 43px; flex: 0 0 43px; display: grid; place-items: center; color: var(--primary); background: var(--surface); border-radius: 14px; box-shadow: var(--shadow); }
+.roadmap-heading .eyebrow { margin: 0 0 3px; color: var(--primary); font-size: 9px; }
+.roadmap-heading h2 { margin: 0; }
+.roadmap-actions { margin: 15px 0 4px; }
+.roadmap-result { padding: 14px; margin-top: 15px; background: var(--surface); border: 1px solid var(--border); border-radius: 14px; line-height: 1.75; }
+.roadmap-result h3 { margin: 0 0 6px; font-size: 14px; }
+.roadmap-result p { margin: 0 0 8px; white-space: normal; }
+.roadmap-result small,.device-note { color: var(--muted); font-size: 11px; }
+.roadmap-error { padding: 10px 12px; color: var(--accent); background: var(--accent-soft); border-radius: 10px; font-size: 12px; }
+.device-note { margin: 14px 0 0; }
+.profile-details .row,.profile-progress,.profile-logout { align-items: center; }
+.profile-details .row h2,.profile-progress h2,.profile-logout h2 { margin-bottom: 4px; }
+.profile-row { display: flex; justify-content: space-between; gap: 14px; padding: 12px 0; border-top: 1px solid var(--border); font-size: 13px; }
+.profile-row span { color: var(--muted); }
+.profile-row b { text-align: right; overflow-wrap: anywhere; }
+.profile-logout { display: flex; justify-content: space-between; gap: 16px; border-color: color-mix(in srgb,var(--accent) 25%,var(--border)); }
+.logout-btn { flex: 0 0 auto; color: #fff; background: #ba4050; }
+@media (max-width: 650px) {
+  nav { padding-right: 3px; padding-left: 3px; }
+  nav button { gap: 2px; font-size: 9px; }
+  nav button .icon { width: 18px; height: 18px; }
+  .progress-summary { grid-template-columns: 1fr; gap: 10px; }
+  .progress-ring-card { min-height: 150px; }
+}
+@media (max-width: 390px) {
+  .progress-ring { width: 112px; height: 112px; flex-basis: 112px; }
+  .progress-ring::before { width: 90px; height: 90px; }
+  .progress-ring-card { gap: 12px; padding: 13px; }
+  .roadmap-actions .btn { flex: 1 1 100%; }
+  .profile-logout { align-items: flex-start; flex-direction: column; }
 }
