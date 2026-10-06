@@ -14,6 +14,7 @@ Offline-first PWA + small Node backend.
 
 ## Lesson packs
 The app includes CUET and college guidance, digital safety, spoken English, scholarship documents, Word and Excel basics, and MP government exam preparation. Download packs while online to use their lessons, quizzes, and FAQs offline.
+The interface can be switched between Hindi, English, and Bagheli. Bagheli lesson text is currently available in the digital safety pack.
 
 ## Deploy
 Render/Railway web service: build `npm install`, start `npm start`, env `GEMINI_API_KEY (and MENTOR_PIN)`. HTTPS is required for mic + service worker on phones.
