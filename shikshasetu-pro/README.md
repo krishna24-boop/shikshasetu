@@ -3,8 +3,13 @@ Offline-first PWA + small Node backend.
 
 ## Run
     npm install
-    cp .env.example .env      # put your GEMINI_API_KEY (and MENTOR_PIN) (Node 20.6+)
+    cp .env.example .env      # set GEMINI_API_KEY, MENTOR_PIN, and MONGODB_URI
     npm start                 # http://localhost:3000
+
+MongoDB Atlas is required for the doubts/mentor API. Set `MONGODB_URI` to
+your Atlas connection string and optionally set `MONGODB_DB` (defaults to
+`shikshasetu`). Keep the real URI in your local `.env` or the hosting
+provider's environment settings; never commit it to Git.
 
 ## Test the offline promise
 1. Open the app online -> Home -> Download a pack (saved in IndexedDB).
@@ -17,8 +22,8 @@ The app includes CUET and college guidance, digital safety, spoken English, scho
 The interface can be switched between Hindi, English, Bagheli, and Bundeli. Bagheli and Bundeli lesson text is currently available in the digital safety pack.
 
 ## Deploy
-Render/Railway web service: build `npm install`, start `npm start`, env `GEMINI_API_KEY (and MENTOR_PIN)`. HTTPS is required for mic + service worker on phones.
+Render/Railway web service: build `npm install`, start `npm start`, env `MONGODB_URI`, `MONGODB_DB` (optional), `GEMINI_API_KEY` (and `MENTOR_PIN`). HTTPS is required for mic + service worker on phones.
 
 ## Layout
-public/ (app.js, sw.js, packs/*.json, faq.json, schemes inside app.js) · server.js (AI + doubts API)
+public/ (app.js, sw.js, packs/*.json, faq.json, schemes inside app.js) · server.js (AI + MongoDB-backed doubts API)
 Mentor page: /mentor.html (enter MENTOR_PIN)
