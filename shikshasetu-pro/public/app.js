@@ -30,7 +30,7 @@ function showRes(){
 // ---------- Core ----------
 var $=function(i){return document.getElementById(i)},t=function(k){return T[S.lang][k]},L=function(){return S.lang=="hi"};
 var esc=function(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return"&#"+c.charCodeAt(0)+";"})};
-var S={lang:"hi",tab:"home",profile:null,packs:{},cat:[],gen:[],open:null,quizAnswers:{},quizResults:{},ans:null,rec:false,q:"",queue:0,busy:{},fl:0};
+var S={lang:"hi",tab:"home",profile:null,packs:{},cat:[],gen:[],open:null,quizAnswers:{},quizResults:{},shareOpen:false,shareSelected:{},ans:null,rec:false,q:"",queue:0,busy:{},fl:0};
 try{var x=JSON.parse(localStorage.getItem("ss")||"{}");if(x.lang)S.lang=x.lang;if(x.profile&&x.profile.name&&x.profile.path&&x.profile.district)S.profile=x.profile}catch(e){}
 function save(){try{localStorage.setItem("ss",JSON.stringify({lang:S.lang,profile:S.profile}))}catch(e){}}
 
@@ -50,11 +50,26 @@ function dl(id){S.busy[id]=1;render();
  .then(function(p){return tx("packs","readwrite",function(s){return s.put(p)}).then(function(){S.packs[id]=p})})
  .catch(function(){alert(L()?"डाउनलोड नहीं हुआ। इंटरनेट जाँचें।":"Download failed. Check your connection.")})
  .then(function(){delete S.busy[id];render()})}
-function share(){var a=Object.keys(S.packs).map(function(i){return S.packs[i]});
+function share(){
+ var a=Object.keys(S.packs).map(function(i){return S.packs[i]});
  if(!a.length)return alert(L()?"पहले कोई पैक डाउनलोड करें।":"Download a pack first.");
+ S.shareSelected={};S.shareOpen=true;render()}
+function selectedShare(){
+ var a=Object.keys(S.shareSelected).filter(function(i){return S.shareSelected[i]&&S.packs[i]}).map(function(i){return S.packs[i]});
+ if(!a.length)return;
  var f=new File([JSON.stringify(a)],"shikshasetu-packs.txt",{type:"text/plain"});
- if(navigator.canShare&&navigator.canShare({files:[f]}))navigator.share({files:[f],title:"ShikshaSetu"}).catch(function(){});
- else{var l=document.createElement("a");l.href=URL.createObjectURL(f);l.download=f.name;l.click()}}
+ if(navigator.canShare&&navigator.canShare({files:[f]})){
+  try{var result=navigator.share({files:[f],title:"ShikshaSetu"});closeShare();render();if(result)result.catch(function(e){if(e.name!=="AbortError")alert(L()?"पैक शेयर नहीं हो पाया।":"Could not share the pack.")})}
+  catch(e){alert(L()?"पैक शेयर नहीं हो पाया।":"Could not share the pack.")}
+ }else{var l=document.createElement("a"),url=URL.createObjectURL(f);l.href=url;l.download=f.name;l.click();setTimeout(function(){URL.revokeObjectURL(url)},1000);closeShare();render()}}
+function closeShare(){S.shareOpen=false;S.shareSelected={}}
+function shareDialog(){
+ if(!S.shareOpen)return "";
+ var Lh=L(),ids=Object.keys(S.packs),count=0;
+ var title=function(id){var p=S.packs[id],c=S.cat.filter(function(x){return x.id===id})[0];return esc(c?c[S.lang]:p[S.lang]||id)};
+ var list=ids.map(function(id){var p=S.packs[id],c=S.cat.filter(function(x){return x.id===id})[0];var checked=!!S.shareSelected[id];if(checked)count++;
+  return '<label class="share-option"><input type="checkbox" data-share-pack="'+esc(id)+'"'+(checked?" checked":"")+'><span>'+esc(p.ic||c&&c.ic||"📘")+' '+title(id)+'</span><small>'+(Lh?"डाउनलोड किया गया":"Downloaded")+'</small></label>'}).join("");
+ return '<div class="share-backdrop" id="share-dialog"><section class="share-dialog" role="dialog" aria-modal="true" aria-labelledby="share-title"><div class="row sp"><h2 id="share-title">'+(Lh?"पैक चुनें":"Select packs")+'</h2><button class="btn g share-close" id="share-close" type="button" aria-label="'+(Lh?"बंद करें":"Close")+'">×</button></div><p class="mut">'+(Lh?"भेजने के लिए डाउनलोड किए पैक चुनें।":"Choose which downloaded packs to send.")+'</p><div class="row share-tools"><button type="button" class="btn g" id="share-all">'+(Lh?"सभी चुनें":"Select all")+'</button><button type="button" class="btn g" id="share-none">'+(Lh?"हटाएँ":"Clear")+'</button></div><div class="share-list">'+list+'</div><div class="row sp share-actions"><span class="mut" id="share-count">'+count+' / '+ids.length+' '+(Lh?"चुने गए":"selected")+'</span><button class="btn o" id="share-send" type="button"'+(count?"":" disabled")+'>'+ (Lh?"चुने हुए पैक भेजें":"Send selected")+'</button></div></section></div>'}
 function imp(f){var rd=new FileReader();rd.onload=function(){try{var a=JSON.parse(rd.result);if(!Array.isArray(a))a=[a];
  var ok=a.filter(function(p){return p&&typeof p.id=="string"&&/^[\w-]+$/.test(p.id)&&typeof p.hi=="string"&&typeof p.en=="string"&&p.t&&typeof p.t.hi=="string"&&typeof p.t.en=="string"});
  Promise.all(ok.map(function(p){return tx("packs","readwrite",function(s){return s.put(p)}).then(function(){S.packs[p.id]=p})}))
@@ -139,9 +154,18 @@ function render(){
  if(S.tab==="login"){$("nav").innerHTML="";$("main").innerHTML=login();bind();return}
  var tabs=[["home","🏠"],["lesson","📖"],["bolo","🎤"],["sch","🎓"]];
  $("nav").innerHTML=tabs.map(function(a){return '<button class="'+(S.tab==a[0]?"on":"")+'" data-t="'+a[0]+'"><b>'+a[1]+'</b>'+t(a[0])+'</button>'}).join("");
- $("main").innerHTML={home:home,lesson:lesson,bolo:bolo,sch:sch}[S.tab]();bind()}
+ $("main").innerHTML={home:home,lesson:lesson,bolo:bolo,sch:sch}[S.tab]()+shareDialog();bind()}
 function bind(){
  var all=function(s,f){Array.prototype.forEach.call(document.querySelectorAll(s),f)};
+ if(S.shareOpen){
+  if($("share-close"))$("share-close").onclick=function(){closeShare();render()};
+  if($("share-dialog"))$("share-dialog").onclick=function(e){if(e.target===this){closeShare();render()}};
+  if($("share-send"))$("share-send").onclick=selectedShare;
+  if($("share-all"))$("share-all").onclick=function(){all("[data-share-pack]",function(c){c.checked=true});updateShareSelection()};
+  if($("share-none"))$("share-none").onclick=function(){all("[data-share-pack]",function(c){c.checked=false});updateShareSelection()};
+  all("[data-share-pack]",function(c){c.onchange=updateShareSelection});
+  if($("share-close"))$("share-close").focus()
+ }
  if($("student-form"))$("student-form").onsubmit=function(e){e.preventDefault();var name=$("student-name").value.trim(),path=$("student-path").value,district=$("student-district").value;
   if(!name||!path||!district)return;
   S.profile={name:name,path:path,district:district};S.tab="home";save();render()};
@@ -168,6 +192,13 @@ function bind(){
  if($("sayans"))$("sayans").onclick=function(){speak(S.ans.a)};
  ["cat","inc","course","goal"].forEach(function(k){if($(k))$(k).onchange=function(){SA[k]=this.value}});
  if($("match"))$("match").onclick=showRes}
+function updateShareSelection(){
+ var boxes=document.querySelectorAll("[data-share-pack]"),count=0;
+ Array.prototype.forEach.call(boxes,function(c){S.shareSelected[c.dataset.sharePack]=c.checked;if(c.checked)count++});
+ if($("share-count"))$("share-count").textContent=count+" / "+boxes.length+" "+(L()?"चुने गए":"selected");
+ if($("share-send"))$("share-send").disabled=count===0
+}
+document.addEventListener("keydown",function(e){if(S.shareOpen&&e.key==="Escape"){closeShare();render()}});
 
 window.addEventListener("online",function(){render();flush();poll()});
 window.addEventListener("offline",render);
