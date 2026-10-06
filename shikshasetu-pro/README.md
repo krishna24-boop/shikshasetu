@@ -12,6 +12,9 @@ Offline-first PWA + small Node backend.
 3. Bolo: ask something not in the FAQ while offline -> "Queued". Go online -> answer syncs from AI.
 4. Home > Share packs (Web Share on Android) -> other phone: Import.
 
+## Lesson packs
+The app includes CUET and college guidance, digital safety, spoken English, scholarship documents, Word and Excel basics, and MP government exam preparation. Download packs while online to use their lessons, quizzes, and FAQs offline.
+
 ## Deploy
 Render/Railway web service: build `npm install`, start `npm start`, env `GEMINI_API_KEY (and MENTOR_PIN)`. HTTPS is required for mic + service worker on phones.
 

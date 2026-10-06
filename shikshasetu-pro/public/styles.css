@@ -29,6 +29,7 @@ nav button b{display:block;font-size:20px}nav button.on{color:var(--p);font-weig
 .mic.rec{background:#c62828;animation:pl 1s infinite}@keyframes pl{50%{transform:scale(1.08)}}
 input,select{width:100%;padding:10px;border-radius:10px;border:1px solid var(--bd);background:var(--card);color:var(--tx);font-size:15px}
 label{display:block;font-weight:700;margin:14px 0 6px}.login-card{width:100%;max-width:460px;margin:10px auto}.login-submit{width:100%;margin-top:18px}.login-cancel{width:100%;margin-top:8px}.student-card{display:flex;align-items:center;justify-content:space-between;gap:12px}.student-card h2{margin-bottom:4px}
+.quiz-item{border-top:1px solid var(--bd);padding:8px 0}.quiz-option{display:flex;align-items:center;gap:9px;padding:5px 0;font-weight:400;cursor:pointer}.quiz-option input{width:auto}.quiz-check{margin:6px 0}.quiz-result{font-weight:700}.quiz-result.correct{color:#1f6b2f}.quiz-result.incorrect{color:#a34219}
 .bar{height:8px;border-radius:9px;background:var(--bd);overflow:hidden;margin-top:8px}.bar i{display:block;height:100%;background:var(--o);width:0;transition:width .15s}
 /* Phone: full-screen mobile layout (default). Laptop/desktop: wide layout with sidebar. */
 @media (min-width:900px){

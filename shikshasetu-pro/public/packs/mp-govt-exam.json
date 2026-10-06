@@ -1,0 +1,57 @@
+{
+  "id": "mp-govt-exam",
+  "ic": "🏛️",
+  "hi": "MP सरकारी परीक्षा की तैयारी",
+  "en": "Preparing for MP government exams",
+  "t": {
+    "hi": "पहले जिस सरकारी परीक्षा की तैयारी करनी है, उसका official syllabus और काम समझें। पढ़ाई को GK, basic maths, reasoning, Hindi और English में बाँटें। MP का नक्शा देखकर जिले, Vindhya और Satpura पहाड़ियाँ तथा Narmada जैसी नदियाँ याद करें। भारत के राज्यों, प्रमुख नदियों और संविधान की बुनियादी बातों को समझें। मध्य प्रदेश का राज्य पशु barasingha और राज्य पक्षी dudhraj हैं। रोज थोड़ा नया पढ़ें, पुराने विषय दोहराएँ और अभ्यास के सवाल हल करें। भर्ती की नई सूचना केवल संबंधित विभाग या परीक्षा बोर्ड की official website और notice से जाँचें।",
+    "en": "First learn the official syllabus and work for the government exam you want to prepare for. Divide your study into GK, basic maths, reasoning, Hindi and English. Use a map of MP to learn its districts, the Vindhya and Satpura ranges, and rivers such as the Narmada. Learn the states of India, major rivers and basic ideas in the Constitution. The hard-ground barasingha is MP's state animal and the dudhraj is its state bird. Study a little new material each day, revise older topics and practise questions. Check recruitment updates only on the official website and notices of the relevant department or exam board."
+  },
+  "quiz": [
+    {
+      "q": {"hi": "पढ़ाई की शुरुआत में किस चीज को समझना चाहिए?", "en": "What should you understand when starting your preparation?"},
+      "o": [
+        {"hi": "केवल दूसरे छात्रों की दिनचर्या", "en": "Only other students' routines"},
+        {"hi": "परीक्षा का official syllabus", "en": "The exam's official syllabus"},
+        {"hi": "बिना तैयारी के अनुमान", "en": "A guess without preparation"}
+      ],
+      "a": 1
+    },
+    {
+      "q": {"hi": "मध्य प्रदेश से होकर कौन सी नदी बहती है?", "en": "Which river flows through Madhya Pradesh?"},
+      "o": [
+        {"hi": "Narmada", "en": "Narmada"},
+        {"hi": "Thames", "en": "Thames"},
+        {"hi": "Nile", "en": "Nile"}
+      ],
+      "a": 0
+    },
+    {
+      "q": {"hi": "भर्ती की नई सूचना कहाँ जाँचनी चाहिए?", "en": "Where should you check a new recruitment notice?"},
+      "o": [
+        {"hi": "पुराने forward message में", "en": "In an old forwarded message"},
+        {"hi": "अनजान व्यक्ति की बात पर", "en": "Based on a stranger's claim"},
+        {"hi": "संबंधित विभाग या परीक्षा बोर्ड की official सूचना में", "en": "In an official notice from the relevant department or exam board"}
+      ],
+      "a": 2
+    }
+  ],
+  "faq": [
+    {
+      "k": ["परीक्षा पढ़ाई", "exam ki taiyari", "government exam study"],
+      "a": {"hi": "पहले परीक्षा का official syllabus देखें और विषयों को छोटे हिस्सों में बाँटें। रोज पढ़ाई, दोहराई और अभ्यास के लिए समय रखें।", "en": "First check the exam's official syllabus and divide subjects into small parts. Set time each day for study, revision and practice."}
+    },
+    {
+      "k": ["नर्मदा नदी", "mp nadiyan", "madhya pradesh rivers"],
+      "a": {"hi": "Narmada मध्य प्रदेश की प्रमुख नदियों में से एक है और पश्चिम की ओर बहती है। नक्शे पर इसका रास्ता देखकर याद करने का अभ्यास करें।", "en": "The Narmada is one of MP's major rivers and flows west. Practise tracing its route on a map."}
+    },
+    {
+      "k": ["संविधान की बात", "samvidhan kya", "constitution basics"],
+      "a": {"hi": "भारत का संविधान देश के शासन के मुख्य नियम बताता है। इसके शुरुआती भाग में भारत को गणराज्य और लोकतंत्र वाला देश बताया गया है।", "en": "The Constitution of India sets out the main rules for governing the country. Its opening describes India as a republic and a democracy."}
+    },
+    {
+      "k": ["भर्ती सूचना", "exam notification", "official vacancy notice"],
+      "a": {"hi": "भर्ती की नई सूचना संबंधित विभाग या परीक्षा बोर्ड की official website पर देखें। तारीख और नियम बदल सकते हैं, इसलिए हर बार ताजा notice पढ़ें।", "en": "Check recruitment notices on the official website of the relevant department or exam board. Dates and rules can change, so read the latest notice each time."}
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "id": "cuet-path",
+  "ic": "🎓",
+  "hi": "CUET और कॉलेज का रास्ता",
+  "en": "CUET and the college path",
+  "t": {
+    "hi": "CUET एक प्रवेश परीक्षा है, जिससे कई भाग लेने वाली यूनिवर्सिटी में दाखिले के लिए आवेदन किया जा सकता है। 12वीं के बाद छात्र आवेदन कर सकते हैं, अगर वे चुने हुए कोर्स और यूनिवर्सिटी की शर्तें पूरी करते हैं। जरूरी विषय, योग्यता और उम्र की शर्तें हर कोर्स में अलग हो सकती हैं। अपनी रुचि, मजबूत विषय और आगे के लक्ष्य देखकर कोर्स चुनें। तैयारी के लिए 12वीं की किताबों से जरूरी विषय पढ़ें और नियमित अभ्यास करें। रोज थोड़ा पढ़ने, दोहराने और सवाल हल करने का समय तय करें। नए नियम और आवेदन की जानकारी NTA की CUET वेबसाइट और यूनिवर्सिटी की आधिकारिक सूचना से जाँचें।",
+    "en": "CUET is an entrance test used by many participating universities for admission applications. After Class 12, students may apply if they meet the requirements of their chosen course and university. Required subjects and other eligibility rules can differ by course. Choose a course by thinking about your interests, strong subjects and future goals. Prepare from your Class 12 books and practise regularly. Set aside time each day to study, revise and solve questions. Check the official NTA CUET website and university notices for the latest rules and application details."
+  },
+  "quiz": [
+    {
+      "q": {"hi": "CUET का उपयोग किस लिए होता है?", "en": "What is CUET used for?"},
+      "o": [
+        {"hi": "यूनिवर्सिटी में दाखिले के लिए आवेदन करने में", "en": "Applying for admission to universities"},
+        {"hi": "बैंक खाता खोलने में", "en": "Opening a bank account"},
+        {"hi": "ड्राइविंग सीखने में", "en": "Learning to drive"}
+      ],
+      "a": 0
+    },
+    {
+      "q": {"hi": "कोर्स चुनते समय क्या देखना चाहिए?", "en": "What should you consider when choosing a course?"},
+      "o": [
+        {"hi": "केवल उसका नाम", "en": "Only its name"},
+        {"hi": "रुचि, मजबूत विषय और आगे के लक्ष्य", "en": "Interests, strong subjects and future goals"},
+        {"hi": "दोस्तों का चुना हुआ कोर्स", "en": "The course chosen by friends"}
+      ],
+      "a": 1
+    },
+    {
+      "q": {"hi": "नई CUET जानकारी कहाँ जाँचनी चाहिए?", "en": "Where should you check for new CUET information?"},
+      "o": [
+        {"hi": "बिना जाँचे सोशल मीडिया संदेश में", "en": "In an unchecked social media message"},
+        {"hi": "केवल पुराने नोट्स में", "en": "Only in old notes"},
+        {"hi": "NTA की CUET वेबसाइट और यूनिवर्सिटी की आधिकारिक सूचना में", "en": "On the official NTA CUET website and university notices"}
+      ],
+      "a": 2
+    }
+  ],
+  "faq": [
+    {
+      "k": ["सीयूईटी परीक्षा", "cuet kya hai", "cuet exam"],
+      "a": {"hi": "CUET यूनिवर्सिटी में दाखिले के लिए होने वाली प्रवेश परीक्षा है। कौन सी यूनिवर्सिटी इसे मानती है, यह आधिकारिक सूचना में देखें।", "en": "CUET is an entrance test for university admission. Check official notices to see which universities use it."}
+    },
+    {
+      "k": ["योग्यता नियम", "cuet kaun de", "cuet eligibility"],
+      "a": {"hi": "12वीं के बाद आवेदन किया जा सकता है, लेकिन योग्यता कोर्स और यूनिवर्सिटी के हिसाब से बदलती है। आवेदन से पहले उनकी मौजूदा शर्तें पढ़ें।", "en": "Students may apply after Class 12, but eligibility differs by course and university. Read their current requirements before applying."}
+    },
+    {
+      "k": ["सीयूईटी तैयारी", "cuet taiyari", "cuet preparation"],
+      "a": {"hi": "अपने चुने हुए कोर्स के जरूरी विषयों को पहले समझें। रोज थोड़ा पढ़ें, दोहराएँ और अभ्यास के सवाल हल करें।", "en": "First learn which subjects your chosen course requires. Study a little each day, revise and practise questions."}
+    },
+    {
+      "k": ["आधिकारिक सूचना", "cuet update", "cuet latest notice"],
+      "a": {"hi": "CUET की नई जानकारी NTA की CUET वेबसाइट और यूनिवर्सिटी की आधिकारिक सूचना में देखें। तारीख और नियम हर साल बदल सकते हैं।", "en": "Check the official NTA CUET website and university notices for updates. Dates and rules can change each year."}
+    }
+  ]
+}

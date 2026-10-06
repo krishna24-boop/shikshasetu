@@ -30,7 +30,7 @@ function showRes(){
 // ---------- Core ----------
 var $=function(i){return document.getElementById(i)},t=function(k){return T[S.lang][k]},L=function(){return S.lang=="hi"};
 var esc=function(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return"&#"+c.charCodeAt(0)+";"})};
-var S={lang:"hi",tab:"home",profile:null,packs:{},cat:[],gen:[],open:null,ans:null,rec:false,q:"",queue:0,busy:{},fl:0};
+var S={lang:"hi",tab:"home",profile:null,packs:{},cat:[],gen:[],open:null,quizAnswers:{},quizResults:{},ans:null,rec:false,q:"",queue:0,busy:{},fl:0};
 try{var x=JSON.parse(localStorage.getItem("ss")||"{}");if(x.lang)S.lang=x.lang;if(x.profile&&x.profile.name&&x.profile.path&&x.profile.district)S.profile=x.profile}catch(e){}
 function save(){try{localStorage.setItem("ss",JSON.stringify({lang:S.lang,profile:S.profile}))}catch(e){}}
 
@@ -39,8 +39,9 @@ var DB;
 function tx(st,mode,fn){return new Promise(function(ok,no){
  function run(){var q,tr=DB.transaction(st,mode);q=fn(tr.objectStore(st));tr.oncomplete=function(){ok(q&&q.result)};tr.onerror=function(){no(tr.error)}}
  if(DB)return run();
- var r=indexedDB.open("ss",1);
- r.onupgradeneeded=function(){r.result.createObjectStore("packs",{keyPath:"id"});r.result.createObjectStore("queue",{keyPath:"id",autoIncrement:true})};
+ var r=indexedDB.open("ss",2);
+ r.onupgradeneeded=function(e){var db=r.result;if(e.oldVersion<1){db.createObjectStore("packs",{keyPath:"id"});db.createObjectStore("queue",{keyPath:"id",autoIncrement:true})}
+  if(e.oldVersion<2){var packs=r.transaction.objectStore("packs");["math","sci","eng"].forEach(function(id){packs.delete(id)})}};
  r.onsuccess=function(){DB=r.result;run()};r.onerror=function(){no(r.error)}})}
 
 // ---------- Packs: download / share / import ----------
@@ -111,7 +112,11 @@ function home(){
 function lesson(){var ids=Object.keys(S.packs);
  if(!ids.length)return '<div class="card"><p>'+(L()?"पहले होम से कोई पैक डाउनलोड करें।":"Download a pack from Home first.")+'</p></div>';
  if(!S.packs[S.open])S.open=ids[0];var p=S.packs[S.open];
- return '<div class="row" style="margin-bottom:10px">'+ids.map(function(i){return '<button class="chip '+(i==S.open?"on":"")+'" data-o="'+esc(i)+'">'+esc(S.packs[i].ic)+'</button>'}).join("")+'</div><div class="card"><h2>'+esc(p[S.lang])+'</h2><p style="font-size:17px;line-height:1.7">'+esc(p.t[S.lang])+'</p><div class="row"><button class="btn" id="say">🔊 '+(L()?"सुनें":"Listen")+'</button><button class="btn g" id="stop">⏹</button></div></div>'}
+ var h='<div class="row" style="margin-bottom:10px">'+ids.map(function(i){return '<button class="chip '+(i==S.open?"on":"")+'" data-o="'+esc(i)+'">'+esc(S.packs[i].ic)+'</button>'}).join("")+'</div><div class="card"><h2>'+esc(p[S.lang])+'</h2><p style="font-size:17px;line-height:1.7">'+esc(p.t[S.lang])+'</p><div class="row"><button class="btn" id="say">🔊 '+(L()?"सुनें":"Listen")+'</button><button class="btn g" id="stop">⏹</button></div></div>';
+ if(p.quiz&&p.quiz.length){var answers=S.quizAnswers[p.id]||{},results=S.quizResults[p.id]||{};
+  h+='<div class="card"><h2>'+(L()?"अपनी समझ जाँचें":"Check your learning")+'</h2>'+p.quiz.map(function(q,i){var result=results[i];
+   return '<div class="quiz-item"><p><b>'+(i+1)+'. '+esc(q.q[S.lang])+'</b></p>'+q.o.map(function(o,j){return '<label class="quiz-option"><input type="radio" name="quiz-'+i+'" value="'+j+'"'+(answers[i]===j?" checked":"")+'>'+esc(o[S.lang])+'</label>'}).join("")+'<button class="btn g quiz-check" data-check="'+i+'">'+(L()?"जवाब जाँचें":"Check answer")+'</button>'+(result===undefined?"":'<p class="quiz-result '+(result?"correct":"incorrect")+'">'+(result?(L()?"सही जवाब!":"Correct!"):(L()?"फिर कोशिश करें।":"Try again."))+'</p>')+'</div>'}).join("")+'</div>'}
+ return h}
 function bolo(){
  var h='<div class="card" style="text-align:center"><h2>🎤 '+(L()?"अपना सवाल बोलिए":"Ask by voice")+'</h2><button class="mic '+(S.rec?"rec":"")+'" id="mic">🎙</button><p class="mut">'+(S.rec?(L()?"सुन रहा हूँ…":"Listening…"):(L()?"माइक दबाएँ या नीचे लिखें":"Tap mic or type below"))+'</p><div class="row" style="margin-top:8px"><input id="q" placeholder="'+(L()?"जैसे: प्रतिशत क्या है?":"e.g. what is percent?")+'" value="'+esc(S.q)+'"><button class="btn" id="ask">→</button></div><button class="btn o" id="ment" style="margin-top:10px;width:100%">👩‍🏫 '+(L()?"मेंटर से पूछें":"Ask a mentor")+'</button></div>';
  if(S.queue)h+='<p class="mut">🕒 '+S.queue+(L()?" सवाल सिंक के इंतज़ार में":" doubt(s) waiting to sync")+'</p>';
@@ -151,6 +156,11 @@ function bind(){
  if($("file"))$("file").onchange=function(){if(this.files[0])imp(this.files[0])};
  if($("say"))$("say").onclick=function(){speak(S.packs[S.open].t[S.lang])};
  if($("stop"))$("stop").onclick=function(){if(window.speechSynthesis)speechSynthesis.cancel()};
+ all("[data-check]",function(b){b.onclick=function(){var p=S.packs[S.open],i=Number(b.dataset.check),choice=document.querySelector('input[name="quiz-'+i+'"]:checked');
+  if(!choice)return;
+  if(!S.quizAnswers[p.id])S.quizAnswers[p.id]={};
+  if(!S.quizResults[p.id])S.quizResults[p.id]={};
+  var selected=Number(choice.value);S.quizAnswers[p.id][i]=selected;S.quizResults[p.id][i]=selected===p.quiz[i].a;render()}});
  if($("mic"))$("mic").onclick=listen;
  if($("ask"))$("ask").onclick=function(){var v=$("q").value.trim();if(v)answer(v)};
  if($("ment"))$("ment").onclick=function(){var v=$("q").value.trim();if(v)askMentor(v);else $("q").focus()};

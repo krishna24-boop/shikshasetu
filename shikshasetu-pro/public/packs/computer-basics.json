@@ -1,0 +1,91 @@
+{
+  "id": "computer-basics",
+  "ic": "💻",
+  "hi": "Computer: Word और Excel",
+  "en": "Computer: Word and Excel",
+  "t": {
+    "hi": "MS Word खोलकर नया document बनाएं, लिखें और Save As से सही file और folder name देकर save करें। Font और size चुनें तथा Bold, Italic, Underline और left, centre या right alignment से text सजाएं। जरूरी बातों के लिए bullets या numbering लगाएं और जानकारी को table में रखें। Page margins और orientation जरूरत के हिसाब से चुनें, फिर spell check से लिखावट जाँचें। आवेदन पत्र में तारीख, जिसे पत्र भेज रहे हैं, विषय, संदेश और अपना नाम रखें; resume में पढ़ाई और skills साफ लिखें। काम का print लें या Save As से PDF बनाकर जमा करें और Ctrl+C, Ctrl+V, Ctrl+X, Ctrl+Z, Ctrl+S, Ctrl+B और Ctrl+A जैसे shortcuts सीखें। Excel में workbook पूरी file, sheet उसका page, cell एक box, row आड़ी लाइन और column खड़ी लाइन होती है; A1 एक cell address है। Marks या महीने के खर्च की सूची में headings बनाएं और हर जानकारी को सही cell में लिखें। Excel का हर formula = से शुरू होता है; SUM जोड़ता है और AVERAGE औसत निकालता है। MAX सबसे बड़ी संख्या, MIN सबसे छोटी संख्या और COUNT संख्या वाले cells गिनता है। Formula को पास के cells में दोहराने के लिए cell के कोने वाले fill handle को खींचें। सूची को sort करके क्रम में रखें, filter से चुनी जानकारी दिखाएं और आंकड़ों का simple chart बनाएं। MS Office न हो तो Google Docs, Google Sheets या LibreOffice जैसे मुफ्त tools मिलते-जुलते तरीके से काम करते हैं। Hardware computer के छू सकने वाले हिस्से हैं और software उसे चलाने वाले programs हैं; Python या Java जैसी programming language से computer को काम करने के निर्देश लिखे जाते हैं।",
+    "en": "Open MS Word, create a document, type your text and use Save As with a clear file and folder name. Choose a font and size, then use Bold, Italic, Underline and left, centre or right alignment to format text. Use bullets or numbering for key points and put information in a table. Set page margins and orientation as needed, then use spell check to review your writing. In an application letter, include the date, recipient, subject, message and your name; in a resume, clearly list your education and skills. Print your work or use Save As to make a PDF, and learn shortcuts such as Ctrl+C, Ctrl+V, Ctrl+X, Ctrl+Z, Ctrl+S, Ctrl+B and Ctrl+A. In Excel, a workbook is the whole file, a sheet is a page, a cell is one box, a row goes across, a column goes down and A1 is a cell address. Make headings for a marks table or monthly expense list and enter each item in the right cell. Every Excel formula starts with =; SUM adds values and AVERAGE finds their mean. MAX gives the largest number, MIN the smallest and COUNT counts cells containing numbers. Drag a cell's fill handle to copy a formula to nearby cells. Sort a list to put it in order, filter it to show selected information and make a simple chart of your data. Free tools such as Google Docs, Google Sheets or LibreOffice work in a similar way if MS Office is not available. Hardware means the parts of a computer you can touch, while software means the programs that run on it; a programming language such as Python or Java is used to write instructions for a computer."
+  },
+  "quiz": [
+    {
+      "q": {"hi": "Word में चुने हुए text को मोटा करने के लिए कौन सा shortcut है?", "en": "Which shortcut makes selected text bold in Word?"},
+      "o": [
+        {"hi": "Ctrl+S", "en": "Ctrl+S"},
+        {"hi": "Ctrl+B", "en": "Ctrl+B"},
+        {"hi": "Ctrl+X", "en": "Ctrl+X"}
+      ],
+      "a": 1
+    },
+    {
+      "q": {"hi": "Word document की PDF प्रति बनाने का एक तरीका क्या है?", "en": "What is one way to make a PDF copy of a Word document?"},
+      "o": [
+        {"hi": "Save As का उपयोग करके PDF चुनें", "en": "Use Save As and choose PDF"},
+        {"hi": "कंप्यूटर बंद करें", "en": "Turn off the computer"},
+        {"hi": "सभी शब्द मिटा दें", "en": "Delete all the words"}
+      ],
+      "a": 0
+    },
+    {
+      "q": {"hi": "Excel में formula किस चिन्ह से शुरू होता है?", "en": "Which symbol starts an Excel formula?"},
+      "o": [
+        {"hi": "+", "en": "+"},
+        {"hi": "#", "en": "#"},
+        {"hi": "=", "en": "="}
+      ],
+      "a": 2
+    },
+    {
+      "q": {"hi": "Excel में SUM का काम क्या है?", "en": "What does SUM do in Excel?"},
+      "o": [
+        {"hi": "चुनी संख्याओं को जोड़ना", "en": "Add selected numbers"},
+        {"hi": "सबसे छोटा शब्द ढूँढना", "en": "Find the shortest word"},
+        {"hi": "कंप्यूटर बंद करना", "en": "Shut down the computer"}
+      ],
+      "a": 0
+    },
+    {
+      "q": {"hi": "Computer का hardware क्या होता है?", "en": "What is computer hardware?"},
+      "o": [
+        {"hi": "केवल इंटरनेट", "en": "Only the internet"},
+        {"hi": "Computer के छू सकने वाले हिस्से", "en": "The parts of a computer you can touch"},
+        {"hi": "एक spreadsheet formula", "en": "A spreadsheet formula"}
+      ],
+      "a": 1
+    }
+  ],
+  "faq": [
+    {
+      "k": ["वर्ड क्या है", "word kaam", "ms word basics"],
+      "a": {"hi": "MS Word में letter, notes और resume जैसे documents लिखे और सजाए जाते हैं। लिखने के बाद file को सही नाम से save करें।", "en": "MS Word is used to write and format documents such as letters, notes and resumes. Save your file with a clear name when you finish."}
+    },
+    {
+      "k": ["वर्ड टेबल", "word mein table", "insert word table"],
+      "a": {"hi": "Table जानकारी को rows और columns में दिखाती है। Word में table बनाने का विकल्प चुनकर जरूरत के अनुसार rows और columns रखें।", "en": "A table shows information in rows and columns. Use Word's table option and choose the rows and columns you need."}
+    },
+    {
+      "k": ["पीडीएफ बनाएं", "word pdf banana", "save as pdf"],
+      "a": {"hi": "PDF बनाने के लिए Save As चुनें और file type में PDF चुनें। जमा करने से पहले बनी file खोलकर देख लें।", "en": "To make a PDF, choose Save As and select PDF as the file type. Open the saved file to check it before submitting."}
+    },
+    {
+      "k": ["रिज्यूमे लिखें", "resume word mein", "word resume layout"],
+      "a": {"hi": "Resume में अपना नाम, संपर्क का तरीका, पढ़ाई और skills साफ headings के साथ लिखें। जानकारी सही रखें और भेजने से पहले spelling जाँचें।", "en": "Use clear headings for your name, a way to contact you, education and skills. Keep details accurate and check spelling before sharing."}
+    },
+    {
+      "k": ["एक्सेल क्या है", "excel kaam", "ms excel basics"],
+      "a": {"hi": "Excel में जानकारी cells वाली sheet में रखी जाती है। इससे हिसाब, सूची और सरल chart बनाए जा सकते हैं।", "en": "Excel stores information in cells on a sheet. You can use it for calculations, lists and simple charts."}
+    },
+    {
+      "k": ["सम formula", "excel jodna", "sum formula"],
+      "a": {"hi": "SUM कई संख्याओं को जोड़ता है और formula = से शुरू होता है। उदाहरण के लिए, चुने हुए cells जोड़ने के लिए =SUM(A1:A3) लिख सकते हैं।", "en": "SUM adds several numbers, and a formula starts with =. For example, =SUM(A1:A3) adds the selected cells."}
+    },
+    {
+      "k": ["एक्सेल सेल", "excel ka cell", "excel cell address"],
+      "a": {"hi": "Cell वह box है जहाँ row और column मिलते हैं। A1 का मतलब column A और row 1 का cell है।", "en": "A cell is a box where a row and column meet. A1 means the cell in column A and row 1."}
+    },
+    {
+      "k": ["एक्सेल क्रम", "excel data chhantna", "sort excel data"],
+      "a": {"hi": "Sort से सूची को चुने हुए क्रम में लगा सकते हैं। Filter से केवल चुनी हुई जानकारी दिखा सकते हैं।", "en": "Sort puts a list in a chosen order. Filter shows only the information you select."}
+    }
+  ]
+}

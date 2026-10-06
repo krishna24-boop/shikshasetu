@@ -1,0 +1,57 @@
+{
+  "id": "scholarship-docs",
+  "ic": "📄",
+  "hi": "स्कॉलरशिप के जरूरी कागज",
+  "en": "Scholarship documents",
+  "t": {
+    "hi": "स्कॉलरशिप के लिए पहचान, पढ़ाई और परिवार से जुड़े कागज माँगे जा सकते हैं। आम कागजों में आय प्रमाण पत्र, जाति प्रमाण पत्र और निवास प्रमाण पत्र शामिल हो सकते हैं। पिछली कक्षा की marksheet और passport size photo भी तैयार रखें। कुछ योजनाओं में Aadhaar से जुड़ा bank account माँगा जाता है, इसलिए अपनी योजना की शर्तें जाँचें। प्रमाण पत्र कहाँ बनता है, यह जिले के सरकारी दफ्तर या अधिकृत सेवा केंद्र से पूछें। NSP या MP Scholarship Portal की आधिकारिक सूचना में जरूरी कागजों की सूची देखें। आखिरी समय की परेशानी से बचने के लिए कागज पहले से तैयार करें और उनकी साफ प्रति रखें।",
+    "en": "A scholarship may ask for documents about your identity, studies and family. Common documents can include an income certificate, caste certificate and domicile certificate. Keep your previous marksheet and a passport-size photo ready too. Some schemes ask for a bank account linked with Aadhaar, so check your scheme's rules. Ask a government office in your district or an authorised service centre where certificates are issued. Check the official NSP or MP Scholarship Portal notice for the required document list. Prepare documents early and keep clear copies to avoid a last-minute rush."
+  },
+  "quiz": [
+    {
+      "q": {"hi": "आय प्रमाण पत्र किस जानकारी के बारे में होता है?", "en": "What information does an income certificate describe?"},
+      "o": [
+        {"hi": "छात्र का पसंदीदा विषय", "en": "A student's favourite subject"},
+        {"hi": "परिवार की आय", "en": "Family income"},
+        {"hi": "स्कूल का रंग", "en": "The colour of a school"}
+      ],
+      "a": 1
+    },
+    {
+      "q": {"hi": "कागजों की सही सूची कहाँ देखनी चाहिए?", "en": "Where should you check the correct document list?"},
+      "o": [
+        {"hi": "दोस्त के पुराने आवेदन में", "en": "In a friend's old application"},
+        {"hi": "बिना जाँचे किसी संदेश में", "en": "In an unchecked message"},
+        {"hi": "योजना की आधिकारिक सूचना में", "en": "In the scheme's official notice"}
+      ],
+      "a": 2
+    },
+    {
+      "q": {"hi": "स्कॉलरशिप के कागज कब तैयार करना अच्छा है?", "en": "When is it helpful to prepare scholarship documents?"},
+      "o": [
+        {"hi": "पहले से", "en": "In advance"},
+        {"hi": "आवेदन बंद होने के बाद", "en": "After applications close"},
+        {"hi": "कभी नहीं", "en": "Never"}
+      ],
+      "a": 0
+    }
+  ],
+  "faq": [
+    {
+      "k": ["आय प्रमाण पत्र", "aay praman patra", "income certificate"],
+      "a": {"hi": "आय प्रमाण पत्र परिवार की आय की जानकारी देता है। इसे कहाँ बनवाना है, यह जिले के सरकारी दफ्तर या अधिकृत सेवा केंद्र से पूछें।", "en": "An income certificate gives information about family income. Ask a government office in your district or an authorised service centre where to get it."}
+    },
+    {
+      "k": ["जाति प्रमाण पत्र", "jaati praman patra", "caste certificate"],
+      "a": {"hi": "कुछ योजनाओं में जाति प्रमाण पत्र माँगा जाता है। अपनी पात्रता और प्रमाण पत्र की जरूरत आधिकारिक योजना सूचना से जाँचें।", "en": "Some schemes ask for a caste certificate. Check your eligibility and document requirements in the official scheme notice."}
+    },
+    {
+      "k": ["आधार बैंक खाता", "aadhaar bank jodna", "aadhaar linked bank"],
+      "a": {"hi": "कुछ स्कॉलरशिप में Aadhaar से जुड़ा bank account जरूरी हो सकता है। अपनी योजना की शर्तें और बैंक से जुड़ी जानकारी आधिकारिक तरीके से जाँचें।", "en": "Some scholarships may require a bank account linked with Aadhaar. Check your scheme's rules and bank details through official channels."}
+    },
+    {
+      "k": ["स्कॉलरशिप कागज", "scholarship kagaz", "scholarship documents"],
+      "a": {"hi": "आय, जाति, निवास प्रमाण पत्र, marksheet और photo माँगे जा सकते हैं। पूरी सूची NSP या MP Scholarship Portal की आधिकारिक सूचना में देखें।", "en": "An income, caste or domicile certificate, marksheet and photo may be requested. Check the full list in the official NSP or MP Scholarship Portal notice."}
+    }
+  ]
+}

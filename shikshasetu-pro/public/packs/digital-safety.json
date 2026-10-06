@@ -1,0 +1,57 @@
+{
+  "id": "digital-safety",
+  "ic": "🛡️",
+  "hi": "डिजिटल सुरक्षा",
+  "en": "Digital safety",
+  "t": {
+    "hi": "UPI PIN और OTP किसी को न बताएं, बैंक या पुलिस कहने वाले को भी नहीं। पैसे पाने के लिए UPI PIN डालने या अनजान व्यक्ति को screen share करने की जरूरत नहीं होती। अनजान link पर क्लिक न करें और संदेश में दिए नंबर के बजाय संस्था का official contact खुद खोजें। KYC के नाम पर आए link या फोन पर जानकारी देने से पहले बैंक से जाँचें। DigiLocker में अपने कागज देख सकते हैं, पर अपना password और OTP सुरक्षित रखें। धोखा हो जाए तो तुरंत बैंक के official channel से संपर्क करें और official cybercrime portal पर शिकायत करें। देर किए बिना कार्रवाई करने से मदद मिलने की संभावना बढ़ती है।",
+    "en": "Never tell anyone your UPI PIN or OTP, even someone claiming to be from a bank or the police. You do not need to enter a UPI PIN or share your screen to receive money. Do not open unknown links, and find an organisation's official contact yourself instead of using a number in a message. Check with your bank before sharing details for a KYC request. DigiLocker lets you access documents, but keep its password and OTP private. If you are cheated, contact your bank through an official channel and report it through the official cybercrime portal as soon as possible. Acting quickly can help you get support."
+  },
+  "quiz": [
+    {
+      "q": {"hi": "UPI PIN और OTP किसके साथ साझा करना चाहिए?", "en": "Who should you share your UPI PIN and OTP with?"},
+      "o": [
+        {"hi": "फोन करने वाले बैंक कर्मचारी के साथ", "en": "A bank worker who calls"},
+        {"hi": "किसी के साथ नहीं", "en": "No one"},
+        {"hi": "पैसे भेजने वाले के साथ", "en": "The person sending money"}
+      ],
+      "a": 1
+    },
+    {
+      "q": {"hi": "पैसे पाने के लिए UPI PIN डालना जरूरी है?", "en": "Do you need to enter a UPI PIN to receive money?"},
+      "o": [
+        {"hi": "हाँ, हर बार", "en": "Yes, every time"},
+        {"hi": "केवल अनजान लोगों से", "en": "Only from strangers"},
+        {"hi": "नहीं", "en": "No"}
+      ],
+      "a": 2
+    },
+    {
+      "q": {"hi": "ऑनलाइन धोखा होने पर क्या करना चाहिए?", "en": "What should you do after an online scam?"},
+      "o": [
+        {"hi": "तुरंत बैंक के official channel से संपर्क और शिकायत करें", "en": "Contact the bank through an official channel and report it quickly"},
+        {"hi": "संदेश को आगे भेजें", "en": "Forward the message"},
+        {"hi": "अपना OTP भेजें", "en": "Send your OTP"}
+      ],
+      "a": 0
+    }
+  ],
+  "faq": [
+    {
+      "k": ["यूपीआई ठगी", "upi dhokha", "upi fraud"],
+      "a": {"hi": "UPI PIN सिर्फ पैसे भेजने के लिए डालें, पैसे पाने के लिए नहीं। अगर धोखा हुआ है तो तुरंत बैंक के official channel से संपर्क करें और cybercrime की official सेवा पर शिकायत करें।", "en": "Enter your UPI PIN only to send money, not to receive it. If you are scammed, contact your bank through an official channel and report it to the official cybercrime service."}
+    },
+    {
+      "k": ["ओटीपी साझा", "otp batana", "otp sharing"],
+      "a": {"hi": "OTP और PIN गुप्त रखें, बैंक का कर्मचारी भी इन्हें नहीं माँगना चाहिए। किसी को code बता दिया हो तो तुरंत बैंक से संपर्क करें।", "en": "Keep your OTP and PIN secret; even a bank worker should not ask for them. Contact your bank quickly if you shared a code."}
+    },
+    {
+      "k": ["फर्जी लिंक", "kyc dhokha", "fake kyc link"],
+      "a": {"hi": "अनजान link न खोलें और KYC के नाम पर जानकारी न दें। बैंक की बात हो तो अपने बैंक के official channel से खुद जाँच करें।", "en": "Do not open unknown links or share details for a KYC request. Check directly through your bank's official channel."}
+    },
+    {
+      "k": ["डिजिलॉकर कागज", "digilocker kaise", "digilocker safety"],
+      "a": {"hi": "DigiLocker में अपने digital documents देख सकते हैं। Password और OTP किसी को न दें और सही official सेवा ही इस्तेमाल करें।", "en": "You can access your digital documents in DigiLocker. Never share its password or OTP, and use the genuine official service."}
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "id": "english-speak",
+  "ic": "🗣️",
+  "hi": "अंग्रेज़ी बोलना सीखें",
+  "en": "Learn to speak English",
+  "t": {
+    "hi": "अपना परिचय छोटे और साफ वाक्यों में दें, जैसे My name is Rani और I am a college student। इंटरव्यू में Tell me about yourself पर I am studying my chosen subject कहें और Why this course पर I enjoy this subject कहें। What are your strengths पर I am regular कहें और What do you want to improve पर I want to speak English better कहें। Why should we select you पर I am ready to learn कहें और What is your goal पर I want to complete my course कहें। How do you handle a problem पर I stay calm कहें और Do you work in a team पर I like working with others कहें। How do you learn something new पर I practise every day कहें और Do you have a question पर Yes, please tell me about the work कहें। रोज बोलें Good morning, Please help me, I understand और Please say that again। यह भी बोलें I am learning, May I come in, Where is the library और Thank you for your time।",
+    "en": "Introduce yourself in short, clear sentences such as My name is Rani and I am a college student. For Tell me about yourself, say I am studying my chosen subject; for Why this course, say I enjoy this subject. For What are your strengths, say I am regular; for What do you want to improve, say I want to speak English better. For Why should we select you, say I am ready to learn; for What is your goal, say I want to complete my course. For How do you handle a problem, say I stay calm; for Do you work in a team, say I like working with others. For How do you learn something new, say I practise every day; for Do you have a question, say Yes, please tell me about the work. Practise saying Good morning, Please help me, I understand and Please say that again. You can also say I am learning, May I come in, Where is the library and Thank you for your time."
+  },
+  "quiz": [
+    {
+      "q": {"hi": "परिचय देते समय कैसे बोलना अच्छा है?", "en": "How is it best to introduce yourself?"},
+      "o": [
+        {"hi": "छोटे और साफ वाक्यों में", "en": "In short, clear sentences"},
+        {"hi": "बहुत तेज बोलकर", "en": "By speaking very fast"},
+        {"hi": "बिना अपना नाम बताए", "en": "Without saying your name"}
+      ],
+      "a": 0
+    },
+    {
+      "q": {"hi": "What do you want to improve के जवाब में क्या कह सकते हैं?", "en": "What can you say for What do you want to improve?"},
+      "o": [
+        {"hi": "I do not want to learn.", "en": "I do not want to learn."},
+        {"hi": "I want to speak English better.", "en": "I want to speak English better."},
+        {"hi": "I have no answer.", "en": "I have no answer."}
+      ],
+      "a": 1
+    },
+    {
+      "q": {"hi": "किसी से बात दोहराने के लिए कौन सा वाक्य बोल सकते हैं?", "en": "Which sentence can you use to ask someone to repeat?"},
+      "o": [
+        {"hi": "Where is the library?", "en": "Where is the library?"},
+        {"hi": "Thank you for your time.", "en": "Thank you for your time."},
+        {"hi": "Please say that again.", "en": "Please say that again."}
+      ],
+      "a": 2
+    }
+  ],
+  "faq": [
+    {
+      "k": ["अपना परिचय", "english parichay", "english introduction"],
+      "a": {"hi": "अपना नाम, पढ़ाई और रुचि छोटे वाक्यों में बताएं। पहले अकेले अभ्यास करें, फिर किसी भरोसेमंद साथी के साथ बोलें।", "en": "Say your name, studies and interests in short sentences. Practise alone first, then speak with someone you trust."}
+    },
+    {
+      "k": ["इंटरव्यू जवाब", "interview jawab", "interview answers"],
+      "a": {"hi": "जवाब सच और आसान रखें, जैसे I am ready to learn। पहले से दो-तीन बार बोलकर अभ्यास करें।", "en": "Keep answers honest and simple, such as I am ready to learn. Practise saying them a few times beforehand."}
+    },
+    {
+      "k": ["रोज अंग्रेज़ी", "daily english", "english vakya"],
+      "a": {"hi": "रोजमर्रा के छोटे वाक्य चुनें और सही मौके पर बोलें। गलती हो तो रुकें नहीं, फिर से कोशिश करें।", "en": "Choose short daily sentences and use them in the right moment. If you make a mistake, keep going and try again."}
+    },
+    {
+      "k": ["अंग्रेज़ी अभ्यास", "english bolna", "speak english practice"],
+      "a": {"hi": "हर दिन थोड़ी देर सुनें और जोर से बोलें। नए वाक्य लिखकर उनका मतलब समझें और दोहराएँ।", "en": "Listen and speak aloud for a little time each day. Write new sentences, understand them and repeat them."}
+    }
+  ]
+}

@@ -1,1 +1,8 @@
-[{"id":"math","ic":"🧮","kb":1,"hi":"गणित – प्रतिशत","en":"Maths – Percentages"},{"id":"sci","ic":"🔬","kb":1,"hi":"विज्ञान – प्रकाश संश्लेषण","en":"Science – Photosynthesis"},{"id":"eng","ic":"🗣️","kb":1,"hi":"अंग्रेज़ी – रोज़मर्रा की बातचीत","en":"English – Daily Talk"}]
+[
+  {"id":"cuet-path","ic":"🎓","kb":6,"hi":"CUET और कॉलेज का रास्ता","en":"CUET and the college path"},
+  {"id":"digital-safety","ic":"🛡️","kb":6,"hi":"डिजिटल सुरक्षा","en":"Digital safety"},
+  {"id":"english-speak","ic":"🗣️","kb":6,"hi":"अंग्रेज़ी बोलना सीखें","en":"Learn to speak English"},
+  {"id":"scholarship-docs","ic":"📄","kb":6,"hi":"स्कॉलरशिप के जरूरी कागज","en":"Scholarship documents"},
+  {"id":"computer-basics","ic":"💻","kb":10,"hi":"Computer: Word और Excel","en":"Computer: Word and Excel"},
+  {"id":"mp-govt-exam","ic":"🏛️","kb":6,"hi":"MP सरकारी परीक्षा की तैयारी","en":"Preparing for MP government exams"}
+]
