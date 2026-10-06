@@ -20,6 +20,8 @@ provider's environment settings; never commit it to Git.
 ## Lesson packs
 The app includes CUET and college guidance, digital safety, spoken English, scholarship documents, Word and Excel basics, and MP government exam preparation. Download packs while online to use their lessons, quizzes, and FAQs offline.
 The interface can be switched between Hindi, English, Bagheli, and Bundeli. Bagheli and Bundeli lesson text is currently available in the digital safety pack.
+The supplied ShikshaSetu splash screen appears briefly before sign-in; students
+and mentors choose their role on the same login screen.
 
 ## Deploy
 Render/Railway web service: build `npm install`, start `npm start`, env `MONGODB_URI`, `MONGODB_DB` (optional), `GEMINI_API_KEY` (and `MENTOR_PIN`). HTTPS is required for mic + service worker on phones.

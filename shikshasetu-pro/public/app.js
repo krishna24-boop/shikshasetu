@@ -65,7 +65,7 @@ function showRes(){
 // ---------- Core ----------
 var $=function(i){return document.getElementById(i)},contentLang=function(){return S.lang=="en"?"en":"hi"},t=function(k){return T[S.lang]&&T[S.lang][k]||T.hi[k]},L=function(){return S.lang!="en"};
 var esc=function(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return"&#"+c.charCodeAt(0)+";"})};
-var S={lang:"hi",tab:"home",loginMode:"student",role:"student",subject:"other",mentorPin:"",mentorSubject:"math",mentorQuestions:[],mentorReplies:{},mentorMessage:"",mentorLoginMessage:"",mentorBusy:false,mentorLoading:false,mentorSending:null,lessonLang:"hi",theme:window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light",profile:null,packs:{},cat:[],gen:[],open:null,quizAnswers:{},quizResults:{},shareOpen:false,shareSelected:{},ans:null,rec:false,q:"",queue:0,busy:{},fl:0};
+var S={lang:"hi",tab:"home",loginMode:"student",role:"student",subject:"other",mentorPin:"",mentorSubject:"math",mentorQuestions:[],mentorReplies:{},mentorMessage:"",mentorLoginMessage:"",mentorBusy:false,mentorLoading:false,mentorSending:null,splashTimer:null,lessonLang:"hi",theme:window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light",profile:null,packs:{},cat:[],gen:[],open:null,quizAnswers:{},quizResults:{},shareOpen:false,shareSelected:{},ans:null,rec:false,q:"",queue:0,busy:{},fl:0};
 try{var x=JSON.parse(localStorage.getItem("ss")||"{}");if(x.lang)S.lang=x.lang;if(x.theme==="light"||x.theme==="dark")S.theme=x.theme;if(x.profile&&x.profile.name&&x.profile.path&&x.profile.district)S.profile=x.profile}catch(e){}
 function applyTheme(){document.documentElement.dataset.theme=S.theme;var m=document.querySelector('meta[name="theme-color"]');if(m)m.content=S.theme==="dark"?"#11111a":"#6246d8"}
 applyTheme();
@@ -93,6 +93,14 @@ var I={
 function icon(name){return '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">'+I[name]+'</svg>'}
 var SUBJECTS=[["math","गणित","Mathematics"],["science","विज्ञान","Science"],["english","अंग्रेज़ी","English"],["computer","कंप्यूटर","Computer"],["career","करियर और परीक्षा","Career & exams"],["other","अन्य","Other"]];
 function subjectName(id){var s=SUBJECTS.filter(function(x){return x[0]===id})[0]||SUBJECTS[5];return L()?s[1]:s[2]}
+function startSplash(){
+ var splash=$("splash-screen");
+ splash.setAttribute("aria-hidden","false");
+ S.splashTimer=setTimeout(function(){
+  splash.classList.add("splash-leave");
+  setTimeout(function(){splash.classList.add("hide");splash.setAttribute("aria-hidden","true");splash.classList.remove("splash-leave");render()},280)
+ },2500)
+}
 
 // ---------- IndexedDB (packs + sync queue) ----------
 var DB;
@@ -170,7 +178,7 @@ function poll(){if(!navigator.onLine)return;waits().forEach(function(w){fetch("/
 // ---------- Views ----------
 function login(){
  var Lh=L(),p=S.profile||{},paths=[["school",Lh?"स्कूल":"School"],["college",Lh?"कॉलेज":"College"],["prep",Lh?"परीक्षा की तैयारी":"Exam preparation"]];
- var h='<div class="card login-card"><div class="row sp"><h2>'+(Lh?"ShikshaSetu से जुड़ें":"Welcome to ShikshaSetu")+'</h2><div class="row"><button type="button" class="chip '+(S.lang==="hi"?"on":"")+'" data-l="hi">हिन्दी</button><button type="button" class="chip '+(S.lang==="en"?"on":"")+'" data-l="en">English</button><button type="button" class="chip '+(S.lang==="bagheli"?"on":"")+'" data-l="bagheli">बघेली</button><button type="button" class="chip '+(S.lang==="bundeli"?"on":"")+'" data-l="bundeli">बुंदेली</button></div></div>';
+ var h='<section class="login-showcase"><div class="login-art-panel"><img class="login-brand-logo" src="brand-logo.png" alt="ShikshaSetu"><h1>'+(Lh?"बिना इंटरनेट के भी सीखते रहें":"Learn. Grow. Anywhere.")+'</h1><p>'+(Lh?"आपकी पढ़ाई, आपकी रफ़्तार से।":"Your learning journey starts here.")+'</p><img class="login-study-art" src="login-study-scene.jpg" alt="" aria-hidden="true"></div><div class="card login-card"><div class="row sp"><h2>'+(Lh?"ShikshaSetu से जुड़ें":"Welcome to ShikshaSetu")+'</h2><div class="row"><button type="button" class="chip '+(S.lang==="hi"?"on":"")+'" data-l="hi">हिन्दी</button><button type="button" class="chip '+(S.lang==="en"?"on":"")+'" data-l="en">English</button><button type="button" class="chip '+(S.lang==="bagheli"?"on":"")+'" data-l="bagheli">बघेली</button><button type="button" class="chip '+(S.lang==="bundeli"?"on":"")+'" data-l="bundeli">बुंदेली</button></div></div>';
  h+='<div class="login-role-switch" role="group" aria-label="'+(Lh?"लॉगिन प्रकार चुनें":"Choose sign-in type")+'"><button type="button" class="login-role '+(S.loginMode==="student"?"on":"")+'" data-login-mode="student">'+icon("user")+(Lh?"छात्र":"Student")+'</button><button type="button" class="login-role '+(S.loginMode==="mentor"?"on":"")+'" data-login-mode="mentor">'+icon("cap")+(Lh?"मेंटर":"Mentor")+'</button></div>';
  if(S.loginMode==="mentor"){
   h+='<div class="login-role-intro"><span class="login-role-icon">'+icon("cap")+'</span><div><h3>'+(Lh?"मेंटर लॉगिन":"Mentor sign in")+'</h3><p class="mut">'+(Lh?"अपना विषय और मेंटर PIN डालकर उसी विषय के सवाल देखें।":"Choose your subject and enter the mentor PIN to view matching questions.")+'</p></div></div>';
@@ -182,7 +190,7 @@ function login(){
   '<label for="student-district">'+(Lh?"ज़िला चुनें":"Select district")+'</label><select id="student-district" name="district" required><option value="">'+(Lh?"अपना ज़िला चुनें":"Choose your district")+'</option>'+DISTRICTS.map(function(d){return '<option value="'+d+'"'+(p.district===d?" selected":"")+'>'+d+'</option>'}).join("")+'</select>'+
   '<button class="btn o login-submit" type="submit">'+(Lh?"लॉगिन करें":"Log in")+'</button></form>'+(p.name?'<button class="btn g login-cancel" id="cancel-profile">'+(Lh?"वापस जाएँ":"Cancel")+'</button>':"")
  }
- return h+'</div>'}
+ return h+'</div></section>'}
 function mentorError(status,error){
  if(status===401||error==="invalid_pin")return L()?"PIN सही नहीं है। Render में MENTOR_PIN की सेटिंग जाँचें और वही PIN डालें।":"PIN not accepted. Check the MENTOR_PIN value in Render and enter the same PIN.";
  if(status===503||error==="mentor_pin_not_configured")return L()?"Render में MENTOR_PIN सेट नहीं है। Environment में PIN जोड़कर redeploy करें।":"Mentor sign-in is not configured. Add MENTOR_PIN in Render → Environment, save, and redeploy.";
@@ -332,5 +340,5 @@ Promise.all([
  tx("packs","readonly",function(s){return s.getAll()}).then(function(a){(a||[]).forEach(function(p){S.packs[p.id]=p})}).catch(function(){}),
  tx("queue","readonly",function(s){return s.count()}).then(function(n){S.queue=n||0}).catch(function(){})
 ]).then(function(){render();flush();poll()});setInterval(poll,30000);
-render();
+render();startSplash();
 if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(function(){});

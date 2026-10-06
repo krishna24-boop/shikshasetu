@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#6246d8">
   <meta name="description" content="ShikshaSetu — learn, explore lessons and get study support, even offline.">
   <link rel="manifest" href="manifest.json">
-  <link rel="icon" href="icon-192.png">
+  <link rel="icon" type="image/png" href="brand-logo.png">
   <script>
     (function () {
       var theme = "";
@@ -23,8 +23,18 @@
   <div id="app">
     <header>
       <div class="brand">
-        <span class="brand-mark" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21z"/><path d="M4 5.5v13A2.5 2.5 0 0 1 6.5 16H20M8 7h8M8 10h7"/></svg></span>
-        <div><h1>ShikshaSetu · शिक्षासेतु</h1><small id="sub"></small></div>
+        <img class="brand-logo" src="brand-logo.png" alt="ShikshaSetu · शिक्षासेतु">
+        <small id="sub"></small>
+      </div>
+      <div class="splash-screen" id="splash-screen" role="status" aria-label="ShikshaSetu is getting ready">
+        <div class="splash-frame">
+          <img class="splash-artwork" src="shikshasetu-brand.png" alt="ShikshaSetu — शिक्षासेतु">
+          <div class="splash-caption">
+            <span class="splash-loader" aria-hidden="true"><i></i></span>
+            <p>आपकी सीखने की दुनिया तैयार हो रही है…</p>
+            <small>Getting your learning space ready…</small>
+          </div>
+        </div>
       </div>
       <div class="header-actions">
         <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to dark mode" title="Switch theme"></button>
