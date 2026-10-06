@@ -9,6 +9,7 @@ var ROAD={gov:"Goal: Govt job → Graduation + CUET/Patwari/Police/Railway prep;
 teach:"Goal: Teacher → B.A/B.Sc + B.Ed, then MP TET/CTET.",tech:"Goal: Tech/Skills → ITI/Polytechnic/BCA, free courses on SWAYAM & Skill India.",biz:"Goal: Business → B.Com + local skill training, MSME & Mudra loan awareness."};
 
 var SA={cat:"gen",inc:1,course:"ug",goal:"gov"};
+var DISTRICTS=["Agar Malwa","Alirajpur","Anuppur","Ashoknagar","Balaghat","Barwani","Betul","Bhind","Bhopal","Burhanpur","Chhatarpur","Chhindwara","Damoh","Datia","Dewas","Dhar","Dindori","Guna","Gwalior","Harda","Indore","Jabalpur","Jhabua","Katni","Khandwa","Khargone","Maihar","Mandla","Mandsaur","Mauganj","Morena","Narmadapuram","Narsinghpur","Neemuch","Niwari","Pandhurna","Panna","Raisen","Rajgarh","Ratlam","Rewa","Sagar","Satna","Sehore","Seoni","Shahdol","Shajapur","Sheopur","Shivpuri","Sidhi","Singrauli","Tikamgarh","Ujjain","Umaria","Vidisha"];
 function sch(){
  var L=S.lang=="hi";
  function sel(id,lab,opts){return '<p><b>'+lab+'</b></p><select id="'+id+'">'+opts.map(function(o){return '<option value="'+o[0]+'"'+(SA[id]==o[0]?" selected":"")+'>'+o[1]+'</option>'}).join("")+'</select>'}
@@ -29,9 +30,9 @@ function showRes(){
 // ---------- Core ----------
 var $=function(i){return document.getElementById(i)},t=function(k){return T[S.lang][k]},L=function(){return S.lang=="hi"};
 var esc=function(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return"&#"+c.charCodeAt(0)+";"})};
-var S={lang:"hi",tab:"home",packs:{},cat:[],gen:[],open:null,ans:null,rec:false,q:"",queue:0,busy:{},fl:0};
-try{var x=JSON.parse(localStorage.getItem("ss")||"{}");if(x.lang)S.lang=x.lang}catch(e){}
-function save(){try{localStorage.setItem("ss",JSON.stringify({lang:S.lang}))}catch(e){}}
+var S={lang:"hi",tab:"home",profile:null,packs:{},cat:[],gen:[],open:null,ans:null,rec:false,q:"",queue:0,busy:{},fl:0};
+try{var x=JSON.parse(localStorage.getItem("ss")||"{}");if(x.lang)S.lang=x.lang;if(x.profile&&x.profile.name&&x.profile.path&&x.profile.district)S.profile=x.profile}catch(e){}
+function save(){try{localStorage.setItem("ss",JSON.stringify({lang:S.lang,profile:S.profile}))}catch(e){}}
 
 // ---------- IndexedDB (packs + sync queue) ----------
 var DB;
@@ -88,8 +89,17 @@ function poll(){if(!navigator.onLine)return;waits().forEach(function(w){fetch("/
  setW(waits().filter(function(x){return x.id!=w.id}));S.ans={q:w.q,a:j.answer,src:"👩‍🏫 "+(L()?"मेंटर का जवाब":"Mentor reply")};S.tab="bolo";render()}).catch(function(){})})}
 
 // ---------- Views ----------
+function login(){
+ var Lh=L(),p=S.profile||{},paths=[["school",Lh?"स्कूल":"School"],["college",Lh?"कॉलेज":"College"],["prep",Lh?"परीक्षा की तैयारी":"Exam preparation"]];
+ return '<div class="card login-card"><div class="row sp"><h2>'+(p.name?(Lh?"अपनी जानकारी बदलें":"Update your details"):(Lh?"छात्र लॉगिन":"Student login"))+'</h2><div class="row"><button type="button" class="chip '+(Lh?"on":"")+'" data-l="hi">हिन्दी</button><button type="button" class="chip '+(Lh?"":"on")+'" data-l="en">English</button></div></div><p class="mut">'+(Lh?"बस ये जानकारी भरें। इंटरनेट के बिना भी लॉगिन होगा।":"Just fill in these details. Login works offline too.")+'</p><form id="student-form">'+
+ '<label for="student-name">'+(Lh?"छात्र का नाम":"Student name")+'</label><input id="student-name" name="name" autocomplete="name" maxlength="60" required value="'+esc(p.name||"")+'" placeholder="'+(Lh?"अपना नाम लिखें":"Enter your name")+'">'+
+ '<label for="student-path">'+(Lh?"आप अभी क्या कर रहे हैं?":"What are you currently doing?")+'</label><select id="student-path" name="path" required><option value="">'+(Lh?"एक विकल्प चुनें":"Choose an option")+'</option>'+paths.map(function(o){return '<option value="'+o[0]+'"'+(p.path===o[0]?" selected":"")+'>'+o[1]+'</option>'}).join("")+'</select>'+
+ '<label for="student-district">'+(Lh?"ज़िला चुनें":"Select district")+'</label><select id="student-district" name="district" required><option value="">'+(Lh?"अपना ज़िला चुनें":"Choose your district")+'</option>'+DISTRICTS.map(function(d){return '<option value="'+d+'"'+(p.district===d?" selected":"")+'>'+d+'</option>'}).join("")+'</select>'+
+ '<button class="btn o login-submit" type="submit">'+(Lh?"लॉगिन करें":"Log in")+'</button></form>'+(p.name?'<button class="btn g login-cancel" id="cancel-profile">'+(Lh?"वापस जाएँ":"Cancel")+'</button>':"")+'</div>'}
 function home(){
- var h='<div class="card"><h2>'+(L()?"भाषा चुनें":"Choose language")+'</h2><div class="row"><button class="chip '+(L()?"on":"")+'" data-l="hi">हिन्दी</button><button class="chip '+(L()?"":"on")+'" data-l="en">English</button><button class="chip" disabled>भीली · गोंडी (soon)</button></div></div>';
+ var pathName={school:L()?"स्कूल":"School",college:L()?"कॉलेज":"College",prep:L()?"परीक्षा की तैयारी":"Exam preparation"};
+ var h='<div class="card student-card"><div><h2>'+esc(S.profile.name)+'</h2><p class="mut">'+esc(pathName[S.profile.path]||S.profile.path)+' · '+esc(S.profile.district)+'</p></div><button class="btn g" id="edit-profile">'+(L()?"जानकारी बदलें":"Edit details")+'</button></div>';
+ h+='<div class="card"><h2>'+(L()?"भाषा चुनें":"Choose language")+'</h2><div class="row"><button class="chip '+(L()?"on":"")+'" data-l="hi">हिन्दी</button><button class="chip '+(L()?"":"on")+'" data-l="en">English</button><button class="chip" disabled>भीली · गोंडी (soon)</button></div></div>';
  var list=S.cat.slice();Object.keys(S.packs).forEach(function(i){if(!list.some(function(c){return c.id==i}))list.push(S.packs[i])});
  h+='<div class="card"><h2>'+(L()?"लेसन पैक":"Lesson packs")+'</h2><p class="mut">'+(L()?"एक बार CSC या पंचायत WiFi पर डाउनलोड करें, फिर बिना नेट पढ़ें।":"Download once at a CSC or panchayat WiFi, then learn without net.")+'</p>';
  list.forEach(function(p){var s=S.packs[p.id],b=S.busy[p.id];
@@ -119,11 +129,19 @@ function listen(){var R=window.SpeechRecognition||window.webkitSpeechRecognition
 // ---------- Render & events ----------
 function render(){
  $("sub").textContent=t("sub");var on=navigator.onLine,n=$("net");n.textContent=(on?"● ":"✈ ")+(on?t("online"):t("offline"));n.className="net"+(on?"":" off");
+ if(!S.profile)S.tab="login";
+ $("app").className=S.tab==="login"?"login":"";
+ if(S.tab==="login"){$("nav").innerHTML="";$("main").innerHTML=login();bind();return}
  var tabs=[["home","🏠"],["lesson","📖"],["bolo","🎤"],["sch","🎓"]];
  $("nav").innerHTML=tabs.map(function(a){return '<button class="'+(S.tab==a[0]?"on":"")+'" data-t="'+a[0]+'"><b>'+a[1]+'</b>'+t(a[0])+'</button>'}).join("");
  $("main").innerHTML={home:home,lesson:lesson,bolo:bolo,sch:sch}[S.tab]();bind()}
 function bind(){
  var all=function(s,f){Array.prototype.forEach.call(document.querySelectorAll(s),f)};
+ if($("student-form"))$("student-form").onsubmit=function(e){e.preventDefault();var name=$("student-name").value.trim(),path=$("student-path").value,district=$("student-district").value;
+  if(!name||!path||!district)return;
+  S.profile={name:name,path:path,district:district};S.tab="home";save();render()};
+ if($("edit-profile"))$("edit-profile").onclick=function(){S.tab="login";render()};
+ if($("cancel-profile"))$("cancel-profile").onclick=function(){S.tab="home";render()};
  all("[data-t]",function(b){b.onclick=function(){S.tab=b.dataset.t;render()}});
  all("[data-l]",function(b){b.onclick=function(){S.lang=b.dataset.l;save();render()}});
  all("[data-o]",function(b){b.onclick=function(){S.open=b.dataset.o;S.tab="lesson";render()}});

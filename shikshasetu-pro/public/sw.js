@@ -1,5 +1,5 @@
 // Shell is cached at install; pack files are NOT precached (they are downloaded by the user into IndexedDB).
-var C="shikshasetu-v2",F=["./","./index.html","./styles.css","./app.js","./manifest.json","./faq.json","./packs/index.json","./icon-192.png","./icon-512.png"];
+var C="shikshasetu-v3",F=["./","./index.html","./styles.css","./app.js","./manifest.json","./faq.json","./packs/index.json"];
 self.addEventListener("install",function(e){e.waitUntil(caches.open(C).then(function(c){return c.addAll(F)}));self.skipWaiting()});
 self.addEventListener("activate",function(e){e.waitUntil(caches.keys().then(function(k){return Promise.all(k.filter(function(n){return n!==C}).map(function(n){return caches.delete(n)}))}));self.clients.claim()});
 self.addEventListener("fetch",function(e){var u=new URL(e.request.url);
