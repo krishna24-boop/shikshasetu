@@ -65,7 +65,7 @@ function showRes(){
 // ---------- Core ----------
 var $=function(i){return document.getElementById(i)},contentLang=function(){return S.lang=="en"?"en":"hi"},t=function(k){return T[S.lang]&&T[S.lang][k]||T.hi[k]},L=function(){return S.lang!="en"};
 var esc=function(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return"&#"+c.charCodeAt(0)+";"})};
-var S={lang:"hi",tab:"home",loginMode:"student",role:"student",subject:"other",mentorPin:"",mentorSubject:"math",mentorQuestions:[],mentorReplies:{},mentorMessage:"",mentorLoginMessage:"",mentorBusy:false,mentorLoading:false,mentorSending:null,splashTimer:null,lessonLang:"hi",theme:window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light",profile:null,loggedIn:false,progress:{opened:[],completed:[],quiz:{}},roadmap:null,roadmapError:"",roadmapLoading:false,packs:{},cat:[],gen:[],open:null,quizAnswers:{},quizResults:{},shareOpen:false,shareSelected:{},ans:null,rec:false,q:"",queue:0,busy:{},fl:0};
+var S={lang:"hi",tab:"home",loginMode:"student",role:"student",subject:"other",mentorPin:"",mentorSubject:"math",mentorQuestions:[],mentorReplies:{},mentorMessage:"",mentorLoginMessage:"",mentorBusy:false,mentorLoading:false,mentorSending:null,splashTimer:null,lessonLang:"hi",theme:window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light",profile:null,loggedIn:false,progress:{opened:[],completed:[],quiz:{}},roadmap:null,roadmapNote:"",roadmapLoading:false,packs:{},cat:[],gen:[],open:null,quizAnswers:{},quizResults:{},shareOpen:false,shareSelected:{},ans:null,rec:false,q:"",queue:0,busy:{},fl:0};
 try{var x=JSON.parse(localStorage.getItem("ss")||"{}");if(x.lang)S.lang=x.lang;if(x.theme==="light"||x.theme==="dark")S.theme=x.theme;if(x.profile){S.profile=x.profile;S.loggedIn=x.loggedIn!==false}if(x.progress&&typeof x.progress==="object"){S.progress.opened=Array.isArray(x.progress.opened)?x.progress.opened:[];S.progress.completed=Array.isArray(x.progress.completed)?x.progress.completed:[];S.progress.quiz=x.progress.quiz&&typeof x.progress.quiz==="object"?x.progress.quiz:{}}}catch(e){}
 function applyTheme(){document.documentElement.dataset.theme=S.theme;var m=document.querySelector('meta[name="theme-color"]');if(m)m.content=S.theme==="dark"?"#11111a":"#6246d8"}
 applyTheme();
@@ -207,15 +207,52 @@ function mentorError(status,error){
 function mentorRequest(url,options){
  return fetch(url,options).then(function(r){return r.json().catch(function(){return{}}).then(function(j){if(!r.ok){var e=new Error(mentorError(r.status,j.error));e.status=r.status;throw e}return j})})
 }
+function localRoadmap(kind){
+ var p=S.profile||{},packs=packCatalog(),started=S.progress.opened.filter(function(id){return packs.some(function(pack){return pack.id===id})}),completed=S.progress.completed.filter(function(id){return packs.some(function(pack){return pack.id===id})}),remaining=packs.filter(function(pack){return completed.indexOf(pack.id)===-1}),names=function(items){return items.map(function(pack){return pack[contentLang()]||pack.id})},goal={gov:L()?"सरकारी नौकरी":"a government job",teach:L()?"शिक्षक बनना":"teaching",tech:L()?"तकनीक और नए कौशल":"technology and practical skills",biz:L()?"व्यवसाय":"business"}[p.goal]||"अपनी पढ़ाई और आगे के अवसर";
+ if(kind==="scholarship"){
+  var lines=L()?[
+   "1. अपनी कक्षा/कोर्स और राज्य के अनुसार कौन-सी योजना लागू होती है, इसकी पुष्टि आधिकारिक पोर्टल पर करें।",
+   "2. आधार/पहचान पत्र, चालू बैंक खाते की पासबुक, पिछली कक्षा की मार्कशीट और स्कूल/कॉलेज का प्रमाण तैयार रखें।",
+   "3. आय प्रमाणपत्र और जाति प्रमाणपत्र केवल तभी जोड़ें जब चुनी हुई योजना माँगे; नियम योजना के अनुसार बदलते हैं।",
+   "4. आवेदन की तारीख, पात्रता और दस्तावेज़ों की सूची हर साल बदल सकती है—जमा करने से पहले आधिकारिक पोर्टल पर जाँचें।",
+   "5. आवेदन ID और जमा किए गए फॉर्म की प्रति सुरक्षित रखें; स्थिति समय-समय पर देखें।"
+  ]:[
+   "1. Confirm which scheme fits your current class/course and state on the official portals.",
+   "2. Prepare identity proof, an active bank-account passbook, previous marksheet, and school/college proof.",
+   "3. Add income or category certificates only if the selected scheme requires them; eligibility differs by scheme.",
+   "4. Check current eligibility, required documents, and deadlines on the official portals before submitting.",
+   "5. Save the application ID and a copy of the submitted form, then check its status."
+  ];
+  return {kind:kind,source:"local",plan:lines.join("\n")}
+ }
+ var weakest=null,lowest=101;
+ Object.keys(S.progress.quiz).forEach(function(id){var scores=Object.keys(S.progress.quiz[id]||{}).map(function(i){return S.progress.quiz[id][i]}),rate=scores.length?scores.filter(Boolean).length*100/scores.length:101;if(rate<lowest){lowest=rate;weakest=id}});
+ var next=remaining[0],weakPack=packs.filter(function(pack){return pack.id===weakest})[0],first=next?next[contentLang()]:null,doneNames=names(packs.filter(function(pack){return completed.indexOf(pack.id)!==-1})),stage=p.className||({school:L()?"स्कूल":"school",college:L()?"कॉलेज":"college",prep:L()?"परीक्षा की तैयारी":"exam preparation"}[p.path]|| (L()?"अपनी मौजूदा कक्षा/स्तर":"your current class/level"));
+ var study=L()?[
+  "आपका लक्ष्य: "+goal+"। अभी "+started.length+" पाठ शुरू किए और "+completed.length+" पूरे किए हैं.",
+  weakPack?"पहले "+(weakPack[contentLang()]||weakPack.id)+" के quiz के गलत जवाब दोहराएँ और पाठ फिर से पढ़ें।":"पहले कोई छोटा lesson pack खोलें; पढ़ा हुआ पाठ progress में अपने-आप जुड़ेगा।",
+  first?"अगला पाठ: "+first+"। रोज़ 20–25 मिनट पढ़ें और अंत में उसका quiz हल करें।":"सभी उपलब्ध पाठ पूरे हैं—एक quiz दोहराएँ या अगला downloaded pack खोलें।",
+  "अगले 7 दिन: 5 दिन एक-एक पाठ/quiz, 1 दिन गलत जवाबों का revision, और 1 दिन अपनी progress देखें।",
+  doneNames.length?"पूरे किए पाठ: "+doneNames.join(", ")+".":"छोटे लक्ष्य रखें; पहला पाठ पूरा होते ही यहाँ progress दिखेगी।"
+ ]:[
+  "Your goal: "+goal+". You have started "+started.length+" lesson(s) and completed "+completed.length+".",
+  weakPack?"Revisit "+(weakPack[contentLang()]||weakPack.id)+" first and retry the questions you missed.":"Open a short lesson pack to get started; opened lessons are tracked automatically.",
+  first?"Next lesson: "+first+". Set aside 20–25 minutes, then try its quiz.":"You have completed the available lessons—review a quiz or open another downloaded pack.",
+  "Seven-day rhythm: study one lesson or quiz on five days, use one day to review mistakes, and check your progress on day seven.",
+  doneNames.length?"Completed so far: "+doneNames.join(", ")+".":"Keep the first goal small; your progress will appear here as you study."
+ ];
+ return {kind:kind,source:"local",plan:study.join("\n")}
+}
 function createRoadmap(kind){
  if(S.roadmapLoading)return;
- if(!navigator.onLine){S.roadmapError=L()?"AI सुझाव के लिए इंटरनेट चाहिए। बाकी progress offline देख सकते हैं।":"AI suggestions need an internet connection. Your progress is still available offline.";render();return}
- S.roadmapLoading=true;S.roadmapError="";render();
+ S.roadmap=localRoadmap(kind);
+ if(!navigator.onLine){S.roadmapNote=L()?"ऑफलाइन तैयार किया गया सुझाव। इंटरनेट मिलने पर AI से और व्यक्तिगत सुझाव माँग सकते हैं।":"Offline-ready guidance. Connect to the internet to request an AI-personalized version.";render();return}
+ S.roadmapLoading=true;S.roadmapNote=L()?"यह काम करने वाला plan तैयार है। AI से इसे और व्यक्तिगत कर रहे हैं…":"Your plan is ready. Asking AI to personalize it…";render();
  var p=S.profile||{},titles=function(ids){return ids.map(function(id){var pack=S.cat.filter(function(item){return item.id===id})[0];return pack?pack[contentLang()]:id}).slice(0,20)};
- fetch("/api/learning-roadmap",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({kind:kind,lang:contentLang(),stage:p.path||"",className:p.className||"",goal:p.goal||"",district:p.district||"",completed:titles(S.progress.completed),started:titles(S.progress.opened),remaining:titles(S.cat.map(function(item){return item.id}).filter(function(id){return S.progress.completed.indexOf(id)===-1})),quizAccuracy:(function(){var values=[];Object.keys(S.progress.quiz).forEach(function(id){Object.keys(S.progress.quiz[id]||{}).forEach(function(i){values.push(S.progress.quiz[id][i])})});return values.length?Math.round(values.filter(Boolean).length*100/values.length):null})()})})
-  .then(function(r){return r.json().catch(function(){return{}}).then(function(j){if(!r.ok){var message=r.status===503?(L()?"AI सुविधा अभी सेट नहीं है। GEMINI_API_KEY जाँचें।":"AI is not configured yet. Check GEMINI_API_KEY."):r.status===502?(L()?"AI से सुझाव नहीं मिल पाए। थोड़ी देर बाद फिर कोशिश करें।":"The AI could not create suggestions. Please try again shortly."):L()?"सुझाव लोड नहीं हुए ("+r.status+")।":"Could not load suggestions ("+r.status+").";throw new Error(message)}if(typeof j.plan!=="string"||!j.plan.trim())throw new Error(L()?"AI ने खाली सुझाव भेजे। फिर कोशिश करें।":"The AI returned an empty plan. Please try again.");return j})})
-  .then(function(j){S.roadmap={kind:kind,plan:j.plan.trim().slice(0,3000)}})
-  .catch(function(e){S.roadmapError=e.message|| (L()?"AI सुझाव नहीं मिल पाए।":"Could not get AI suggestions.")})
+ fetch("/api/learning-roadmap",{method:"POST",headers:{"content-type":"application/json"},signal:AbortSignal.timeout(25000),body:JSON.stringify({kind:kind,lang:contentLang(),stage:p.path||"",className:p.className||"",goal:p.goal||"",district:p.district||"",completed:titles(S.progress.completed),started:titles(S.progress.opened),remaining:titles(packCatalog().map(function(item){return item.id}).filter(function(id){return S.progress.completed.indexOf(id)===-1})),quizAccuracy:(function(){var values=[];Object.keys(S.progress.quiz).forEach(function(id){Object.keys(S.progress.quiz[id]||{}).forEach(function(i){values.push(S.progress.quiz[id][i])})});return values.length?Math.round(values.filter(Boolean).length*100/values.length):null})()})})
+  .then(function(r){return r.json().catch(function(){return{}}).then(function(j){if(!r.ok)throw new Error(j.error||String(r.status));if(typeof j.plan!=="string"||!j.plan.trim())throw new Error("empty AI plan");return j})})
+  .then(function(j){S.roadmap={kind:kind,source:"ai",plan:j.plan.trim().slice(0,3000)};S.roadmapNote=L()?"AI ने सुझाव को आपकी जानकारी के अनुसार बेहतर किया।":"AI personalized this plan using your study details."})
+  .catch(function(){S.roadmapNote=L()?"AI सुझाव अभी उपलब्ध नहीं हैं। नीचे दिया उपयोगी plan बिना AI के तैयार किया गया है।":"AI personalization is unavailable right now. The useful plan below works without AI."})
   .then(function(){S.roadmapLoading=false;render()})
 }
 function mentor(){
@@ -255,10 +292,10 @@ function progress(){
  if(!total)h+='<p class="mut">'+(L()?"पाठों की सूची लोड हो रही है…":"Loading lesson packs…")+'</p>';
  h+=allPacks.map(function(p){var done=S.progress.completed.indexOf(p.id)!==-1,started=S.progress.opened.indexOf(p.id)!==-1,marks=S.progress.quiz[p.id]||{},n=Object.keys(marks).length,correct=Object.keys(marks).filter(function(i){return marks[i]}).length;
   return '<div class="learning-row"><span class="learning-icon">'+esc(p.ic||"📘")+'</span><div class="learning-copy"><b>'+esc(p[contentLang()]||p.id)+'</b><small>'+(!started?(L()?"अभी शुरू नहीं":"Not started"):done?(L()?"पूरा हुआ":"Completed"):n?(L()?"Quiz "+correct+"/"+n+" सही":"Quiz "+correct+"/"+n+" correct"):(L()?"शुरू किया":"In progress"))+'</small></div><span class="tag '+(done?"ok":"")+'">'+(done?(L()?"पूरा":"Done"):started?(L()?"जारी":"Ongoing"):(L()?"बाकी":"To do"))+'</span></div>'}).join("")+'</section>';
- h+='<section class="card ai-roadmap-card"><div class="roadmap-heading"><span class="roadmap-spark">'+icon("spark")+'</span><div><span class="eyebrow">'+(L()?"AI से व्यक्तिगत सुझाव":"PERSONALIZED WITH AI")+'</span><h2>'+(L()?"अब आगे क्या पढ़ें?":"What should you learn next?")+'</h2></div></div><p class="mut">'+(L()?"अपनी प्रगति के आधार पर पढ़ाई का अगला कदम और छात्रवृत्ति जाँचने का roadmap पाएँ।":"Get next study steps and a scholarship-check roadmap based on your progress.")+'</p><div class="row roadmap-actions"><button class="btn" data-roadmap="study"'+(S.roadmapLoading?" disabled":"")+'>'+icon("spark")+(S.roadmapLoading?(L()?"सुझाव बन रहे हैं…":"Creating suggestions…"):(L()?"पढ़ाई का plan बनाएँ":"Build my study plan"))+'</button><button class="btn o" data-roadmap="scholarship"'+(S.roadmapLoading?" disabled":"")+'>'+icon("cap")+(L()?"छात्रवृत्ति roadmap":"Scholarship roadmap")+'</button></div>';
- if(S.roadmapError)h+='<p class="roadmap-error" role="status">'+esc(S.roadmapError)+'</p>';
- if(S.roadmap)h+='<div class="roadmap-result" role="status"><h3>'+(S.roadmap.kind==="scholarship"?(L()?"छात्रवृत्ति जाँचने के कदम":"Scholarship checklist"):(L()?"आपकी पढ़ाई का अगला plan":"Your next study steps"))+'</h3><p>'+esc(S.roadmap.plan).replace(/\n/g,"<br>")+'</p><small>'+(L()?"योग्यता व तारीखें आधिकारिक पोर्टल पर ज़रूर जाँचें।":"Verify current eligibility and deadlines on official portals.")+'</small></div>';
- h+='<p class="device-note">'+(L()?"आपकी profile और progress इसी device में save होती है। AI सुझाव माँगने पर पढ़ाई का स्तर, ज़िला, लक्ष्य और progress AI सेवा को भेजे जाते हैं—नाम या स्कूल नहीं।":"Your profile and progress stay on this device. Requesting an AI plan sends your study stage, district, goal, and progress to the AI service—not your name or school.")+'</p></section>';
+ h+='<section class="card ai-roadmap-card"><div class="roadmap-heading"><span class="roadmap-spark">'+icon("spark")+'</span><div><span class="eyebrow">'+(L()?"AI + offline-ready सुझाव":"AI + OFFLINE-READY GUIDANCE")+'</span><h2>'+(L()?"अब आगे क्या पढ़ें?":"What should you learn next?")+'</h2></div></div><p class="mut">'+(L()?"यहाँ उपयोगी सुझाव हमेशा मिलेंगे; इंटरनेट हो तो AI उन्हें आपकी progress के अनुसार बेहतर करेगा।":"Get useful guidance every time; when online, AI can personalize it to your progress.")+'</p><div class="row roadmap-actions"><button class="btn" data-roadmap="study">'+icon("spark")+(L()?"पढ़ाई का plan बनाएँ":"Build my study plan")+'</button><button class="btn o" data-roadmap="scholarship">'+icon("cap")+(L()?"छात्रवृत्ति roadmap":"Scholarship roadmap")+'</button></div>';
+ if(S.roadmapNote)h+='<p class="roadmap-note" role="status">'+esc(S.roadmapNote)+'</p>';
+ if(S.roadmap)h+='<div class="roadmap-result" role="status"><h3>'+(S.roadmap.kind==="scholarship"?(L()?"छात्रवृत्ति जाँचने के कदम":"Scholarship checklist"):(L()?"आपकी पढ़ाई का अगला plan":"Your next study steps"))+'</h3><p>'+esc(S.roadmap.plan).replace(/\n/g,"<br>")+'</p>'+(S.roadmap.kind==="scholarship"?'<div class="roadmap-portals"><a href="https://scholarships.gov.in/" target="_blank" rel="noopener noreferrer">National Scholarship Portal ↗</a><a href="https://hescholarship.mp.gov.in/" target="_blank" rel="noopener noreferrer">MP Scholarship Portal ↗</a></div>':"")+'<small>'+(S.roadmap.source==="ai"?(L()?"AI सुझाव हैं—नियम और योग्यता आधिकारिक पोर्टल पर जाँचें।":"AI-generated guidance. Confirm eligibility on official portals."):L()?"यह सामान्य मार्गदर्शन है, पात्रता की गारंटी नहीं। आधिकारिक portal पर जाँचें।":"General guidance, not an eligibility decision. Verify on official portals.")+'</small></div>';
+ h+='<p class="device-note">'+(L()?"आपकी profile और progress इसी device में save होती है। AI उपलब्ध न हो तो भी पढ़ाई और scholarship का plan काम करेगा।":"Your profile and progress stay on this device. Study and scholarship plans still work if AI is unavailable.")+'</p></section>';
  return h}
 function profilePage(){
  var p=S.profile||{},name=p.name||(L()?"विद्यार्थी":"Student"),path={school:L()?"स्कूल":"School",college:L()?"कॉलेज":"College",prep:L()?"परीक्षा की तैयारी":"Exam preparation"};
@@ -340,7 +377,7 @@ function bind(){
  }
  if($("student-form"))$("student-form").onsubmit=function(e){e.preventDefault();var name=$("student-name").value.trim(),path=$("student-path").value,district=$("student-district").value;
   S.profile={name:name,className:$("student-class").value.trim(),institution:$("student-institution").value.trim(),path:path,district:district,goal:$("student-goal").value};
-  S.loggedIn=true;S.role="student";S.tab="home";S.roadmap=null;S.roadmapError="";save();render()};
+  S.loggedIn=true;S.role="student";S.tab="home";S.roadmap=null;S.roadmapNote="";save();render()};
  if($("edit-profile"))$("edit-profile").onclick=function(){S.loginMode="student";S.tab="login";render()};
  if($("cancel-profile"))$("cancel-profile").onclick=function(){S.tab="profile";render()};
  if($("student-logout"))$("student-logout").onclick=function(){S.loggedIn=false;S.role="student";S.loginMode="student";S.tab="login";save();render()};
@@ -359,7 +396,7 @@ function bind(){
   if(!S.quizAnswers[p.id])S.quizAnswers[p.id]={};
   if(!S.quizResults[p.id])S.quizResults[p.id]={};
   var selected=Number(choice.value),correct=selected===p.quiz[i].a;S.quizAnswers[p.id][i]=selected;S.quizResults[p.id][i]=correct;
-  if(!S.progress.quiz[p.id])S.progress.quiz[p.id]={};S.progress.quiz[p.id][i]=correct;S.roadmap=null;S.roadmapError="";
+  if(!S.progress.quiz[p.id])S.progress.quiz[p.id]={};S.progress.quiz[p.id][i]=correct;S.roadmap=null;S.roadmapNote="";
   if(p.quiz.every(function(q,index){return S.progress.quiz[p.id][index]===true})){if(S.progress.completed.indexOf(p.id)===-1)S.progress.completed.push(p.id)}
   else S.progress.completed=S.progress.completed.filter(function(id){return id!==p.id});
   save();render()}});

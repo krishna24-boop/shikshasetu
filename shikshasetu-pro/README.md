@@ -25,10 +25,10 @@ and mentors choose their role on the same login screen.
 Student name, study stage, district, class, institution, and career goal are
 optional. Student profile and lesson/quiz progress are saved in the current
 browser only; this is a local profile, not a server-backed student account.
-The Progress dashboard tracks opened lesson packs and quiz completions. Its
-AI study and scholarship roadmaps require an internet connection and
-`GEMINI_API_KEY`; scholarship eligibility and deadlines must be confirmed on
-official portals.
+The Progress dashboard tracks opened lesson packs and quiz completions. Study
+and scholarship roadmaps always have a built-in offline-ready plan; when online,
+the app can optionally personalize that plan using `GEMINI_API_KEY`. Scholarship
+eligibility and deadlines must be confirmed on official portals.
 
 ## Deploy
 Render/Railway web service: build `npm install`, start `npm start`, env `MONGODB_URI`, `MONGODB_DB` (optional), `GEMINI_API_KEY` (and `MENTOR_PIN`). HTTPS is required for mic + service worker on phones.

@@ -446,10 +446,14 @@ header #sub { margin: 0 0 0 10px; }
 .roadmap-heading .eyebrow { margin: 0 0 3px; color: var(--primary); font-size: 9px; }
 .roadmap-heading h2 { margin: 0; }
 .roadmap-actions { margin: 15px 0 4px; }
+.roadmap-note { padding: 9px 11px; margin: 11px 0 0; color: var(--primary); background: var(--surface); border: 1px solid var(--border); border-radius: 10px; font-size: 12px; }
 .roadmap-result { padding: 14px; margin-top: 15px; background: var(--surface); border: 1px solid var(--border); border-radius: 14px; line-height: 1.75; }
 .roadmap-result h3 { margin: 0 0 6px; font-size: 14px; }
 .roadmap-result p { margin: 0 0 8px; white-space: normal; }
 .roadmap-result small,.device-note { color: var(--muted); font-size: 11px; }
+.roadmap-portals { display: flex; flex-wrap: wrap; gap: 8px; margin: 11px 0; }
+.roadmap-portals a { padding: 8px 10px; color: var(--primary); background: var(--primary-soft); border-radius: 9px; font-size: 12px; font-weight: 750; text-decoration: none; }
+.roadmap-portals a:hover { text-decoration: underline; }
 .roadmap-error { padding: 10px 12px; color: var(--accent); background: var(--accent-soft); border-radius: 10px; font-size: 12px; }
 .device-note { margin: 14px 0 0; }
 .profile-details .row,.profile-progress,.profile-logout { align-items: center; }
